@@ -3,19 +3,21 @@
 
 # Author        : kesalin@gmail.com
 # Blog          : http://kesalin.github.io
-# Date          : 2016/07/12
-# Description   : 将豆列导出为 Markdown 文件. 
+# Date          : 2016/07/13
+# Description   : 将豆列导出为 Markdown 文件，多线程版本. 
 # Version       : 1.0.0.0
 # Python Version: Python 2.7.3
 #
 
 import os
-import threading
 import time
 import datetime
 import re
 import string
 import urllib2
+
+from threading import Thread
+from Queue import Queue
 from bs4 import BeautifulSoup
 
 gHeader = {"User-Agent": "Mozilla-Firefox5.0"}
@@ -169,7 +171,6 @@ def parse(url):
             doulistAbout = "{0}\n{1}".format(doulistAbout, htmlContent)
     #print "doulist about:" + doulistAbout
 
-
     # get page urls
     pageUrls = []
     content = soup.find("div", "paginator")
@@ -203,6 +204,122 @@ def parse(url):
     print " > 共获取 {0} 本图书信息，耗时 {1} 秒 {2} 毫秒".format(total, 
         cost.microseconds/1000000, (cost.microseconds%1000000)/1000)
 
+
+#=============================================================================
+gQueue = Queue(20)
+gDoulistTile = ''
+gDoulistAbout = ''
+gBookInfos = []
+
+class Producer(Thread):
+    url = ''
+    
+    def __init__(self, t_name, url):  
+        Thread.__init__(self, name=t_name)
+        self.url = url
+
+    def run(self):
+        global gQueue
+
+        page = getHtml(self.url)
+        gQueue.put(page)
+
+class Consumer(Thread):
+    running = True
+
+    def __init__(self, t_name):  
+        Thread.__init__(self, name=t_name)
+
+    def stop(self):
+        self.running = False
+
+    def run(self):
+        global gQueue
+        global gDoulistTile
+        global gDoulistAbout
+        global gBookInfos
+
+        while True:
+            if self.running == False and gQueue.empty():
+                break;
+
+            page = gQueue.get()
+            gQueue.task_done()
+
+            soup = BeautifulSoup(page, 'html.parser')
+
+            if gDoulistTile == '':
+                # get doulist title
+                gDoulistTile = soup.html.head.title.string.encode('utf-8')
+                print " > 获取豆列：" + gDoulistTile
+
+            if gDoulistAbout == '':
+                # get doulist about
+                content = soup.find("div", "doulist-about")
+                about = ''
+                for child in content.children:
+                    if child.string != None:
+                        htmlContent = child.string.strip().encode('utf-8')
+                        about = "{0}\n{1}".format(about, htmlContent)
+                gDoulistAbout = about
+                #print "doulist about:" + about
+
+            # get books from current page
+            parseItemInfo(page, gBookInfos)
+ 
+
 #=============================================================================
 # 程序入口：解析指定豆列
-parse("https://www.douban.com/doulist/1133232/")
+gDoulistUrl = "https://www.douban.com/doulist/1133232/"
+
+if __name__ == '__main__': 
+    start = datetime.datetime.now()
+
+    # all producers
+    producers = []
+
+    # get first page of doulist
+    page = getHtml(gDoulistUrl)
+    gQueue.put(page)
+
+    # get url of other pages in doulist
+    soup = BeautifulSoup(page, 'html.parser')
+    content = soup.find("div", "paginator")
+    i = 0
+    for child in content.children:
+        childStr = "{0}".format(child)
+        if childStr.startswith('<a href=') == True:
+            childStr = decodeHtmlSpecialCharacter(childStr)
+            pattern = re.compile(r'(<a href=")(.*)(=">)(\d*)(</a>)')
+            match = pattern.search(childStr)
+            if match:
+                hrefStr = match.group(2)
+                producer = Producer('Producer_{0:d}'.format(i+1), hrefStr)
+                producers.append(producer)
+                i = i + 1
+
+    # create consumer
+    consumer = Consumer('Consumer')
+    consumer.start()
+
+    # start all producers
+    for producer in producers:
+        producer.start()
+
+    # wait for all producers
+    for producer in producers:
+        producer.join()
+
+    # wait for consumer
+    consumer.stop()
+
+    # export to markdown
+    exportToMarkdown(gDoulistTile, gDoulistAbout, gBookInfos)
+
+    # summrise
+    total = len(gBookInfos)
+    end = datetime.datetime.now()
+    cost = end - start
+    print " > 共获取 {0} 本图书信息，耗时 {1} 秒 {2} 毫秒".format(total, 
+        cost.microseconds/1000000, (cost.microseconds%1000000)/1000)
+
