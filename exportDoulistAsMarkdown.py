@@ -16,6 +16,7 @@ import datetime
 import re
 import string
 import urllib2
+import timeit
 from bs4 import BeautifulSoup
 
 gHeader = {"User-Agent": "Mozilla-Firefox5.0"}
@@ -25,15 +26,15 @@ class BookInfo:
     name = ''
     url = ''
     icon = ''
-    ratingNums = ''
-    ratingPeople = ''
+    ratingNum = 0.0
+    ratingPeople = 0
     comment = ''
 
     def __init__(self, name, url, icon, nums, people, comment):
         self.name = name
         self.url = url
         self.icon = icon
-        self.ratingNums = nums
+        self.ratingNum = nums
         self.ratingPeople = people
         self.comment = comment 
 
@@ -52,23 +53,6 @@ def getHtml(url):
             print "Reason: %s" % e.reason
     return data
 
-# 转换 html 转义字符
-def decodeHtmlSpecialCharacter(htmlStr):
-    specChars = {"&ensp;" : "", \
-                 "&emsp;" : "", \
-                 "&nbsp;" : "", \
-                 "&lt;" : "<", \
-                 "&gt" : ">", \
-                 "&amp;" : "&", \
-                 "&quot;" : "\"", \
-                 "&copy;" : "®", \
-                 "&times;" : "×", \
-                 "&divide;" : "÷", \
-                 }
-    for key in specChars.keys():
-        htmlStr = htmlStr.replace(key, specChars[key])
-    return htmlStr
-
 # 导出为 Markdown 格式文件
 def exportToMarkdown(doulistTile, doulistAbout, bookInfos):
     path = "{0}.md".format(doulistTile)
@@ -85,11 +69,11 @@ def exportToMarkdown(doulistTile, doulistAbout, bookInfos):
     i = 0
     for book in bookInfos:
         file.write('\n### No.{0:d} {1}\n'.format(i + 1, book.name))
-        file.write(' > **图书名称**：[{0}]({1})  \n'.format(book.name, book.url))
-        file.write(' > **豆瓣链接**：[{0}]({1})  \n'.format(book.url, book.url))
-        file.write(' > **豆瓣评分**：{0}  \n'.format(book.ratingNums))
-        file.write(' > **评分人数**：{0}  \n'.format(book.ratingPeople))
-        file.write(' > **我的评论**：{0}  \n'.format(book.comment))
+        file.write(' > **图书名称**： [{0}]({1})  \n'.format(book.name, book.url))
+        file.write(' > **豆瓣链接**： [{0}]({1})  \n'.format(book.url, book.url))
+        file.write(' > **豆瓣评分**： {0}  \n'.format(book.ratingNum))
+        file.write(' > **评分人数**： {0} 人 \n'.format(book.ratingPeople))
+        file.write(' > **我的评论**： {0}  \n'.format(book.comment))
         i = i + 1
     file.close()
 
@@ -98,60 +82,68 @@ def parseItemInfo(page, bookInfos):
     soup = BeautifulSoup(page, 'html.parser')
     items = soup.find_all("div", "doulist-item")
     for item in items:
-        #itemStr = item.prettify().encode('utf-8')
-        #print itemStr
+        #print item.prettify().encode('utf-8')
 
         # get book name
-        content = item.find("div", "title").contents[1]
-        bookName = content.string.strip().encode('utf-8')
+        bookName = ''
+        content = item.find("div", "title")
+        if content != None:
+            href = content.find("a")
+            if href != None and href.string != None:
+                bookName = href.string.strip().encode('utf-8')
+        #print " > name: {0}".format(bookName)
 
         # get book url and icon
-        contents = item.find("div", "post")
-        hrefStr = contents.find('a').prettify().encode('utf-8')
-        #print hrefStr
-
         bookUrl = ''
-        pattern = re.compile(r'(<a href=\")(.*)(\" target=)')
-        match = pattern.search(hrefStr)
-        if match:
-            bookUrl = match.group(2)
+        bookImage = ''
+        content = item.find("div", "post")
+        if content != None:
+            tag = content.find('a')
+            if tag != None:
+                bookUrl = tag['href'].encode('utf-8')
+            tag = content.find('img')
+            if tag != None:
+                bookImage = tag['src'].encode('utf-8')
+        #print " > url: {0}, image: {1}".format(bookUrl, bookImage)
 
-        bookIcon = ''
-        pattern = re.compile(r'(img src=\")(.*)(\" width=)')
-        match = pattern.search(hrefStr)
-        if match:
-            bookIcon = match.group(2)
-        #print " > Book {0} : {1}, {2}".format(bookName, bookUrl, bookIcon)
 
         # get rating
-        ratingNums = ''
-        ratingPeople = ''
+        ratingNum = 0.0
+        ratingPeople = 0
         contents = item.find("div", "rating")
         for content in contents:
             if content.name != None and content.string != None:
                 if content.get("class") != None:
-                    ratingNums = content.string.encode('utf-8')
+                    ratingStr = content.string.strip().encode('utf-8')
+                    if len(ratingStr) > 0:
+                        ratingNum = float(ratingStr)
                 else:
-                    ratingPeople = content.string.encode('utf-8')
-                    pattern = re.compile(r'(\()(.*)(\))')
-                    match = pattern.search(ratingPeople)
+                    ratingStr = content.string.strip().encode('utf-8')
+                    pattern = re.compile(r'(\()([0-9]*)(.*)(\))')
+                    match = pattern.search(ratingStr)
                     if match:
-                        ratingPeople = match.group(2)
-        #print "   RatingNums: {0}, ratingPeople: {1}".format(ratingNums, ratingPeople)
+                        ratingStr = match.group(2).strip()
+                        if len(ratingStr) > 0:
+                            ratingPeople = int(ratingStr)
+        #print " > ratingNum: {0}, ratingPeople: {1}".format(ratingNum, ratingPeople)
 
         # get comment
         comment = ''
-        contents = item.find_all("blockquote", "comment")
-        comment = contents[0].contents[2].encode('utf-8')
-        #print "   Comment: {0}".format(comment)
+        content = item.find("blockquote", "comment")
+        if content != None:
+            for child in content.contents:
+                if child.name == None and child.string != None:
+                    comment = child.string.strip().encode('utf-8')
+        #print " > comment: {0}".format(comment)
 
         # add book info to list
-        bookInfo = BookInfo(bookName, bookUrl, bookIcon, ratingNums, ratingPeople, comment)
+        bookInfo = BookInfo(bookName, bookUrl, bookImage, ratingNum, ratingPeople, comment)
         bookInfos.append(bookInfo)
 
 # 解析豆列 url
 def parse(url):
-    start = datetime.datetime.now()
+    start = timeit.default_timer()
+
     page = getHtml(url)
     soup = BeautifulSoup(page, 'html.parser')
 
@@ -160,9 +152,8 @@ def parse(url):
     print " > 获取豆列：" + doulistTile
 
     # get doulist about
-    content = soup.find("div", "doulist-about")
-    #print content.prettify().encode('utf-8')
     doulistAbout = ''
+    content = soup.find("div", "doulist-about")
     for child in content.children:
         if child.string != None:
             htmlContent = child.string.strip().encode('utf-8')
@@ -172,37 +163,47 @@ def parse(url):
 
     # get page urls
     pageUrls = []
+
+    nextPageStart = 100000
+    lastPageStart = 0
     content = soup.find("div", "paginator")
     for child in content.children:
-        childStr = "{0}".format(child)
-        if childStr.startswith('<a href=') == True:
-            childStr = decodeHtmlSpecialCharacter(childStr)
-            pattern = re.compile(r'(<a href=")(.*)(=">)(\d*)(</a>)')
-            match = pattern.search(childStr)
+        if child.name == 'a':
+            pattern = re.compile(r'(start=)([0-9]*)(.*)(&sort=)')
+            match = pattern.search(child['href'].encode('utf-8'))
             if match:
-                hrefStr = match.group(2)
-                pageUrls.append(hrefStr)
+                index = int(match.group(2))
+                if nextPageStart > index:
+                    nextPageStart = index
+                if lastPageStart < index:
+                    lastPageStart = index
 
-    bookInfos = []
+    books = []
 
     # get books from current page
-    #print " scan page : {0}".format(url)
-    parseItemInfo(page, bookInfos)
+    print ' > process page: {0}'.format(url)
+    parseItemInfo(page, books)
 
     # get books from follow pages
-    for pageUrl in pageUrls:
-        #print " scan page : {0}".format(hrefStr)
+    for pageStart in range(nextPageStart, lastPageStart + nextPageStart, nextPageStart):
+        pageUrl = "{0}?start={1:d}&sort=seq&sub_type=".format(url, pageStart)
+        print ' > process page: {0}'.format(pageUrl)
         page = getHtml(pageUrl)
-        parseItemInfo(page, bookInfos)
+        if page != None:
+            parseItemInfo(page, books)
 
-    exportToMarkdown(doulistTile, doulistAbout, bookInfos)
+    # export to markdown file
+    exportToMarkdown(doulistTile, doulistAbout, books)
 
-    total = len(bookInfos)
-    end = datetime.datetime.now()
-    cost = end - start
-    print " > 共获取 {0} 本图书信息，耗时 {1} 秒 {2} 毫秒".format(total, 
-        cost.microseconds/1000000, (cost.microseconds%1000000)/1000)
+    # summrise
+    total = len(books)
+    elapsed = timeit.default_timer() - start
+    print " > 共获取 {0} 本图书信息，耗时 {1} 秒".format(total, elapsed)
 
 #=============================================================================
-# 程序入口：解析指定豆列
-parse("https://www.douban.com/doulist/1133232/")
+# 程序入口：抓取指定指定豆列的书籍
+#=============================================================================
+gDoulistUrl = "https://www.douban.com/doulist/1133232/"
+
+if __name__ == '__main__': 
+    parse(gDoulistUrl)
