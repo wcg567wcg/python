@@ -59,21 +59,15 @@ class BookInfo:
 
     def getCompositeRating(self):
         if self.compositeRating == 0.0:
-            k = 0.25
-            people = max(5, min(5000, self.ratingPeople))
+            k = 0.15
+            people = max(5, min(1000, self.ratingPeople))
             peopleWeight = math.pow(people, k)
             if people < 50:
-                self.compositeRating = (self.ratingNum * 40 + peopleWeight * 60) / 100.0
-            elif people < 100:
-                self.compositeRating = (self.ratingNum * 50 + peopleWeight * 50) / 100.0
-            elif people < 200:
-                self.compositeRating = (self.ratingNum * 60 + peopleWeight * 40) / 100.0
-            elif people < 400:
-                self.compositeRating = (self.ratingNum * 70 + peopleWeight * 30) / 100.0
-            elif people < 800:
                 self.compositeRating = (self.ratingNum * 80 + peopleWeight * 20) / 100.0
-            else:
+            elif people < 1000:
                 self.compositeRating = (self.ratingNum * 90 + peopleWeight * 10) / 100.0
+            else:
+                self.compositeRating = (self.ratingNum * 95 + peopleWeight * 5) / 100.0
 
         return self.compositeRating
 
@@ -289,7 +283,7 @@ def parse(url):
     # get books from follow pages
     for pageStart in range(nextPageStart, lastPageStart + nextPageStart, nextPageStart):
         pageUrl = "{0}?start={1:d}&sort=seq&sub_type=".format(url, pageStart)
-        print ' > process page: {0}'.format(pageUrl)
+        print ' > process page :  {0}'.format(pageUrl)
         producer = Producer('Producer_{0:d}'.format(pageStart), pageUrl)
         producer.start()
         producers.append(producer)

@@ -44,20 +44,13 @@ class BookInfo:
         self.comment = comment
         self.compositeRating = num
 
-    def __sortByRating(self, other):
-        val = self.ratingNum - other.ratingNum
-        if val < 0:
-            return 1
-        elif val > 0:
-            return -1
-        else:
-            val = self.ratingPeople - other.ratingPeople
-            if val < 0:
-                return 1
-            elif val > 0:
-                return -1
-            else:
-                return 0
+    def __hash__(self):
+        return hash(self.url)
+
+    def __eq__(self, other):
+        if self.url == other.url:
+            return True
+        return False
 
     def __sortByCompositeRating(self, other):
         val = self.compositeRating - other.compositeRating
@@ -70,26 +63,6 @@ class BookInfo:
 
     def __cmp__(self, other):
         return self.__sortByCompositeRating(other)
-
-def computeCompositeRating(tag, num, people):
-    k = 0.25
-    maxNum = 5000
-    minNum = 5
-
-    people = max(minNum, min(maxNum, people))
-    peopleWeight = math.pow(people, k)
-    if people < 50:
-        return (num * 40 + peopleWeight * 60) / 100.0
-    elif people < 100:
-        return (num * 50 + peopleWeight * 50) / 100.0
-    elif people < 200:
-        return (num * 60 + peopleWeight * 40) / 100.0
-    elif people < 400:
-        return (num * 70 + peopleWeight * 30) / 100.0
-    elif people < 800:
-        return (num * 80 + peopleWeight * 20) / 100.0
-    else:
-        return (num * 90 + peopleWeight * 10) / 100.0
 
 # 获取 url 内容
 def getHtml(url):
@@ -108,7 +81,7 @@ def getHtml(url):
     return None
 
 # 导出为 Markdown 格式文件
-def exportToMarkdown(tag, books):
+def exportToMarkdown(tag, books, total):
     path = "{0}.md".format(tag)
     if(os.path.isfile(path)):
         os.remove(path)
@@ -116,8 +89,19 @@ def exportToMarkdown(tag, books):
     today = datetime.datetime.now()
     todayStr = today.strftime('%Y-%m-%d %H:%M:%S %z')
     file = open(path, 'a')
-    file.write('\n## {0} 图书列表\n\n'.format(tag))
-    file.write('### 总计 {0} 本，更新时间：{1}\n'.format(len(books), todayStr))
+    file.write('## 说明\n\n')
+    file.write(' > 本页面是由 Python 爬虫根据图书排序算法抓取豆瓣图书信息自动生成，列出特定主题排名靠前的一百本图书。  \n\n')
+    file.write(' > 我使用的排序算法似乎要比豆瓣默认的评价排序算法要可靠些，因为我喜欢书，尤其是对非虚构类图书有一定了解，' 
+        '所以我可以根据特定主题对排序算法进行调整。大家可以访问 '
+        '[豆瓣图书爬虫](https://github.com/luozhaohui/PythonSnippet/blob/master/exportTopBooksFromDouban.py) 查看图书排序算法。'
+        '但我并不擅长排序算法，希望能得到大家的反馈与建议，改善排序算法，提供更精准的图书排名。  \n\n')
+    file.write(' > 联系方式：  \n')
+    file.write('    + 邮箱：kesalin@gmail.com  \n')
+    file.write('    + 微博：[飘飘白云](http://weibo.com/kesalin)  \n')
+
+    file.write('\n## {0} Top {1} 图书\n\n'.format(tag, len(books)))
+    file.write('### 总共分析了 {0} 本图书，更新时间：{1}\n'.format(total, todayStr))
+
     i = 0
     for book in books:
         file.write('\n### No.{0:d} {1}\n'.format(i + 1, book.name))
@@ -130,7 +114,7 @@ def exportToMarkdown(tag, books):
     file.close()
 
 # 解析图书信息
-def parseItemInfo(tag, page, bookInfos):
+def parseItemInfo(tag, minNum, maxNum, k, page, bookInfos):
     soup = BeautifulSoup(page, 'html.parser')
     items = soup.find_all("li", "subject-item")
     for item in items:
@@ -190,7 +174,7 @@ def parseItemInfo(tag, page, bookInfos):
 
         # add book info to list
         bookInfo = BookInfo(bookName, bookUrl, bookImage, ratingNum, ratingPeople, description)
-        bookInfo.compositeRating = computeCompositeRating(tag, ratingNum, ratingPeople)
+        bookInfo.compositeRating = computeCompositeRating(tag, minNum, maxNum, k, ratingNum, ratingPeople)
         bookInfos.append(bookInfo)
 
 #=============================================================================
@@ -215,12 +199,18 @@ class Consumer(Thread):
     tag = ''
     books = []
     queue = None
+    minNum = 5
+    maxNum = 5000
+    k = 0.25
 
-    def __init__(self, t_name, tag, queue, books):  
+    def __init__(self, t_name, tag, minNum, maxNum, k, queue, books):  
         Thread.__init__(self, name=t_name)
         self.queue = queue
         self.books = books
         self.tag = tag
+        self.minNum = max(2, min(1000, minNum))
+        self.maxNum = max(1200, min(maxNum, 20000))
+        self.k = max(0.01, min(1.0, k))
 
     def stop(self):
         self.running = False
@@ -232,12 +222,12 @@ class Consumer(Thread):
 
             page = self.queue.get()
             if page != None:
-                parseItemInfo(tag, page, self.books)
+                parseItemInfo(self.tag, self.minNum, self.maxNum, self.k, page, self.books)
             self.queue.task_done()
  
 
-def spider(tag):
-    print ' > getting books of {0} ...'.format(tag)
+def spider(tag, minNum, maxNum, k):
+    print '   抓取 [{0}] 图书 ...'.format(tag)
     start = timeit.default_timer()
 
     # all producers
@@ -270,11 +260,11 @@ def spider(tag):
                         lastPageStart = index
 
         # process current page
-        print " > process page:{0}".format(url)
+        #print " > process page : {0}".format(url)
         queue.put(page)
 
         # create consumer
-        consumer = Consumer('Consumer', tag, queue, bookInfos)
+        consumer = Consumer('Consumer', tag, minNum, maxNum, k, queue, bookInfos)
         consumer.start()
 
         # create producers
@@ -284,7 +274,7 @@ def spider(tag):
             producer = Producer('Producer_{0:d}'.format(pageStart), pageUrl, queue)
             producer.start()
             producers.append(producer)
-            print " > process page:{0}".format(pageUrl)
+            #print " > process page : {0}".format(pageUrl)
             time.sleep(0.1)         # slow down a little
 
         # wait for all producers
@@ -296,21 +286,78 @@ def spider(tag):
         queue.put(None)
         consumer.join()
 
-        # sort
-        books = sorted(bookInfos)
-
-        # export to markdown
-        exportToMarkdown(tag, books)
-
         # summrise
-        total = len(books)
+        total = len(bookInfos)
         elapsed = timeit.default_timer() - start
-        print " > 共获取 {0} 本图书信息，耗时 {1} 秒".format(total, elapsed)
+        print "   获取 %d 本 [%s] 图书信息，耗时 %.2f 秒"%(total, tag, elapsed)
+        return bookInfos
+
+
+def process(tags):
+    tagList = tags[0].split(',')
+    minNum = tags[1]
+    maxNum = tags[2]
+    k = tags[3]
+
+    books = []
+    # spider
+    for tag in tagList:
+        tagBooks = spider(tag.strip(), minNum, maxNum, k)
+        books = list(set(books + tagBooks))
+
+    total = len(books)
+    print " > 共获取 {0} 本 [{1}] 不重复图书信息".format(total, tags[0])
+
+    # sort
+    books = sorted(books)
+    # get top 100
+    books = books[0:100]
+
+    # export to markdown
+    exportToMarkdown(tagList[0], books, total)
+
+#=============================================================================
+# 排序算法
+#=============================================================================
+def computeCompositeRating(tag, minNum, maxNum, k, num, people):
+    people = max(minNum, min(maxNum, people))
+    peopleWeight = math.pow(people, k)
+    if people < 50:
+        return (num * 40 + peopleWeight * 60) / 100.0
+    elif people < 100:
+        return (num * 50 + peopleWeight * 50) / 100.0
+    elif people < 200:
+        return (num * 60 + peopleWeight * 40) / 100.0
+    elif people < 400:
+        return (num * 70 + peopleWeight * 30) / 100.0
+    elif people < 800:
+        return (num * 80 + peopleWeight * 20) / 100.0
+    else:
+        return (num * 90 + peopleWeight * 10) / 100.0
 
 #=============================================================================
 # 程序入口：抓取指定标签的书籍
 #=============================================================================
 if __name__ == '__main__': 
-    tags = ["心理学", "社会学", "政治", "哲学"]
+    tags = [
+        ["心理,心理学", 5, 5000, 0.25], 
+        ["社会,社会学", 5, 8000, 0.25], 
+        ["政治,政治学", 5, 4000, 0.25], 
+        ["经济,经济学,金融,商业,投资,管理,创业", 5, 3000, 0.25], 
+        ["哲学,西方哲学,自由主义,思想", 5, 3000, 0.25], 
+        ["科技,科普,科学", 5, 3000, 0.25], 
+        ["编程,程序,互联网,用户体验,交互设计", 5, 3000, 0.25], 
+        ["文化,人文,思想,国学", 5, 8000, 0.25], 
+        ["历史,中国历史,近代史", 5, 8000, 0.25], 
+        ["成长,教育", 5, 5000, 0.25], 
+        ["文学","经典","名著","外国名著","外国文学", 5, 10000, 0.25], 
+        ["小说", 5, 10000, 0.25], 
+    ]
+
+    start = timeit.default_timer()
+
     for tag in tags:
-        spider(tag)
+        process(tag)
+
+    elapsed = timeit.default_timer() - start
+    print "== 总耗时 %.2f 秒 =="%(elapsed)

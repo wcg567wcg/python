@@ -181,13 +181,13 @@ def parse(url):
     books = []
 
     # get books from current page
-    print ' > process page: {0}'.format(url)
+    print ' > process page :  {0}'.format(url)
     parseItemInfo(page, books)
 
     # get books from follow pages
     for pageStart in range(nextPageStart, lastPageStart + nextPageStart, nextPageStart):
         pageUrl = "{0}?start={1:d}&sort=seq&sub_type=".format(url, pageStart)
-        print ' > process page: {0}'.format(pageUrl)
+        print ' > process page :  {0}'.format(pageUrl)
         page = getHtml(pageUrl)
         if page != None:
             parseItemInfo(page, books)
