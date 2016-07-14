@@ -108,7 +108,7 @@ def exportToMarkdown(tag, books, total):
         file.write(' > **图书名称**： [{0}]({1})  \n'.format(book.name, book.url))
         file.write(' > **豆瓣链接**： [{0}]({1})  \n'.format(book.url, book.url))
         file.write(' > **豆瓣评分**： {0}  \n'.format(book.ratingNum))
-        file.write(' > **评分人数**： {0} 人 \n'.format(book.ratingPeople))
+        file.write(' > **评分人数**： {0} 人  \n'.format(book.ratingPeople))
         file.write(' > **内容简介**： {0}  \n'.format(book.comment))
         i = i + 1
     file.close()
