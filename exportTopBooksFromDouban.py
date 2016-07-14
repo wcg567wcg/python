@@ -41,7 +41,8 @@ class BookInfo:
         self.icon = icon
         self.ratingNum = num
         self.ratingPeople = people
-        self.comment = comment 
+        self.comment = comment
+        self.compositeRating = num
 
     def __sortByRating(self, other):
         val = self.ratingNum - other.ratingNum
@@ -58,29 +59,8 @@ class BookInfo:
             else:
                 return 0
 
-    def getCompositeRating(self):
-        if self.compositeRating == 0.0:
-            k = 0.25
-            people = max(5, min(5000, self.ratingPeople))
-            peopleWeight = math.pow(people, k)
-            if people < 50:
-                self.compositeRating = (self.ratingNum * 40 + peopleWeight * 60) / 100.0
-            elif people < 100:
-                self.compositeRating = (self.ratingNum * 50 + peopleWeight * 50) / 100.0
-            elif people < 200:
-                self.compositeRating = (self.ratingNum * 60 + peopleWeight * 40) / 100.0
-            elif people < 400:
-                self.compositeRating = (self.ratingNum * 70 + peopleWeight * 30) / 100.0
-            elif people < 800:
-                self.compositeRating = (self.ratingNum * 80 + peopleWeight * 20) / 100.0
-            else:
-                self.compositeRating = (self.ratingNum * 90 + peopleWeight * 10) / 100.0
-
-        return self.compositeRating
-
     def __sortByCompositeRating(self, other):
-        rhs = other.getCompositeRating()
-        val = self.getCompositeRating() - other.getCompositeRating()
+        val = self.compositeRating - other.compositeRating
         if val < 0:
             return 1
         elif val > 0:
@@ -90,6 +70,26 @@ class BookInfo:
 
     def __cmp__(self, other):
         return self.__sortByCompositeRating(other)
+
+def computeCompositeRating(tag, num, people):
+    k = 0.25
+    maxNum = 5000
+    minNum = 5
+
+    people = max(minNum, min(maxNum, people))
+    peopleWeight = math.pow(people, k)
+    if people < 50:
+        return (num * 40 + peopleWeight * 60) / 100.0
+    elif people < 100:
+        return (num * 50 + peopleWeight * 50) / 100.0
+    elif people < 200:
+        return (num * 60 + peopleWeight * 40) / 100.0
+    elif people < 400:
+        return (num * 70 + peopleWeight * 30) / 100.0
+    elif people < 800:
+        return (num * 80 + peopleWeight * 20) / 100.0
+    else:
+        return (num * 90 + peopleWeight * 10) / 100.0
 
 # 获取 url 内容
 def getHtml(url):
@@ -108,16 +108,15 @@ def getHtml(url):
     return None
 
 # 导出为 Markdown 格式文件
-def exportToMarkdown(gTag, books):
-    path = "{0}.md".format(gTag)
+def exportToMarkdown(tag, books):
+    path = "{0}.md".format(tag)
     if(os.path.isfile(path)):
         os.remove(path)
 
     today = datetime.datetime.now()
     todayStr = today.strftime('%Y-%m-%d %H:%M:%S %z')
     file = open(path, 'a')
-    file.write('## {0}\n\n'.format(gTag))
-    file.write('## 图书列表\n\n')
+    file.write('\n## {0} 图书列表\n\n'.format(tag))
     file.write('### 总计 {0} 本，更新时间：{1}\n'.format(len(books), todayStr))
     i = 0
     for book in books:
@@ -131,7 +130,7 @@ def exportToMarkdown(gTag, books):
     file.close()
 
 # 解析图书信息
-def parseItemInfo(page, bookInfos):
+def parseItemInfo(tag, page, bookInfos):
     soup = BeautifulSoup(page, 'html.parser')
     items = soup.find_all("li", "subject-item")
     for item in items:
@@ -191,70 +190,66 @@ def parseItemInfo(page, bookInfos):
 
         # add book info to list
         bookInfo = BookInfo(bookName, bookUrl, bookImage, ratingNum, ratingPeople, description)
-        bookInfo.getCompositeRating()
+        bookInfo.compositeRating = computeCompositeRating(tag, ratingNum, ratingPeople)
         bookInfos.append(bookInfo)
 
 #=============================================================================
 # 生产者-消费者模型
 #=============================================================================
-gQueue = Queue(20)
-gBookInfos = []
-
 class Producer(Thread):
     url = ''
     
-    def __init__(self, t_name, url):  
+    def __init__(self, t_name, url, queue):  
         Thread.__init__(self, name=t_name)
         self.url = url
+        self.queue = queue
 
     def run(self):
-        global gQueue
-
         page = getHtml(self.url)
         if page != None:
             # block util a free slot available
-            gQueue.put(page, True)
+            self.queue.put(page, True)
 
 class Consumer(Thread):
     running = True
+    tag = ''
+    books = []
+    queue = None
 
-    def __init__(self, t_name):  
+    def __init__(self, t_name, tag, queue, books):  
         Thread.__init__(self, name=t_name)
+        self.queue = queue
+        self.books = books
+        self.tag = tag
 
     def stop(self):
         self.running = False
 
     def run(self):
-        global gQueue
-        global gBookInfos
-
         while True:
-            if self.running == False and gQueue.empty():
+            if self.running == False and self.queue.empty():
                 break;
 
-            page = gQueue.get()
+            page = self.queue.get()
             if page != None:
-                parseItemInfo(page, gBookInfos)
-            gQueue.task_done()
+                parseItemInfo(tag, page, self.books)
+            self.queue.task_done()
  
 
-#=============================================================================
-# 程序入口：抓取指定标签的书籍
-#=============================================================================
-gTag = "心理学"
-gTagUrl = "https://book.douban.com/tag/{0}".format(gTag)
-
-if __name__ == '__main__': 
-    print ' > getting books of {0} ...'.format(gTag)
+def spider(tag):
+    print ' > getting books of {0} ...'.format(tag)
     start = timeit.default_timer()
 
     # all producers
+    queue = Queue(20)
+    bookInfos = []
     producers = []
 
     # get first page of doulist
-    page = getHtml(gTagUrl)
+    url = "https://book.douban.com/tag/{0}".format(tag)
+    page = getHtml(url)
     if page == None:
-        print ' > invalid url {0}'.format(gTagUrl)
+        print ' > invalid url {0}'.format(url)
     else:
         # get url of other pages in doulist
         soup = BeautifulSoup(page, 'html.parser')
@@ -275,18 +270,18 @@ if __name__ == '__main__':
                         lastPageStart = index
 
         # process current page
-        print " > process page:{0}".format(gTagUrl)
-        gQueue.put(page)
+        print " > process page:{0}".format(url)
+        queue.put(page)
 
         # create consumer
-        consumer = Consumer('Consumer')
+        consumer = Consumer('Consumer', tag, queue, bookInfos)
         consumer.start()
 
         # create producers
         producers = []
         for pageStart in range(nextPageStart, lastPageStart + nextPageStart, nextPageStart):
-            pageUrl = "{0}?start={1:d}&type=T".format(gTagUrl, pageStart)
-            producer = Producer('Producer_{0:d}'.format(pageStart), pageUrl)
+            pageUrl = "{0}?start={1:d}&type=T".format(url, pageStart)
+            producer = Producer('Producer_{0:d}'.format(pageStart), pageUrl, queue)
             producer.start()
             producers.append(producer)
             print " > process page:{0}".format(pageUrl)
@@ -298,16 +293,24 @@ if __name__ == '__main__':
 
         # wait for consumer
         consumer.stop()
-        gQueue.put(None)
+        queue.put(None)
         consumer.join()
 
         # sort
-        books = sorted(gBookInfos)
+        books = sorted(bookInfos)
 
         # export to markdown
-        exportToMarkdown(gTag, books)
+        exportToMarkdown(tag, books)
 
         # summrise
         total = len(books)
         elapsed = timeit.default_timer() - start
         print " > 共获取 {0} 本图书信息，耗时 {1} 秒".format(total, elapsed)
+
+#=============================================================================
+# 程序入口：抓取指定标签的书籍
+#=============================================================================
+if __name__ == '__main__': 
+    tags = ["心理学", "社会学", "政治", "哲学"]
+    for tag in tags:
+        spider(tag)
