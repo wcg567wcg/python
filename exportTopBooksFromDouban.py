@@ -90,11 +90,11 @@ def exportToMarkdown(tag, books, total):
     todayStr = today.strftime('%Y-%m-%d %H:%M:%S %z')
     file = open(path, 'a')
     file.write('## 说明\n\n')
-    file.write(' > 本页面是由 Python 爬虫根据图书排序算法抓取豆瓣图书信息自动生成，列出特定主题排名靠前的一百本图书。  \n\n')
-    file.write(' > 我使用的排序算法似乎要比豆瓣默认的评价排序算法要可靠些，因为我喜欢书，尤其是对非虚构类图书有一定了解，' 
-        '所以我可以根据特定主题对排序算法进行调整。大家可以访问 '
-        '[豆瓣图书爬虫](https://github.com/luozhaohui/PythonSnippet/blob/master/exportTopBooksFromDouban.py) 查看图书排序算法。'
-        '但我并不擅长排序算法，希望能得到大家的反馈与建议，改善排序算法，提供更精准的图书排名。  \n\n')
+    file.write(' > 本页面是由 Python 爬虫根据图书推荐算法抓取豆瓣图书信息自动生成，列出特定主题排名靠前的一百本图书。  \n\n')
+    file.write(' > 我使用的推荐算法似乎要比豆瓣默认的算法要可靠些，因为我喜欢书，尤其是对非虚构类图书有一定了解，' 
+        '所以我可以根据特定主题对推荐算法进行调整。大家可以访问 '
+        '[豆瓣图书爬虫](https://github.com/luozhaohui/PythonSnippet/blob/master/exportTopBooksFromDouban.py) 查看推荐算法。'
+        '但我并不擅长推荐算法，希望能得到大家的反馈与建议，改善算法，提供更精准的图书排名。  \n\n')
     file.write(' > 联系方式：  \n')
     file.write('    + 邮箱：kesalin@gmail.com  \n')
     file.write('    + 微博：[飘飘白云](http://weibo.com/kesalin)  \n')
@@ -208,8 +208,8 @@ class Consumer(Thread):
         self.queue = queue
         self.books = books
         self.tag = tag
-        self.minNum = max(2, min(1000, minNum))
-        self.maxNum = max(1200, min(maxNum, 20000))
+        self.minNum = max(10, min(200, minNum))
+        self.maxNum = max(1000, min(maxNum, 20000))
         self.k = max(0.01, min(1.0, k))
 
     def stop(self):
@@ -320,17 +320,21 @@ def process(tags):
 # 排序算法
 #=============================================================================
 def computeCompositeRating(tag, minNum, maxNum, k, num, people):
-    people = max(minNum, min(maxNum, people))
+    people = max(1, min(maxNum, people))
+    if people <= minNum:
+        people = minNum / 3
     peopleWeight = math.pow(people, k)
+    level4 = max(500, maxNum * 1 / 10)
+    level5 = max(1000, maxNum * 3 / 10)
     if people < 50:
         return (num * 40 + peopleWeight * 60) / 100.0
     elif people < 100:
         return (num * 50 + peopleWeight * 50) / 100.0
     elif people < 200:
         return (num * 60 + peopleWeight * 40) / 100.0
-    elif people < 400:
+    elif people < level4:
         return (num * 70 + peopleWeight * 30) / 100.0
-    elif people < 800:
+    elif people < level5:
         return (num * 80 + peopleWeight * 20) / 100.0
     else:
         return (num * 90 + peopleWeight * 10) / 100.0
@@ -340,18 +344,35 @@ def computeCompositeRating(tag, minNum, maxNum, k, num, people):
 #=============================================================================
 if __name__ == '__main__': 
     tags = [
-        ["心理,心理学", 5, 5000, 0.25], 
-        ["社会,社会学", 5, 8000, 0.25], 
-        ["政治,政治学", 5, 4000, 0.25], 
-        ["经济,经济学,金融,商业,投资,管理,创业", 5, 3000, 0.25], 
-        ["哲学,西方哲学,自由主义,思想", 5, 3000, 0.25], 
-        ["科技,科普,科学", 5, 3000, 0.25], 
-        ["编程,程序,互联网,用户体验,交互设计", 5, 3000, 0.25], 
-        ["文化,人文,思想,国学", 5, 8000, 0.25], 
-        ["历史,中国历史,近代史", 5, 8000, 0.25], 
-        ["成长,教育", 5, 5000, 0.25], 
-        ["文学","经典","名著","外国名著","外国文学", 5, 10000, 0.25], 
-        ["小说", 5, 10000, 0.25], 
+        ["心理,心理学", 30, 3000, 0.25],
+        ["社会,社会学", 30, 5000, 0.275],
+        ["政治,政治学,自由主义", 30, 4000, 0.22],
+        ["经济,经济学,金融", 30, 5000, 0.275],
+        ["商业,投资,管理,创业", 30, 8000, 0.275],
+        ["哲学,西方哲学,自由主义,思想", 30, 3000, 0.25],
+        ["文化,人文,思想,国学", 30, 8000, 0.275],
+        ["历史,中国历史,近代史", 30, 8000, 0.3],
+        ["科技,科普,科学,神经网络", 30, 5000, 0.24],
+        ["设计,用户体验,交互,交互设计,UCD,UE", 30, 3000, 0.25],
+        ["编程,程序,算法,互联网", 30, 3000, 0.25],
+        ["成长,教育", 50, 5000, 0.25],
+        ["名著,外国名著,经典,古典文学", 50, 8000, 0.275],
+        ["文学,经典,名著,外国名著,外国文学,中国文学,日本文学,当代文学", 50, 8000, 0.3],
+        ["外国文学,外国名著,日本文学", 50, 8000, 0.3],
+        ["中国文学", 50, 8000, 0.3],
+        ["小说", 50, 8000, 0.3],
+        ["杂文", 50, 5000, 0.25],
+        ["散文", 50, 8000, 0.25],
+        ["诗歌", 50, 4000, 0.25],
+        ["科幻,科幻小说", 50, 8000, 0.275],
+        ["推理,推理小说", 50, 8000, 0.275],
+        ["武侠", 50, 8000, 0.3],
+        ["悬疑", 50, 8000, 0.3],
+        ["言情", 50, 8000, 0.3],
+        ["青春,青春文学", 50, 8000, 0.3],
+        ["童话", 20, 8000, 0.275],
+        ["绘本", 20, 5000, 0.25],
+        ["漫画,日本漫画", 50, 8000, 0.275],
     ]
 
     start = timeit.default_timer()
