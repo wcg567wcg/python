@@ -122,7 +122,7 @@ def exportToMarkdown(tag, items, total):
     file.close()
 
 # 解析图书信息
-def parseItemInfo(tag, minNum, maxNum, k, page, itemInfos):
+def parseItemInfo(countryList, tag, minNum, maxNum, k, page, itemInfos):
     soup = BeautifulSoup(page, 'html.parser')
     items = soup.find_all("tr", "item")
     for item in items:
@@ -154,6 +154,26 @@ def parseItemInfo(tag, minNum, maxNum, k, page, itemInfos):
         # print " > name: {0}".format(itemName)
         # print " > itemUrl: {0}".format(itemUrl)
         # print " > description: {0}".format(description)
+
+        # match the country list?
+        if len(countryList):
+            validCountry = True
+            pattern = re.compile(r'(-)([0-9]*)(\()(.*)(\))')
+            match = pattern.search(description)
+            if match:
+                country = match.group(4)
+                if country not in countryList:
+                    validCountry = False
+                    for c in countryList:
+                        pattern = re.compile(r'' + c)
+                        match = pattern.search(description)
+                        if match:
+                            validCountry = True
+                            break
+
+            if not validCountry:
+                #print " > description: {0}".format(description)
+                continue
 
         # get url and image
         itemImage = ''
@@ -214,8 +234,9 @@ class Consumer(Thread):
     minNum = 5
     maxNum = 5000
     k = 0.25
+    countryList = []
 
-    def __init__(self, t_name, tag, minNum, maxNum, k, queue, items):  
+    def __init__(self, t_name, tag, countryList, minNum, maxNum, k, queue, items):  
         Thread.__init__(self, name=t_name)
         self.queue = queue
         self.items = items
@@ -223,6 +244,7 @@ class Consumer(Thread):
         self.minNum = max(10, min(200, minNum))
         self.maxNum = max(1000, min(maxNum, 20000))
         self.k = max(0.01, min(1.0, k))
+        self.countryList = countryList
 
     def stop(self):
         self.running = False
@@ -234,11 +256,11 @@ class Consumer(Thread):
 
             page = self.queue.get()
             if page != None:
-                parseItemInfo(self.tag, self.minNum, self.maxNum, self.k, page, self.items)
+                parseItemInfo(self.countryList, self.tag, self.minNum, self.maxNum, self.k, page, self.items)
             self.queue.task_done()
  
 
-def spider(tag, minNum, maxNum, k):
+def spider(tag, countryList, minNum, maxNum, k):
     print '   抓取 [{0}] 电影 ...'.format(tag)
     start = timeit.default_timer()
 
@@ -276,7 +298,7 @@ def spider(tag, minNum, maxNum, k):
         queue.put(page)
 
         # create consumer
-        consumer = Consumer('Consumer', tag, minNum, maxNum, k, queue, itemInfos)
+        consumer = Consumer('Consumer', tag, countryList, minNum, maxNum, k, queue, itemInfos)
         consumer.start()
 
         # create producers
@@ -307,15 +329,22 @@ def spider(tag, minNum, maxNum, k):
 
 def process(tags):
     tagList = tags[0].split(',')
-    minNum = tags[1]
-    maxNum = tags[2]
-    k = tags[3]
-    outputNum = max(100, tags[4])
+    country = tags[1]
+    minNum = tags[2]
+    maxNum = tags[3]
+    k = tags[4]
+    outputNum = max(100, tags[5])
+
+    countryList = []
+    if country != "":
+        countryList = country.split(',')
+        countryList = list(set(countryList + tagList))
+        #print countryList
 
     items = []
     # spider
     for tag in tagList:
-        tagItems = spider(tag.strip(), minNum, maxNum, k)
+        tagItems = spider(tag.strip(), countryList, minNum, maxNum, k)
         items = list(set(items + tagItems))
 
     total = len(items)
@@ -356,34 +385,34 @@ def computeCompositeRating(tag, minNum, maxNum, k, num, people):
 #=============================================================================
 if __name__ == '__main__': 
     tags = [
-        # ["经典", 100, 50000, 0.25, 300],
-        # ["剧情,感人", 100, 50000, 0.25, 250],
-        # ["励志", 100, 50000, 0.25, 200],
-        # ["喜剧", 100, 50000, 0.25, 300],
-        # ["搞笑", 100, 50000, 0.25, 300],
-        # ["爱情,情色,浪漫", 100, 50000, 0.25, 250],
-        # ["科幻,魔幻", 100, 50000, 0.25, 150],
-        # ["动作,暴力", 100, 50000, 0.25, 200],
-        # ["史诗", 100, 50000, 0.25, 100],
-        # ["战争", 100, 50000, 0.25, 200],
-        # ["悬疑", 100, 50000, 0.25, 200],
-        # ["犯罪,黑帮", 100, 50000, 0.25, 200],
-        # ["恐怖,惊悚", 100, 50000, 0.25, 200],
-        # ["青春", 100, 50000, 0.25, 200],
-        # ["文艺", 100, 50000, 0.25, 200],
-        # ["童话,童年", 100, 50000, 0.25, 200],
-        # ["纪录片,传记", 100, 50000, 0.25, 300],
-        # ["黑色幽默", 100, 50000, 0.25, 200],
-        # ["亚洲,日本,韩国,印度,泰国,新加坡", 100, 50000, 0.25, 300],
-        # ["欧美,美国,加拿大,欧洲,德国,英国,法国,意大利,西班牙,澳大利亚,俄罗斯,伊朗,巴西,瑞典,丹麦,波兰,捷克,比利时,墨西哥,土耳其", 100, 50000, 0.25, 300],
-        # ["中国,中国大陆,内地", 100, 50000, 0.25, 300],
-        # ["香港", 100, 50000, 0.25, 300],
-        # ["台湾", 100, 50000, 0.25, 200],
-        # ["美国", 100, 50000, 0.25, 300],
-        # ["英国", 100, 50000, 0.25, 200],
-        # ["法国", 100, 50000, 0.25, 200],
-        ["日本", 100, 50000, 0.25, 300],
-        # ["韩国", 100, 50000, 0.25, 200],
+        ["经典", "", 100, 50000, 0.25, 300],
+        ["剧情,感人", "", 100, 50000, 0.25, 250],
+        ["励志", "", 100, 50000, 0.25, 200],
+        ["喜剧", "", 100, 50000, 0.25, 300],
+        ["搞笑", "", 100, 50000, 0.25, 300],
+        ["爱情,情色,浪漫", "", 100, 50000, 0.25, 250],
+        ["科幻,魔幻", "", 100, 50000, 0.25, 150],
+        ["动作,暴力", "", 100, 50000, 0.25, 200],
+        ["史诗", "", 100, 50000, 0.25, 100],
+        ["战争", "", 100, 50000, 0.25, 200],
+        ["悬疑", "", 100, 50000, 0.25, 200],
+        ["犯罪,黑帮", "", 100, 50000, 0.25, 200],
+        ["恐怖,惊悚", "", 100, 50000, 0.25, 200],
+        ["青春", "", 100, 50000, 0.25, 200],
+        ["文艺", "", 100, 50000, 0.25, 200],
+        ["童话,童年", "", 100, 50000, 0.25, 200],
+        ["纪录片,传记", "", 100, 50000, 0.25, 300],
+        ["黑色幽默", "", 100, 50000, 0.25, 200],
+        ["亚洲,日本,韩国,印度,泰国,新加坡", "日语,韩语", 100, 50000, 0.25, 300],
+        ["欧美,美国,加拿大,欧洲,德国,英国,法国,意大利,西班牙,澳大利亚,俄罗斯,伊朗,巴西,瑞典,丹麦,波兰,捷克,比利时,墨西哥,土耳其", "美国,英语,法语,俄语,德语,西班牙语,意大利语", 100, 50000, 0.25, 300],
+        ["中国,中国大陆,内地", "大陆,汉语,普通话", 100, 50000, 0.25, 300],
+        ["香港", "香港", 100, 50000, 0.25, 300],
+        ["台湾", "台湾", 100, 50000, 0.25, 200],
+        ["美国", "英语", 100, 50000, 0.25, 300],
+        ["英国", "英语", 100, 50000, 0.25, 200],
+        ["法国", "法语", 100, 50000, 0.25, 200],
+        ["日本", "日语,先行", 100, 50000, 0.25, 300],
+        ["韩国", "韩语,朝鲜", 100, 50000, 0.25, 200],
     ]
 
     start = timeit.default_timer()
