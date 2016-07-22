@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+#! encoding=utf-8
+
 # countline.py
 # counting lines of java file or java files in a dir
 
