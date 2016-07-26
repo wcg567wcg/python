@@ -71,3 +71,6 @@ time.sleep(5)
 p.end()
 c.end()
 
+p.join()
+c.join()
+
