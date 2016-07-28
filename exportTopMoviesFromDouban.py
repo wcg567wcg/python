@@ -65,7 +65,7 @@ class ItemInfo:
             elif val > 0:
                 return -1
             else:
-                return val
+                return 0
 
     def __cmp__(self, other):
         return self.__sortByCompositeRating(other)
