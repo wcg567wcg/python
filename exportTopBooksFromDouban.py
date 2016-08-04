@@ -252,18 +252,20 @@ def spider(tag, minNum, maxNum, k):
         content = soup.find("div", "paginator")
         #print content.prettify().encode('utf-8')
 
-        nextPageStart = 100000
+        nextPageStart = 0
         lastPageStart = 0
-        for child in content.children:
-            if child.name == 'a':
-                pattern = re.compile(r'(start=)([0-9]*)(.*)(&type=)')
-                match = pattern.search(child['href'].encode('utf-8'))
-                if match:
-                    index = int(match.group(2))
-                    if nextPageStart > index:
-                        nextPageStart = index
-                    if lastPageStart < index:
-                        lastPageStart = index
+        if content != None:
+            nextPageStart = 100000
+            for child in content.children:
+                if child.name == 'a':
+                    pattern = re.compile(r'(start=)([0-9]*)(.*)(&type=)')
+                    match = pattern.search(child['href'].encode('utf-8'))
+                    if match:
+                        index = int(match.group(2))
+                        if nextPageStart > index:
+                            nextPageStart = index
+                        if lastPageStart < index:
+                            lastPageStart = index
 
         # process current page
         #print " > process page : {0}".format(url)
@@ -301,9 +303,10 @@ def spider(tag, minNum, maxNum, k):
 
 def process(tags, ignore):
     tagList = tags[0].split(',')
-    minNum = tags[1]
-    maxNum = tags[2]
-    k = tags[3]
+    backlist = tags[1]
+    minNum = tags[2]
+    maxNum = tags[3]
+    k = tags[4]
 
     books = []
     # spider
@@ -314,13 +317,31 @@ def process(tags, ignore):
     total = len(books)
     print " > 共获取 {0} 本 [{1}] 不重复图书信息".format(total, tags[0])
 
-    if tags[0].find("文学") != -1:
+    if tags[0].find("文学") != -1 \
+        or tags[0].find("文化") \
+        or tags[0].find("绘本") \
+        or tags[0] == "小说" \
+        or tags[0] == "成长" \
+        or tags[0].find("哲学") \
+        or tags[0].find("政治"):
         books = list(set(books) - set(ignore))
 
     # sort
     books = sorted(books)
+
     # get top 100
-    topBooks = books[0:100]
+    topBooks = books[0:min(130, len(books))]
+
+    # ignore blacklist
+    if backlist != None:
+        delList = []
+        for book in topBooks:
+            for bl in backlist:
+                if book.name.find(bl) != -1:
+                    delList.append(book.name)
+                    break
+        topBooks = [book for book in topBooks if book.name not in delList]
+    topBooks = topBooks[0:min(100, len(topBooks))]
 
     # export to markdown
     exportToMarkdown(tagList[0], topBooks, total)
@@ -353,43 +374,66 @@ def computeCompositeRating(tag, minNum, maxNum, k, num, people):
 # 程序入口：抓取指定标签的书籍
 #=============================================================================
 if __name__ == '__main__': 
-    tags = [
-        ["小说", 50, 8000, 0.3],
-        ["杂文", 50, 5000, 0.25],
-        ["散文", 50, 8000, 0.25],
-        ["诗歌", 50, 4000, 0.25],
-        ["绘本", 20, 5000, 0.25],
-        ["漫画,日本漫画", 50, 8000, 0.275],
-        ["科幻,科幻小说", 50, 8000, 0.275],
-        ["推理,推理小说", 50, 8000, 0.275],
-        ["武侠", 50, 8000, 0.3],
-        ["悬疑", 50, 8000, 0.3],
-        ["言情", 50, 8000, 0.3],
-        ["青春,青春文学", 50, 8000, 0.3],
-        ["童话", 20, 8000, 0.275],
-        ["考古", 50, 4000, 0.25],
-        ["电影", 50, 8000, 0.275],
+    # blacklist
+    classicBL = ["新概念英语", "大明宫词", "费恩曼物理学讲义", "经济学原理"]
+    japanLibBL = ["苍井优", "知日", "杉浦康平", "设计中的设计", "我的造梦之路", \
+        "版式设计原理", "家庭收纳1000例", "无缘社会", "未来ちゃん", "用洗脸盆吃羊肉饭"]
+    programBL = ["三双鞋", "触动人心", "破茧成蝶", "MFC", "李开复", "沸腾十五年"]
+    techBL = ["哲学家们都干了些什么", "你一定爱读的极简欧洲史", "一课经济学", "定本育儿百科", \
+        "儿童百科", "宝石"]
+    politicsBL = ["剑桥中华人民共和国史", "我为什么要写作", "职场动物进化手册", "王小波", \
+        "大明王朝", "观念的水位", "一课经济学", "雪", "毛泽东选集"]
+    lawBL = ["七号房的礼物", "走不出的风景", "美国常春藤上的中国蜗牛"]
+    philosophyBL = ["鲁迅全集", "人类简史", "孙子兵法", "上帝掷骰子吗", "中国历代政治得失",\
+        "洞穴奇案", "规训与惩罚", "韦伯", "古拉格", "顾准", "王小波", "穷查理宝典", "思维的乐趣", \
+        "毛泽东选集", "进化心理学", "一只特立独行的猪", "陈寅恪的最后20年", "生命之书", "自私的基因", \
+        "金枝"]
+    anthropologyBL = ["考古学", "贫穷的本质", "基因组"]
 
-        ["宗教,佛教", 50, 4000, 0.25],
-        ["心理,心理学", 30, 3000, 0.25],
-        ["社会,社会学", 30, 5000, 0.275],
-        ["政治,政治学,自由主义", 30, 4000, 0.22],
-        ["经济,经济学,金融", 30, 5000, 0.275],
-        ["商业,投资,管理,创业", 30, 8000, 0.275],
-        ["哲学,西方哲学,自由主义,思想", 30, 3000, 0.25],
-        ["法律,法学,民法,刑法,国际法", 50, 4000, 0.25],
-        ["文化,人文,思想,国学", 30, 8000, 0.275],
-        ["历史,中国历史,近代史", 30, 8000, 0.3],
-        ["科技,科普,科学,神经网络", 30, 5000, 0.24],
-        ["设计,用户体验,交互,交互设计,UCD,UE", 30, 3000, 0.25],
-        ["编程,程序,算法,互联网", 30, 3000, 0.25],
-        ["数学", 50, 4000, 0.25],
-        ["成长,教育", 50, 5000, 0.25],
-        ["名著,外国名著,经典,古典文学", 50, 8000, 0.275],
-        ["文学,经典,名著,外国名著,外国文学,中国文学,日本文学,当代文学", 50, 8000, 0.3],
-        ["外国文学,外国名著", 50, 8000, 0.3],
-        ["日本文学,日本", 50, 8000, 0.3],
-        ["中国文学", 50, 8000, 0.3],
+    tags = [
+        ["杂文", None, 50, 5000, 0.25],
+        ["散文", None, 50, 8000, 0.25],
+        ["诗歌", None, 50, 4000, 0.25],
+        ["漫画,日本漫画", None, 50, 8000, 0.275],
+        ["绘本", None, 20, 5000, 0.25],
+        ["科幻,科幻小说", None, 50, 8000, 0.275],
+        ["魔幻,魔幻小说,玄幻,玄幻小说", None, 50, 8000, 0.275],
+        ["推理,推理小说", None, 50, 8000, 0.275],
+        ["武侠", None, 50, 8000, 0.3],
+        ["悬疑", None, 50, 8000, 0.3],
+        ["言情", None, 50, 8000, 0.3],
+        ["青春,青春文学", None, 50, 8000, 0.3],
+        ["童话", None, 20, 8000, 0.275],
+        ["考古", None, 50, 4000, 0.25],
+        ["电影", None, 50, 8000, 0.275],
+        ["小说", None, 50, 8000, 0.3],
+
+        ["编程,程序,算法,互联网", programBL, 30, 3000, 0.25],
+        ["宗教,佛教", None, 50, 4000, 0.25],
+        ["心理,心理学", None, 30, 3000, 0.25],
+        ["社会,社会学", None, 30, 5000, 0.275],
+        ["政治,政治学,自由主义", politicsBL, 30, 4000, 0.22],
+        ["经济,经济学,金融", None, 30, 5000, 0.275],
+        ["商业,投资,管理,创业", None, 30, 8000, 0.275],
+        ["哲学,西方哲学,自由主义,思想", philosophyBL, 30, 3000, 0.25],
+        ["法律,法学,民法,刑法,国际法", lawBL, 50, 4000, 0.25],
+        ["文化,人文,思想,国学", None, 30, 8000, 0.275],
+        ["历史,中国历史,近代史", None, 30, 8000, 0.3],
+        ["人类学", anthropologyBL, 50, 4000, 0.25],
+        ["数学", None, 50, 4000, 0.25],
+        ["化学", None, 50, 4000, 0.25],
+        ["地理,地理学", None, 50, 4000, 0.25],
+        ["物理,物理学", None, 50, 4000, 0.25],
+        ["生物,生物学", None, 50, 4000, 0.25],
+        ["医学,临床医学", None, 50, 4000, 0.25],
+        ["科技,科普,科学,神经网络", techBL, 30, 5000, 0.24],
+        ["设计,用户体验,交互,交互设计,UCD,UE", None, 30, 3000, 0.25],
+        ["成长,教育", None, 50, 5000, 0.25],
+        ["名著,外国名著,经典,古典文学", classicBL, 50, 8000, 0.275],
+        ["文学,经典,名著,外国名著,外国文学,中国文学,日本文学,当代文学", None, 50, 8000, 0.3],
+        ["外国文学,外国名著", None, 50, 8000, 0.3],
+        ["日本文学,日本", japanLibBL, 50, 8000, 0.3],
+        ["中国文学", None, 50, 8000, 0.3],
     ]
 
     start = timeit.default_timer()
@@ -398,9 +442,18 @@ if __name__ == '__main__':
     for tag in tags:
         tagName = tag[0]
         books = process(tag, ignore)
-        if tagName.find("绘本") != -1 or tagName.find("漫画") != -1 \
+        if tagName.find("绘本") != -1 \
+            or tagName.find("漫画") != -1 \
             or tagName.find("童话") != -1 \
-            or tagName.find("悬疑") != -1 or tagName.find("推理") != -1:
+            or tagName.find("青春") != -1 \
+            or tagName.find("言情") != -1 \
+            or tagName.find("武侠") != -1 \
+            or tagName.find("悬疑") != -1 \
+            or tagName.find("推理") != -1 \
+            or tagName.find("科幻") != -1 \
+            or tagName.find("魔幻") != -1 \
+            or tagName.find("编程") != -1 \
+            or tagName.find("宗教") != -1:
             ignore = list(set(books + ignore))
 
 
