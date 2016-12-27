@@ -3,7 +3,7 @@
 
 # Author        : kesalin@gmail.com
 # Blog          : http://kesalindev.github.io
-# Date          : 2016/07/12
+# Date          : 2016/12/24
 # Description   : Douban Reading Analizer. 
 # Version       : 1.0.0.0
 # Python Version: Python 2.7.3
@@ -71,20 +71,20 @@ def kanji_to_num(kanji):
 def get_book_by_rating(books, rating):
     return [book for book in books if book.ratingNums == rating]
 
-def output_rating_num(file, total, rating, books):
+def get_book_by_tag(books, tag):
+    return [book for book in books if book.tag == tag]
+
+def output_by_rating_num(file, total, rating, books):
     count = len(books)
     if count > 0:
         file.write(' > {0}图书 {1} 本，占比 {2:2.0f}%  \n'.format(num_to_kanji(rating), count, count * 100.0/total))
 
 def output_tags(file, tags):
-    items = sorted(tags.items(), key=lambda d: d[1], reverse=True)
-    print items
-
     file.write('### 标签统计:\n')
-    for key, value in items:
+    for key, value in tags:
         file.write(' > {0} {1} 本  \n'.format(key, value))
 
-def output_rating(file, index, rating, books):
+def output_by_rating(file, index, rating, books):
     count = len(books)
     if count == 0:
         return index
@@ -92,6 +92,27 @@ def output_rating(file, index, rating, books):
     file.write('### {0} 图书: {1} 本\n'.format(num_to_kanji(rating), count))
 
     books.sort(cmp=None, key=lambda x:(x.ratingNums, x.tag), reverse=True)
+    for book in books:
+        #print '{0} {1} {2}\n'.format(book.name, book.ratingNums, book.tag)
+        file.write('#### No.{0:d} {1}\n'.format(index, book.name))
+        file.write(' > 图书名称：[{0}]({1})  \n'.format(book.name, book.url))
+        file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
+        file.write(' > 标签：{0}\t\t评分：{1}    \n'.format(book.tag, num_to_kanji(book.ratingNums)))
+        file.write(' > 我的评论：{0}  \n'.format(book.comment))
+        file.write('\n')
+        index = index + 1
+    file.write('\n')
+    return index
+
+
+def output_by_tag(file, books, index, tag):
+    count = len(books)
+    if count == 0:
+        return index
+
+    file.write('### {0}: {1} 本\n'.format(tag, count))
+
+    books.sort(cmp=None, key=lambda x:(x.ratingNums), reverse=True)
     for book in books:
         #print '{0} {1} {2}\n'.format(book.name, book.ratingNums, book.tag)
         file.write('#### No.{0:d} {1}\n'.format(index, book.name))
@@ -118,36 +139,42 @@ def analyze_book(books, tags):
 
     rating = 5
     rating5 = get_book_by_rating(books, rating)
-    output_rating_num(file, total, rating, rating5)
+    output_by_rating_num(file, total, rating, rating5)
 
     rating = 4
     rating4 = get_book_by_rating(books, rating)
-    output_rating_num(file, total, rating, rating4)
+    output_by_rating_num(file, total, rating, rating4)
 
     rating = 3
     rating3 = get_book_by_rating(books, rating)
-    output_rating_num(file, total, rating, rating3)
+    output_by_rating_num(file, total, rating, rating3)
 
     rating = 2
     rating2 = get_book_by_rating(books, rating)
-    output_rating_num(file, total, rating, rating2)
+    output_by_rating_num(file, total, rating, rating2)
 
     rating = 1
     rating1 = get_book_by_rating(books, rating)
-    output_rating_num(file, total, rating, rating1)
+    output_by_rating_num(file, total, rating, rating1)
 
     file.write('\n')
+
+    tags = sorted(tags.items(), key=lambda d: d[1], reverse=True)
+    #print tags
 
     output_tags(file, tags)
 
     file.write('\n')
 
     index = 1
-    index = output_rating(file, index, 5, rating5)
-    index = output_rating(file, index, 4, rating4)
-    index = output_rating(file, index, 3, rating3)
-    index = output_rating(file, index, 2, rating2)
-    index = output_rating(file, index, 1, rating1)
+    # index = output_by_rating(file, index, 5, rating5)
+    # index = output_by_rating(file, index, 4, rating4)
+    # index = output_by_rating(file, index, 3, rating3)
+    # index = output_by_rating(file, index, 2, rating2)
+    # index = output_by_rating(file, index, 1, rating1)
+
+    for key, value in tags:
+        index = output_by_tag(file, get_book_by_tag(books, key), index, key)
 
     file.close()
 
@@ -225,4 +252,3 @@ def process(datapath):
 datapath = "2016readings.txt"
 
 process(datapath)
-
