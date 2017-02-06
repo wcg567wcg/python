@@ -15,7 +15,7 @@ Python 小程序
 4. [exportTopBooksFromDouban.py](https://github.com/luozhaohui/PythonSnippet/blob/master/exportTopBooksFromDouban.py)  
     豆瓣图书爬虫，抓取特定主题的图书，按照评分、评分人数等加权排名，取靠前的 100 本图书
     
-5. [exportTopBooksFromDouban.py](https://github.com/luozhaohui/PythonSnippet/blob/master/exportTopBooksFromDouban.py)  
+5. [exportTopMoviesFromDouban.py](https://github.com/luozhaohui/PythonSnippet/blob/master/exportTopMoviesFromDouban.py)  
     豆瓣电影爬虫，抓取特定主题的电影，按照评分、评分人数等加权排名，取靠前的 100 部电影
     
 6. [doubanReadingAnalizer.py](https://github.com/luozhaohui/PythonSnippet/blob/master/doubanReadingAnalizer.py)  
