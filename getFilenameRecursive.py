@@ -27,7 +27,7 @@ def scan_dir(path, prefix, output_file):
 	output_file.write(info)
 	#print info
 
-	prefix = '{0}	'.format(prefix)
+	prefix = '{0}    '.format(prefix)
 	listfile = os.listdir(path)
 	for filename in listfile:
 		filepath = path + '/' + filename
