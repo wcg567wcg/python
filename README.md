@@ -1,11 +1,11 @@
 Python 小程序
 =============
 
-1. [Syntax.py]()
+1. [Syntax.py](https://github.com/luozhaohui/python/blob/master/Syntax.py)
     Python syntax.  
     Python 简明用法示例。
     
-2. [Encryption.py]()  
+2. [Encryption.py](https://github.com/luozhaohui/python/blob/master/Encryption.py)  
     Use PyCrypto to encrpyt/decrpyt data.  
     使用 PyCrypto 加密和解密数据。
 
