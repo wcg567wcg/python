@@ -12,18 +12,19 @@ from collections import Counter
 import codecs
 import os
 
-enable_log = True
+enable_log = False
 
-def get_filepath_without_ext(path):
-    filename = path
-    index = path.rfind('.');
+def get_filename_without_ext(path):
+    filename = os.path.basename(path)
+    index = filename.rfind('.');
     if index != -1:
-        filename = path[0:index]
+        filename = filename[0:index]
     return filename
 
 def save_to_file(list, path):
     if (os.path.isfile(path)):
         os.remove(path)
+    print "> saving to {0}".format(path)
     with open(path, 'a') as f:
         for item in list:
             f.write('{0} : {1}\n'.format(item[0].encode('utf-8'), item[1]))
@@ -76,8 +77,9 @@ def sort(dict):
     return sorted_list
 
 def top(list, num):
-    top_list = list[0 : num_top]
-    print 'Toppest %d items:' % num_top
+    top_list = list[0 : min(len(list), num_top)]
+    if enable_log:
+        print 'Toppest %d items:' % num_top
     log_list('', top_list)
     return top_list
 
@@ -91,7 +93,13 @@ def process_file(path, num_top, filter_keys, count_min_limit):
     sorted_list = sort(filter_dict)
     top_list = top(sorted_list, num_top)
 
-    new_path = get_filepath_without_ext(path) + "_fenci.txt"
+    new_path = os.path.dirname(path)
+    new_path = "{0}/data/".format(new_path)
+    if not os.path.exists(new_path):
+        os.makedirs(new_path)
+
+    basename = get_filename_without_ext(path)
+    new_path = "{0}{1}_fenci.txt".format(new_path, basename)
     save_to_file(top_list, new_path)
 
 def process_dir(path, num_top, filter_keys, count_min_limit):
@@ -116,10 +124,13 @@ def word_frequency_statistics(path, num_top, filter_keys, count_min_limit):
         process_file(path, num_top, filter_keys, count_min_limit)
 
 #====================================================================
-path = '/home/luozhaohui/Documents/python/fenci/data/'
-filter_keys = [u'，', u'。', u'、', u'!', u'；']
-count_min_limit = 2
-num_top = 2
+path = '/home/luozhaohui/Documents/python/fenci/chapters/'
+
+filter_keys = [u'，', u'。', u'、', u'!', u'；', u'：', u'“', u'”', u'！'
+    , u'！', u'？', u'’', u'‘', u'—', u'…', u'', '『', '』', u' ']
+
+count_min_limit = 20
+num_top = 300
 
 if __name__ == '__main__':
     word_frequency_statistics(path, num_top, filter_keys, count_min_limit)
