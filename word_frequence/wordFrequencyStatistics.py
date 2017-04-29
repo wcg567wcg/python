@@ -69,7 +69,8 @@ def read(path):
             line = line.rstrip().lower()
             document += line
 
-        document = remove_punctuation(document)
+        document = str(document)
+        document = document.translate(None, '\n ')  # 去除回车空点
         seg_list = jieba.cut(document, cut_all=False)
         raw_dict.update(seg_list)
 
@@ -81,11 +82,13 @@ def read(path):
     #     print '%s\t\t: %d' % (letter, count)
     return raw_dict
 
-def filter(dict, keys, min_limit):
+def filter(dict, filter_keys, min_limit):
     filter_dict = {
         key : dict[key]
         for key in dict.keys()
-        if (key not in filter_keys) and dict[key] >= max(count_min_limit, 1)
+        if (dict[key] >= max(count_min_limit, 1)
+            and (key not in filter_keys))
+            and (key not in string.punctuation) # 去除英文标点
     }
 
     log_dict('Filtered items:', filter_dict)
@@ -150,8 +153,10 @@ def word_frequency_statistics(path, data_path, num_top, filter_keys, count_min_l
 path = '/home/luozhaohui/Documents/python/word_frequence/book/'
 data_path = '/home/luozhaohui/Documents/python/word_frequence/book/data/'
 
-filter_keys = [u'\n', u' ']
-count_min_limit = 1
+filter_keys = [u'，', u'。', u'、', u'!', u'；', u'：', u'“', u'”', u'！',
+    u'？', u'‘', u'’', u'—', u'…', u'', u'『', u'』', u' ', u'「', u'」',
+    u'．', u'－', u'□', u'·', u'∶', u'﹫', u'　', u'', u'【', u'】', u'《', u'》']
+count_min_limit = 3
 num_top = -1   # -1 means all
 
 if __name__ == '__main__':
