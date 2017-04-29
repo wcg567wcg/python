@@ -11,6 +11,13 @@ import jieba
 from collections import Counter
 import codecs
 import os
+import sys
+import re
+import string
+
+
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 enable_log = False
 
@@ -45,13 +52,26 @@ def log_list(info, list):
             print '%s\t\t: %d' % (item[0], item[1])
         print "\n"
 
+def remove_punctuation(document):
+    document = str(document)
+
+    # 去除英文标点&回车&空点
+    document = document.translate(None, string.punctuation + '\n ')
+    # 去除中文标点
+    regex = re.compile(ur"[^\u4e00-\u9fa5a-zA-Z0-9\s]")
+    return regex.sub('', document.decode('utf-8'))
+
 def read(path):
     raw_dict = Counter()
     with codecs.open(path, 'r', 'utf-8') as f:
+        document = ""
         for line in f:
             line = line.rstrip().lower()
-            seg_list = jieba.cut(line, cut_all=False)
-            raw_dict.update(seg_list)
+            document += line
+
+        document = remove_punctuation(document)
+        seg_list = jieba.cut(document, cut_all=False)
+        raw_dict.update(seg_list)
 
     log_dict('Raw items:', raw_dict)
 
@@ -65,7 +85,7 @@ def filter(dict, keys, min_limit):
     filter_dict = {
         key : dict[key]
         for key in dict.keys()
-        if (key not in filter_keys) and dict[key] >= count_min_limit
+        if (key not in filter_keys) and dict[key] >= max(count_min_limit, 1)
     }
 
     log_dict('Filtered items:', filter_dict)
@@ -77,14 +97,17 @@ def sort(dict):
     return sorted_list
 
 def top(list, num):
-    top_list = list[0 : min(len(list), num_top)]
+    if num <= 0:
+        return list
+
+    top_list = list[0 : min(len(list), num)]
     if enable_log:
-        print 'Toppest %d items:' % num_top
+        print 'Toppest %d items:' % num
     log_list('', top_list)
     return top_list
 
-def process_file(path, num_top, filter_keys, count_min_limit):
-    if path.endswith('_fenci.txt'):
+def process_file(path, data_path, num_top, filter_keys, count_min_limit):
+    if path.endswith('_wordfrq.txt'):
         return
 
     print ">> processing %s ..." % path
@@ -93,16 +116,16 @@ def process_file(path, num_top, filter_keys, count_min_limit):
     sorted_list = sort(filter_dict)
     top_list = top(sorted_list, num_top)
 
-    new_path = os.path.dirname(path)
-    new_path = "{0}/data/".format(new_path)
+    # new_path = "{0}/data/".format(os.path.dirname(path))
+    new_path = data_path
     if not os.path.exists(new_path):
         os.makedirs(new_path)
 
     basename = get_filename_without_ext(path)
-    new_path = "{0}{1}_fenci.txt".format(new_path, basename)
+    new_path = "{0}{1}_wordfrq.txt".format(new_path, basename)
     save_to_file(top_list, new_path)
 
-def process_dir(path, num_top, filter_keys, count_min_limit):
+def process_dir(path, data_path, num_top, filter_keys, count_min_limit):
     if path.endswith('/'):
         path = path[0:len(path)-1]
 
@@ -113,24 +136,23 @@ def process_dir(path, num_top, filter_keys, count_min_limit):
         if (os.path.isdir(filepath)):
             # exclude hidden dirs
             if (filename[0] != '.'):
-                process_dir(filepath, num_top, filter_keys, count_min_limit)
+                process_dir(filepath, data_path, num_top, filter_keys, count_min_limit)
         elif(os.path.isfile(filepath)):
-            process_file(filepath, num_top, filter_keys, count_min_limit)
+            process_file(filepath, data_path, num_top, filter_keys, count_min_limit)
 
-def word_frequency_statistics(path, num_top, filter_keys, count_min_limit):
+def word_frequency_statistics(path, data_path, num_top, filter_keys, count_min_limit):
     if (os.path.isdir(path)):
-        process_dir(path, num_top, filter_keys, count_min_limit)
+        process_dir(path, data_path, num_top, filter_keys, count_min_limit)
     elif (os.path.isfile(path)):
-        process_file(path, num_top, filter_keys, count_min_limit)
+        process_file(path, data_path, num_top, filter_keys, count_min_limit)
 
 #====================================================================
-path = '/home/luozhaohui/Documents/python/fenci/chapters/'
+path = '/home/luozhaohui/Documents/python/word_frequence/book/'
+data_path = '/home/luozhaohui/Documents/python/word_frequence/book/data/'
 
-filter_keys = [u'，', u'。', u'、', u'!', u'；', u'：', u'“', u'”', u'！'
-    , u'！', u'？', u'’', u'‘', u'—', u'…', u'', '『', '』', u' ']
-
-count_min_limit = 20
-num_top = 300
+filter_keys = [u'\n', u' ']
+count_min_limit = 1
+num_top = -1   # -1 means all
 
 if __name__ == '__main__':
-    word_frequency_statistics(path, num_top, filter_keys, count_min_limit)
+    word_frequency_statistics(path, data_path, num_top, filter_keys, count_min_limit)
