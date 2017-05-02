@@ -150,13 +150,13 @@ def word_frequency_statistics(path, data_path, num_top, filter_keys, count_min_l
         process_file(path, data_path, num_top, filter_keys, count_min_limit)
 
 #====================================================================
-path = '/home/luozhaohui/Documents/python/word_frequence/book/'
-data_path = '/home/luozhaohui/Documents/python/word_frequence/book/data/'
+path = 'book/'
+data_path = 'book/data/'
 
 filter_keys = [u'，', u'。', u'、', u'!', u'；', u'：', u'“', u'”', u'！',
     u'？', u'‘', u'’', u'—', u'…', u'', u'『', u'』', u' ', u'「', u'」',
     u'．', u'－', u'□', u'·', u'∶', u'﹫', u'　', u'', u'【', u'】', u'《', u'》']
-count_min_limit = 3
+count_min_limit = 1
 num_top = -1   # -1 means all
 
 if __name__ == '__main__':

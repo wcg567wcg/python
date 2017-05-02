@@ -44,31 +44,35 @@ def kanji_to_num(kanji):
     return dict[kanji]
 
 def convert_name(name):
+    if name == "零":
+        return '000'
+
     #print name
     # >= 110
-    pattern = re.compile(r'(一百)(.*)(十)(.*)')
+    pattern = re.compile(r'(^一百)(.*)(十)(.*)')
     match = pattern.match(name)
     if match:
         return "1{0}{1}".format(kanji_to_num(match.group(2)), kanji_to_num(match.group(4)))
 
     # > 100 && <= 110
-    pattern = re.compile(r'(一百零)(.*)')
+    pattern = re.compile(r'(^一百零)(.*)')
     match = pattern.match(name)
     if match:
         return "10{0}".format(kanji_to_num(match.group(2)))
 
     # == 100
-    pattern = re.compile(r'一百')
+    pattern = re.compile(r'^一百')
     match = pattern.match(name)
     if match:
         return "100"
 
-    if name == "十":
-        return '010'
+    # 11 ~ 19
+    pattern = re.compile(r'(^十)(.*)')
+    match = pattern.match(name)
+    if match:
+        return "01{0}".format(kanji_to_num(match.group(2)))
 
-    if name == "零":
-        return '000'
-
+    # 20 ~ 99
     pattern = re.compile(r'(.*)(十)(.*)')
     match = pattern.match(name)
     if match:
@@ -112,5 +116,5 @@ def divide_into_chapter(path):
 #=======================================================================
 
 if __name__ == '__main__':
-    path = '/home/luozhaohui/Documents/python/word_frequence/book/水浒传全集.txt'
+    path = 'book/水浒传全集.txt'
     divide_into_chapter(path)
