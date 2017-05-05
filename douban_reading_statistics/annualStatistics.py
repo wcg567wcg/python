@@ -19,11 +19,11 @@
 
 import os
 import re
+import sys
 import string
 import matplotlib.pyplot as plt
-from pylab import *
-
 from matplotlib.font_manager import FontManager
+from pylab import mpl
 import subprocess
 
 datapath = "2017readings.txt"
