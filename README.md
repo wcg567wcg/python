@@ -20,4 +20,6 @@ Python 小程序
     
 6. [doubanReadingAnalizer.py](https://github.com/luozhaohui/PythonSnippet/blob/master/doubanReadingAnalizer.py)  
     豆瓣年度阅读统计，抓取特定年份的豆瓣阅读记录，按照评分以及标签分类统计
-    
+
+7. [word_frequence](https://github.com/luozhaohui/python/tree/master/word_frequence)  
+    词频统计以及章节文笔相似度检测，以《水浒传》为例，分析前七十回及后五十回各回文笔的相似度，粗略比较下来，金圣叹说后五十回是罗贯中续的、很有可能是真的。
