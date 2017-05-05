@@ -18,7 +18,7 @@ Python 小程序
 5. [exportTopMoviesFromDouban.py](https://github.com/luozhaohui/PythonSnippet/blob/master/exportTopMoviesFromDouban.py)  
     豆瓣电影爬虫，抓取特定主题的电影，按照评分、评分人数等加权排名，取靠前的 100 部电影
     
-6. [doubanReadingAnalizer.py](https://github.com/luozhaohui/PythonSnippet/blob/master/doubanReadingAnalizer.py)  
+6. [douban_reading_statistics](https://github.com/luozhaohui/python/tree/master/douban_reading_statistics)  
     豆瓣年度阅读统计，抓取特定年份的豆瓣阅读记录，按照评分以及标签分类统计
 
 7. [word_frequence](https://github.com/luozhaohui/python/tree/master/word_frequence)  
