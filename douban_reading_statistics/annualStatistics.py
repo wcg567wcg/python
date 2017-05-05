@@ -2,9 +2,9 @@
 #! encoding=utf-8
 
 # Author        : kesalin@gmail.com
-# Blog          : http://kesalindev.github.io
+# Blog          : http://luozhaohui.github.io
 # Date          : 2016/12/24
-# Description   : Douban Reading Analizer. 
+# Description   : Douban Reading Annual Statistics.
 # Version       : 1.0.0.0
 # Python Version: Python 2.7.3
 #
@@ -20,6 +20,19 @@
 import os
 import re
 import string
+import matplotlib.pyplot as plt
+from pylab import *
+
+from matplotlib.font_manager import FontManager
+import subprocess
+
+datapath = "2017readings.txt"
+year = 2017
+
+############################################################################################################
+
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 class BookInfo:
     name = ''
@@ -37,6 +50,11 @@ class BookInfo:
         self.tag = tag
         self.comment = comment
 
+def get_rating_save_png_name():
+    return u'{0}_read_rate.png'.format(str(year))
+
+def get_tags_save_png_name():
+    return u'{0}_read_tags.png'.format(str(year))
 
 def read_file(path):
     lines = []
@@ -77,10 +95,14 @@ def get_book_by_tag(books, tag):
 def output_by_rating_num(file, total, rating, books):
     count = len(books)
     if count > 0:
-        file.write(' > {0}图书 {1} 本，占比 {2:2.0f}%  \n'.format(num_to_kanji(rating), count, count * 100.0/total))
+        file.write(' > {0}图书 {1} 本，占比 {2:2.1f}%  \n'.format(num_to_kanji(rating), count, count * 100.0/total))
 
 def output_tags(file, tags):
     file.write('### 标签统计:\n')
+    title = u'{0}年阅读标签统计'.format(str(year))
+    generate_pie(tags, title, get_tags_save_png_name())
+    file.write('![标签统计]({0})\n\n'.format(get_tags_save_png_name()))
+
     for key, value in tags:
         file.write(' > {0} {1} 本  \n'.format(key, value))
 
@@ -97,13 +119,12 @@ def output_by_rating(file, index, rating, books):
         file.write('#### No.{0:d} {1}\n'.format(index, book.name))
         file.write(' > 图书名称：[{0}]({1})  \n'.format(book.name, book.url))
         file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
-        file.write(' > 标签：{0}\t\t评分：{1}    \n'.format(book.tag, num_to_kanji(book.ratingNums)))
+        file.write(' > 标签：{0}        评分：{1}  \n'.format(book.tag, num_to_kanji(book.ratingNums)))
         file.write(' > 我的评论：{0}  \n'.format(book.comment))
         file.write('\n')
         index = index + 1
     file.write('\n')
     return index
-
 
 def output_by_tag(file, books, index, tag):
     count = len(books)
@@ -118,44 +139,72 @@ def output_by_tag(file, books, index, tag):
         file.write('#### No.{0:d} {1}\n'.format(index, book.name))
         file.write(' > 图书名称：[{0}]({1})  \n'.format(book.name, book.url))
         file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
-        file.write(' > 标签：{0}\t\t评分：{1}    \n'.format(book.tag, num_to_kanji(book.ratingNums)))
+        file.write(' > 标签：{0}        评分：{1}  \n'.format(book.tag, num_to_kanji(book.ratingNums)))
         file.write(' > 我的评论：{0}  \n'.format(book.comment))
         file.write('\n')
         index = index + 1
     file.write('\n')
     return index
 
+def generate_pie(items, title, savefilename):
+    total = 0;
+    for key, value in items:
+        total += value
+
+    labels = []
+    fracs = []
+    explode = []
+    for key, value in items:
+        labels.append(u"{0} {1} 本".format(key, value))
+        fracs.append(value * 100.0/total)
+        explode.append(0)
+    explode[0] = 0.02
+    # for label in labels:
+    #     print "{0} ".format(label)
+    # print fracs
+    # print explode
+    show_pie(labels, fracs, explode, title, savefilename)
+
+def show_pie(labels, fracs, explode, title, savefilename):
+    plt.figure(figsize=(6, 6))
+    ax = plt.axes([0.1, 0.1, 0.8, 0.8])
+    plt.pie(fracs, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True)
+    plt.title(title, bbox={'facecolor':'0.8', 'pad':12})
+    plt.savefig(savefilename)
+    #plt.show()
+
 def analyze_book(books, tags):
-    path = "2016doubanreading.md"
+    path = "{0}doubanreading.md".format(str(year))
     if(os.path.isfile(path)):
         os.remove(path)
     file = open(path, 'a')
 
     total = len(books)
 
-    file.write('## 2016年阅读统计\n')
+    rating5 = get_book_by_rating(books, 5)
+    rating4 = get_book_by_rating(books, 4)
+    rating3 = get_book_by_rating(books, 3)
+    rating2 = get_book_by_rating(books, 2)
+    rating1 = get_book_by_rating(books, 1)
+
+    file.write('## {0}年阅读统计\n'.format(str(year)))
     file.write('## 总计阅读 {0} 本\n'.format(total))
     file.write('### 评价统计:\n')
 
-    rating = 5
-    rating5 = get_book_by_rating(books, rating)
-    output_by_rating_num(file, total, rating, rating5)
+    rating_dict = {u"五星" : len(rating5), u"四星" : len(rating4),
+        u"三星" : len(rating3), u"两星" : len(rating2), u"一星" : len(rating1)}
+    filter_dict = { key : rating_dict[key] for key in rating_dict.keys() if (rating_dict[key] > 0) }
+    #items = sorted(filter_dict.iteritems(), key=lambda d:d[1], reverse = True)
+    items = filter_dict.items()
+    title = u'{0}年阅读评价统计'.format(str(year))
+    generate_pie(items, title, get_rating_save_png_name())
+    file.write('![评价统计]({0})\n\n'.format(get_rating_save_png_name()))
 
-    rating = 4
-    rating4 = get_book_by_rating(books, rating)
-    output_by_rating_num(file, total, rating, rating4)
-
-    rating = 3
-    rating3 = get_book_by_rating(books, rating)
-    output_by_rating_num(file, total, rating, rating3)
-
-    rating = 2
-    rating2 = get_book_by_rating(books, rating)
-    output_by_rating_num(file, total, rating, rating2)
-
-    rating = 1
-    rating1 = get_book_by_rating(books, rating)
-    output_by_rating_num(file, total, rating, rating1)
+    output_by_rating_num(file, total, 5, rating5)
+    output_by_rating_num(file, total, 4, rating4)
+    output_by_rating_num(file, total, 3, rating3)
+    output_by_rating_num(file, total, 2, rating2)
+    output_by_rating_num(file, total, 1, rating1)
 
     file.write('\n')
 
@@ -249,6 +298,27 @@ def process(datapath):
     analyze_book(books, tags)
 
 ############################################################################################################
-datapath = "2016readings.txt"
 
-process(datapath)
+def get_matplot_zh_font():
+    fm = FontManager()
+    mat_fonts = set(f.name for f in fm.ttflist)
+
+    output = subprocess.check_output('fc-list :lang=zh -f "%{family}\n"', shell=True)
+    zh_fonts = set(f.split(',', 1)[0] for f in output.split('\n'))
+    available = list(mat_fonts & zh_fonts)
+
+    print '*' * 10, '可用的字体', '*' * 10
+    for f in available:
+        print f
+    return available
+
+def set_matplot_zh_font():
+    available = get_matplot_zh_font()
+    if len(available) > 0:
+        mpl.rcParams['font.sans-serif'] = [available[0]]    # 指定默认字体
+        mpl.rcParams['axes.unicode_minus'] = False          # 解决保存图像是负号'-'显示为方块的问题
+
+############################################################################################################
+if __name__ == '__main__':
+    set_matplot_zh_font()
+    process(datapath)
