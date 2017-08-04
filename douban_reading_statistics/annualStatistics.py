@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#! encoding=utf-8
+# encoding=utf-8
 
 # Author        : kesalin@gmail.com
 # Blog          : http://luozhaohui.github.io
@@ -7,6 +7,9 @@
 # Description   : Douban Reading Annual Statistics.
 # Version       : 1.0.0.0
 # Python Version: Python 2.7.3
+#
+# sudo apt-get install python-matplotlib
+# sudo apt-get install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
 #
 
 # data format:
@@ -95,11 +98,12 @@ def get_book_by_tag(books, tag):
 def output_by_rating_num(file, total, rating, books):
     count = len(books)
     if count > 0:
-        file.write(' > {0}图书 {1} 本，占比 {2:2.1f}%  \n'.format(num_to_kanji(rating), count, count * 100.0/total))
+        file.write(' > {0}图书 {1} 本，占比 {2:2.1f}%  \n'.format(
+            num_to_kanji(rating), count, count * 100.0/total))
 
-def output_tags(file, tags):
+def output_tags(file, tags, total):
     file.write('### 标签统计:\n')
-    title = u'{0}年阅读标签统计'.format(str(year))
+    title = u'{0}年阅读标签统计: 总计 {1} 本'.format(str(year), total)
     generate_pie(tags, title, get_tags_save_png_name())
     file.write('![标签统计]({0})\n\n'.format(get_tags_save_png_name()))
 
@@ -196,7 +200,7 @@ def analyze_book(books, tags):
     filter_dict = { key : rating_dict[key] for key in rating_dict.keys() if (rating_dict[key] > 0) }
     #items = sorted(filter_dict.iteritems(), key=lambda d:d[1], reverse = True)
     items = filter_dict.items()
-    title = u'{0}年阅读评价统计'.format(str(year))
+    title = u'{0}年阅读评价统计: 总计 {1} 本'.format(str(year), total)
     generate_pie(items, title, get_rating_save_png_name())
     file.write('![评价统计]({0})\n\n'.format(get_rating_save_png_name()))
 
@@ -211,7 +215,7 @@ def analyze_book(books, tags):
     tags = sorted(tags.items(), key=lambda d: d[1], reverse=True)
     #print tags
 
-    output_tags(file, tags)
+    output_tags(file, tags, total)
 
     file.write('\n')
 
