@@ -1,0 +1,1375 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>body {
+  max-width: 980px;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 45px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+@font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headeranchor-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding-right: 6px;
+  padding-left: 30px;
+  margin-left: -30px;
+}
+
+.markdown-body .headeranchor-link:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .headeranchor,
+.markdown-body h2 .headeranchor,
+.markdown-body h3 .headeranchor,
+.markdown-body h4 .headeranchor,
+.markdown-body h5 .headeranchor,
+.markdown-body h6 .headeranchor {
+  display: none;
+  color: #000;
+  vertical-align: middle;
+}
+
+.markdown-body h1:hover .headeranchor-link,
+.markdown-body h2:hover .headeranchor-link,
+.markdown-body h3:hover .headeranchor-link,
+.markdown-body h4:hover .headeranchor-link,
+.markdown-body h5:hover .headeranchor-link,
+.markdown-body h6:hover .headeranchor-link {
+  height: 1em;
+  padding-left: 8px;
+  margin-left: -30px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .headeranchor-link .headeranchor,
+.markdown-body h2:hover .headeranchor-link .headeranchor,
+.markdown-body h3:hover .headeranchor-link .headeranchor,
+.markdown-body h4:hover .headeranchor-link .headeranchor,
+.markdown-body h5:hover .headeranchor-link .headeranchor,
+.markdown-body h6:hover .headeranchor-link .headeranchor {
+  display: inline-block;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .codehilite pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* Multimarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px octicons-anchor;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\f05c';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><title>2016reading</title></head><body><article class="markdown-body"><h2 id="2016"><a name="user-content-2016" href="#2016" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2016年阅读统计</h2>
+<h2 id="46"><a name="user-content-46" href="#46" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>总计阅读 46 本</h2>
+<h3 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>评价统计:</h3>
+<p><img alt="评价统计" src="/home/luozhaohui/Documents/github/python/douban_reading_statistics/2016/2016_reading_tags.png" /></p>
+<blockquote>
+<p>五星图书 14 本，占比 30.4%<br />
+四星图书 24 本，占比 52.2%<br />
+三星图书 8 本，占比 17.4%  </p>
+</blockquote>
+<h3 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>标签统计:</h3>
+<p><img alt="标签统计" src="/home/luozhaohui/Documents/github/python/douban_reading_statistics/2016/2016_reading_tags.png" /></p>
+<blockquote>
+<p>历史 11 本<br />
+编程 8 本<br />
+家庭 6 本<br />
+科学 5 本<br />
+管理 4 本<br />
+思维 3 本<br />
+社会 2 本<br />
+政治 2 本<br />
+心理 2 本<br />
+设计 1 本<br />
+小说 1 本<br />
+哲学 1 本  </p>
+</blockquote>
+<h3 id="11"><a name="user-content-11" href="#11" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>历史: 11 本</h3>
+<h4 id="no1"><a name="user-content-no1" href="#no1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.1 万历十五年（增订本）</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1981042/">万历十五年（增订本）</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1981042/"><a href="https://book.douban.com/subject/1981042/"><a href="https://book.douban.com/subject/1981042/">https://book.douban.com/subject/1981042/</a></a></a><br />
+标签：历史        评分：五星<br />
+我的评论：通过解读明末六个上层人物的故事，设计政治、军事、文化、经济等多方面，让我们了解那个时代官场的运作方式，明白中国道德官僚体制的缺陷。  </p>
+</blockquote>
+<h4 id="no2"><a name="user-content-no2" href="#no2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.2 中国近百年政治史</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/10532831/">中国近百年政治史</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/10532831/"><a href="https://book.douban.com/subject/10532831/"><a href="https://book.douban.com/subject/10532831/">https://book.douban.com/subject/10532831/</a></a></a><br />
+标签：历史        评分：五星<br />
+我的评论：1840~1926年近百年政治史，作者是很多事件的亲历者，学贯中西，详细阐述了各个时段中的重大事件及其影响，思路清晰明了，文笔有趣有料。  </p>
+</blockquote>
+<h4 id="no3"><a name="user-content-no3" href="#no3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.3 白鹿原</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/10564071/">白鹿原</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/10564071/"><a href="https://book.douban.com/subject/10564071/"><a href="https://book.douban.com/subject/10564071/">https://book.douban.com/subject/10564071/</a></a></a><br />
+标签：历史        评分：五星<br />
+我的评论：这是一本乡土文化&amp;近代史书，写于80年代末，最后的文学黄金时期。看官看前要留心是不是删节版。  </p>
+</blockquote>
+<h4 id="no4"><a name="user-content-no4" href="#no4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.4 大动乱的年代</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1659807/">大动乱的年代</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1659807/"><a href="https://book.douban.com/subject/1659807/"><a href="https://book.douban.com/subject/1659807/">https://book.douban.com/subject/1659807/</a></a></a><br />
+标签：历史        评分：四星<br />
+我的评论：比较少见的先允许出版再到变成禁书的书籍。  </p>
+</blockquote>
+<h4 id="no5"><a name="user-content-no5" href="#no5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.5 剑桥中国隋唐史</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1014192/">剑桥中国隋唐史</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1014192/"><a href="https://book.douban.com/subject/1014192/"><a href="https://book.douban.com/subject/1014192/">https://book.douban.com/subject/1014192/</a></a></a><br />
+标签：历史        评分：四星<br />
+我的评论：隋唐可以说都是西北贵族建立的天下，隋的悲剧在于执着打高丽，唐的悲剧在边疆强敌林立不得不重兵把守，以致中央式微，藩镇坐大，节度使失控。  </p>
+</blockquote>
+<h4 id="no6"><a name="user-content-no6" href="#no6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.6 剑桥中国秦汉史</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1253638/">剑桥中国秦汉史</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1253638/"><a href="https://book.douban.com/subject/1253638/"><a href="https://book.douban.com/subject/1253638/">https://book.douban.com/subject/1253638/</a></a></a><br />
+标签：历史        评分：四星<br />
+我的评论：以西方框架史观来分析中国历史，比中国传统的帝王将相道德中心史观更加宏大与全面，考证并去除史籍中虚大的内容，全面探讨政、军、外交、经、思想、宗教方面的内容。  </p>
+</blockquote>
+<h4 id="no7"><a name="user-content-no7" href="#no7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.7 叫魂</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/25912076/">叫魂</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/25912076/"><a href="https://book.douban.com/subject/25912076/"><a href="https://book.douban.com/subject/25912076/">https://book.douban.com/subject/25912076/</a></a></a><br />
+标签：历史        评分：四星<br />
+我的评论：框架历史观，最后一章以及译后记的诠释与分析非常到位。  </p>
+</blockquote>
+<h4 id="no8"><a name="user-content-no8" href="#no8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.8 东大爸爸写给我的日本史</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/26612919/">东大爸爸写给我的日本史</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/26612919/"><a href="https://book.douban.com/subject/26612919/"><a href="https://book.douban.com/subject/26612919/">https://book.douban.com/subject/26612919/</a></a></a><br />
+标签：历史        评分：四星<br />
+我的评论：不仅仅是史料与分析，更讲述思辨批判的历史观。作为日本史料入门还是不错的，玩《太阁立志传》时也不至于傻傻地没半点背景了。  </p>
+</blockquote>
+<h4 id="no9"><a name="user-content-no9" href="#no9" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.9 何以中国</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/25850080/">何以中国</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/25850080/"><a href="https://book.douban.com/subject/25850080/"><a href="https://book.douban.com/subject/25850080/">https://book.douban.com/subject/25850080/</a></a></a><br />
+标签：历史        评分：四星<br />
+我的评论：以考古挖掘资料为依据来推测公元两千年前夏以及商早期的社会形态，打破了教科书中统一强势的夏王朝形象．上古时期的华夏大地不过是傍水傍铜盐资源的一些国家联盟，夏或商或周王朝只是较大较强的盟主．洛阳盆地的二里头文化已经初具国家雏形，并且华夏文化基于礼的秩序根基也已初步形成．  </p>
+</blockquote>
+<h4 id="no10"><a name="user-content-no10" href="#no10" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.10 上帝与黄金</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/26260335/">上帝与黄金</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/26260335/"><a href="https://book.douban.com/subject/26260335/"><a href="https://book.douban.com/subject/26260335/">https://book.douban.com/subject/26260335/</a></a></a><br />
+标签：历史        评分：四星<br />
+我的评论：历史部分写得很不错，需要庞大的欧洲以及美国历史储备．论证过程不过严谨，所以最后一章的结论来得有点突兀．所谓历史的终极就是一个传统&amp;宗教&amp;理性的混合体积极拥抱变化，这三结合的保守进步主义相信变革且一直向上，也就无所谓终结与否了，一致都在前进路上．  </p>
+</blockquote>
+<h4 id="no11"><a name="user-content-no11" href="#no11" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.11 秩序的沦陷</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/26392829/">秩序的沦陷</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/26392829/"><a href="https://book.douban.com/subject/26392829/"><a href="https://book.douban.com/subject/26392829/">https://book.douban.com/subject/26392829/</a></a></a><br />
+标签：历史        评分：三星<br />
+我的评论：除了黑白两个极端，中间自然大部分都是灰色地带，诚然国共双方都有意忽略这个地带。但中国沦陷区的情况与法国投降区的情况性质是不同的，合作对于维希政府来说事实，但当时正统的国民政府依然存在，依然在抗日。刀架在脖子上的合作不是合作，虽然作者和译者都认为合作这个词没有表达出西方那种贬义来，用勾结又过了点。书中虽不乏独特的见解，但明显有硬套发生在法国的模式的嫌疑，在丛林中往下看灌木丛，与在沙漠中往下看是不一样的。  </p>
+</blockquote>
+<h3 id="8"><a name="user-content-8" href="#8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>编程: 8 本</h3>
+<h4 id="no12-3"><a name="user-content-no12-3" href="#no12-3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.12 现代操作系统（第3版）</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/3852290/">现代操作系统（第3版）</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/3852290/"><a href="https://book.douban.com/subject/3852290/"><a href="https://book.douban.com/subject/3852290/">https://book.douban.com/subject/3852290/</a></a></a><br />
+标签：编程        评分：五星<br />
+我的评论：概念讲解得非常到位，比如说讲消费者&amp;生产者模型，讲银行间算法等，有图有代码。最后还分别介绍linux、windows、symbian系统，但symbian已经不再了。  </p>
+</blockquote>
+<h4 id="no13"><a name="user-content-no13" href="#no13" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.13 世界是数字的</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/24749903/">世界是数字的</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/24749903/"><a href="https://book.douban.com/subject/24749903/"><a href="https://book.douban.com/subject/24749903/">https://book.douban.com/subject/24749903/</a></a></a><br />
+标签：编程        评分：五星<br />
+我的评论：计算机知识扫盲入门科普书，非计算机专业或文科生必读。讲述硬件、软件、操作系统、编程、网络、人工智能等多个领域的基本概念。  </p>
+</blockquote>
+<h4 id="no14"><a name="user-content-no14" href="#no14" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.14 代码的未来</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/24536403/">代码的未来</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/24536403/"><a href="https://book.douban.com/subject/24536403/"><a href="https://book.douban.com/subject/24536403/">https://book.douban.com/subject/24536403/</a></a></a><br />
+标签：编程        评分：四星<br />
+我的评论：中文名有点哗众取宠，这是作者在技术的剖析专栏的合集，看看高手对各种技术的见解，可拓宽知识面，增进对各种技术的认识。  </p>
+</blockquote>
+<h4 id="no15-stl"><a name="user-content-no15-stl" href="#no15-stl" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.15 STL源码剖析</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1110934/">STL源码剖析</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1110934/"><a href="https://book.douban.com/subject/1110934/"><a href="https://book.douban.com/subject/1110934/">https://book.douban.com/subject/1110934/</a></a></a><br />
+标签：编程        评分：四星<br />
+我的评论：源码剖析所以源码篇幅占了很大一部分，对一些数据机构的算法分析很到位，模板妙用除了traits并无太多出众的地方，CPP码农还是推荐看看。  </p>
+</blockquote>
+<h4 id="no16-com"><a name="user-content-no16-com" href="#no16-com" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.16 COM本质论</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1231481/">COM本质论</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1231481/"><a href="https://book.douban.com/subject/1231481/"><a href="https://book.douban.com/subject/1231481/">https://book.douban.com/subject/1231481/</a></a></a><br />
+标签：编程        评分：四星<br />
+我的评论：了解COM的设计思想，曾经为二进制兼容而付出的努力。  </p>
+</blockquote>
+<h4 id="no17-android"><a name="user-content-no17-android" href="#no17-android" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.17 深入理解Android内核设计思想</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/25921329/">深入理解Android内核设计思想</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/25921329/"><a href="https://book.douban.com/subject/25921329/"><a href="https://book.douban.com/subject/25921329/">https://book.douban.com/subject/25921329/</a></a></a><br />
+标签：编程        评分：四星<br />
+我的评论：书名起的有点大，内容其实一些基础与源码分析，作者善用比喻，总体来说算是一本还不错的源码分析。  </p>
+</blockquote>
+<h4 id="no18-java2"><a name="user-content-no18-java2" href="#no18-java2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.18 深入Java虚拟机(原书第2版)</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1138768/">深入Java虚拟机(原书第2版)</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1138768/"><a href="https://book.douban.com/subject/1138768/"><a href="https://book.douban.com/subject/1138768/">https://book.douban.com/subject/1138768/</a></a></a><br />
+标签：编程        评分：四星<br />
+我的评论：虽然有点老，讲JVM架构这方面的书真心不太多，这本十多年前的书依然是了解JVM不二之选。书中从平台无关、安全以及网络移动性三个方面考量JVM的设计与架构，后面十章是JVM指令的介绍，可作手册，精华在前九章：设计考量（相当于《C++设计与演化》），class格式及其装载、解析，符号链接，垃圾回收策略等等。  </p>
+</blockquote>
+<h4 id="no19-android-50"><a name="user-content-no19-android-50" href="#no19-android-50" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.19 深入解析Android 5.0系统</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/26377840/">深入解析Android 5.0系统</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/26377840/"><a href="https://book.douban.com/subject/26377840/"><a href="https://book.douban.com/subject/26377840/">https://book.douban.com/subject/26377840/</a></a></a><br />
+标签：编程        评分：三星<br />
+我的评论：作者选择解析的源码不够全面，可能作者选择的是他最熟悉的吧，如果就当这本书算是源码解析方面的补漏还可以。  </p>
+</blockquote>
+<h3 id="6"><a name="user-content-6" href="#6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>家庭: 6 本</h3>
+<h4 id="no20"><a name="user-content-no20" href="#no20" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.20 理解孩子的成长</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1912252/">理解孩子的成长</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1912252/"><a href="https://book.douban.com/subject/1912252/"><a href="https://book.douban.com/subject/1912252/">https://book.douban.com/subject/1912252/</a></a></a><br />
+标签：家庭        评分：四星<br />
+我的评论：本书专注儿童身体、认知、心智、社交发展与成长，综述许多著名实验与儿童发展流派，专业性较强，内容广而全。  </p>
+</blockquote>
+<h4 id="no21"><a name="user-content-no21" href="#no21" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.21 孩子：挑战</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/26304087/">孩子：挑战</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/26304087/"><a href="https://book.douban.com/subject/26304087/"><a href="https://book.douban.com/subject/26304087/">https://book.douban.com/subject/26304087/</a></a></a><br />
+标签：家庭        评分：四星<br />
+我的评论：在民主的理念下与孩子相处，依然不外乎“温柔而坚定”的原则。  </p>
+</blockquote>
+<h4 id="no22"><a name="user-content-no22" href="#no22" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.22 不能错过的英语启蒙</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/6523827/">不能错过的英语启蒙</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/6523827/"><a href="https://book.douban.com/subject/6523827/"><a href="https://book.douban.com/subject/6523827/">https://book.douban.com/subject/6523827/</a></a></a><br />
+标签：家庭        评分：四星<br />
+我的评论：作者推崇自然拼读法，先用动画片、儿歌、绘本阅读培养语感，然后学习拼读，然后阅读。以音为着重点，同级别大量常见生活场景内容的阅读为手段，培养对阅读的兴趣。方法确实可取  </p>
+</blockquote>
+<h4 id="no23"><a name="user-content-no23" href="#no23" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.23 正面管教</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/3420606/">正面管教</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/3420606/"><a href="https://book.douban.com/subject/3420606/"><a href="https://book.douban.com/subject/3420606/">https://book.douban.com/subject/3420606/</a></a></a><br />
+标签：家庭        评分：四星<br />
+我的评论：育儿先育己：怎么可能先让孩子感觉很糟，却期待孩子变得更好。所以要优先照顾情绪：是为和善，要让孩子变得更好呢又需要坚定：授权、试错。承担自然后果，和善而坚定结合起来才能培养出自律、责任感、合作以及自己解决问题的能力。  </p>
+</blockquote>
+<h4 id="no24"><a name="user-content-no24" href="#no24" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.24 如何培养孩子的社会能力</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/3909967/">如何培养孩子的社会能力</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/3909967/"><a href="https://book.douban.com/subject/3909967/"><a href="https://book.douban.com/subject/3909967/">https://book.douban.com/subject/3909967/</a></a></a><br />
+标签：家庭        评分：三星<br />
+我的评论：碰到问题，引导孩子思考多种解决方案，并评估对应的后果，而不是替他解决问题。大概也就一两页纸的干货吧。  </p>
+</blockquote>
+<h4 id="no25"><a name="user-content-no25" href="#no25" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.25 培养高情商的孩子</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/25834256/">培养高情商的孩子</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/25834256/"><a href="https://book.douban.com/subject/25834256/"><a href="https://book.douban.com/subject/25834256/">https://book.douban.com/subject/25834256/</a></a></a><br />
+标签：家庭        评分：三星<br />
+我的评论：情绪优先，有点拼凑的感觉。不如其他几本如《父母效能训练手册》等。  </p>
+</blockquote>
+<h3 id="5"><a name="user-content-5" href="#5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>科学: 5 本</h3>
+<h4 id="no26"><a name="user-content-no26" href="#no26" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.26 通灵芯片</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/3423021/">通灵芯片</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/3423021/"><a href="https://book.douban.com/subject/3423021/"><a href="https://book.douban.com/subject/3423021/">https://book.douban.com/subject/3423021/</a></a></a><br />
+标签：科学        评分：五星<br />
+我的评论：一本能够深入浅出地介绍计算机&amp;软件工作原理的简短科普书籍。高屋建瓴式的概括，既不失深度，又妙趣横生。现在的计算机本质上一切都是计算以及分层求解，未来的计算机软件或说人工智能应该能够自适应自组织地演化。  </p>
+</blockquote>
+<h4 id="no27"><a name="user-content-no27" href="#no27" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.27 众病之王</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/20507206/">众病之王</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/20507206/"><a href="https://book.douban.com/subject/20507206/"><a href="https://book.douban.com/subject/20507206/">https://book.douban.com/subject/20507206/</a></a></a><br />
+标签：科学        评分：五星<br />
+我的评论：中信难得出一本翻译得不错的好书。这本书从癌症这个话题切入，从发现它，到认识它了解它；从试错法治疗，到科学地验证治疗；从局限于病人医生，到正确政府支持，再到大众宣传；从治疗到预防。横跨科技、人文、方法论、政治、宣传、社会学多个领域。与疾病的斗争不仅仅是技术问题，还是科学问题、哲学问题、伦理问题和社会政治问题。作者的文笔构思非常好，字里行间散发着深深的人文关怀，这本书之所以好，这两点功不可没。  </p>
+</blockquote>
+<h4 id="no28"><a name="user-content-no28" href="#no28" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.28 我们为什么生病</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1046620/">我们为什么生病</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1046620/"><a href="https://book.douban.com/subject/1046620/"><a href="https://book.douban.com/subject/1046620/">https://book.douban.com/subject/1046620/</a></a></a><br />
+标签：科学        评分：五星<br />
+我的评论：新达尔文医学观：从演化观点看待医学！生病与衰老是一种演化适应。可以《基因组》结合着看。超赞！  </p>
+</blockquote>
+<h4 id="no29"><a name="user-content-no29" href="#no29" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.29 基因组</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/26281143/">基因组</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/26281143/"><a href="https://book.douban.com/subject/26281143/"><a href="https://book.douban.com/subject/26281143/">https://book.douban.com/subject/26281143/</a></a></a><br />
+标签：科学        评分：五星<br />
+我的评论：这是一本比较全面、新颖、引人深思的书籍。相比《自私的基因》那种宏大概括的叙事方式，更注重个别基因这个微观层面的故事。全书选取与我们密切相关的一些基因探讨了：生命、物种、疾病、环境、智力、死亡、性别、压力、个性、死亡、基因疗法、政治、自由意志等科学的，哲学的，社会的，政治的，伦理的问题。  </p>
+</blockquote>
+<h4 id="no30"><a name="user-content-no30" href="#no30" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.30 科学革命的结构</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/20376550/">科学革命的结构</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/20376550/"><a href="https://book.douban.com/subject/20376550/"><a href="https://book.douban.com/subject/20376550/">https://book.douban.com/subject/20376550/</a></a></a><br />
+标签：科学        评分：四星<br />
+我的评论：科学革命是跳跃式的，是范式的新旧替代，亦是世界观的变革，而非教科书中暗示的累积式进步。说某个领域的科学已经成熟其实是指某种范式获得了那个领域中科学共同体的认同与维护。  </p>
+</blockquote>
+<h3 id="4"><a name="user-content-4" href="#4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>管理: 4 本</h3>
+<h4 id="no31-5"><a name="user-content-no31-5" href="#no31-5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.31 权力与领导（第5版）</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/26288194/">权力与领导（第5版）</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/26288194/"><a href="https://book.douban.com/subject/26288194/"><a href="https://book.douban.com/subject/26288194/">https://book.douban.com/subject/26288194/</a></a></a><br />
+标签：管理        评分：五星<br />
+我的评论：领导就是管理能量，首先是管理你自己的能量，然后管理周围人的能量。具体来说是要根据愿景建立战略任务、设计合适的组织、影响他人去达成任务。有三个层次的领导：行为、思想、VABE(价值观、假设、信念、期望)。第三层次的领导是最为持久与固化的。OK，以上书中的主干内容。这本书是集心理、管理、生理之大成的经典，书中综合大量管理、心理学方面的书籍的观点，如：《从优秀到卓越》、《高效能人士的七个习惯》、《第五项修炼》、《少有人走的路》等等。无论是个人（自我领导）还是组织（组织领导）都值得阅读。  </p>
+</blockquote>
+<h4 id="no32"><a name="user-content-no32" href="#no32" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.32 横向领导力</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/26641761/">横向领导力</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/26641761/"><a href="https://book.douban.com/subject/26641761/"><a href="https://book.douban.com/subject/26641761/">https://book.douban.com/subject/26641761/</a></a></a><br />
+标签：管理        评分：四星<br />
+我的评论：任何人都是潜在的领导者，在一个组织中发挥领导作用的人不论是否有职位就是实际上的领导者，因此下级也可以领导或影响上级。  </p>
+</blockquote>
+<h4 id="no33"><a name="user-content-no33" href="#no33" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.33 领导力</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/20492915/">领导力</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/20492915/"><a href="https://book.douban.com/subject/20492915/"><a href="https://book.douban.com/subject/20492915/">https://book.douban.com/subject/20492915/</a></a></a><br />
+标签：管理        评分：四星<br />
+我的评论：有点快餐的味道，深度与广度都不及《权力与领导》，优点在通俗易懂，挺多令人深省的妙句。书中用精炼出领导的五个关键原则：以身作则、共启愿景、挑战现状、使众人行、激励人心 。如果用一句话就是：领导是一种关系，这个关系不是中国式管理中的权术或操纵关系，而是真诚&amp;共赢理念下的人际关系。  </p>
+</blockquote>
+<h4 id="no34"><a name="user-content-no34" href="#no34" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.34 成为技术领导者</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/26419762/">成为技术领导者</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/26419762/"><a href="https://book.douban.com/subject/26419762/"><a href="https://book.douban.com/subject/26419762/">https://book.douban.com/subject/26419762/</a></a></a><br />
+标签：管理        评分：三星<br />
+我的评论：盛名在外其实不符。内容短短，观点平平，价格高高。  </p>
+</blockquote>
+<h3 id="3"><a name="user-content-3" href="#3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>思维: 3 本</h3>
+<h4 id="no35"><a name="user-content-no35" href="#no35" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.35 心理定向与成功</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/2309200/">心理定向与成功</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/2309200/"><a href="https://book.douban.com/subject/2309200/"><a href="https://book.douban.com/subject/2309200/">https://book.douban.com/subject/2309200/</a></a></a><br />
+标签：思维        评分：四星<br />
+我的评论：本书另有中信译本《看见成长的自己》，成长式思维VS僵固式思维，非常正三观，越早读到这本书越有益。以发展的眼光来看待自己与周边的一切，而不是把自己或他人贴上固化的标签。成长是硬道理！  </p>
+</blockquote>
+<h4 id="no36"><a name="user-content-no36" href="#no36" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.36 看见成长的自己</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/6510688/">看见成长的自己</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/6510688/"><a href="https://book.douban.com/subject/6510688/"><a href="https://book.douban.com/subject/6510688/">https://book.douban.com/subject/6510688/</a></a></a><br />
+标签：思维        评分：四星<br />
+我的评论：成长式思维VS僵固式思维，非常正三观，越早读到这本书越有益。以发展的眼光来看待自己与周边的一切，而不是把自己或他人贴上固化的标签。成长是硬道理！  </p>
+</blockquote>
+<h4 id="no37"><a name="user-content-no37" href="#no37" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.37 农民进城防骗手册</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1929825/">农民进城防骗手册</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1929825/"><a href="https://book.douban.com/subject/1929825/"><a href="https://book.douban.com/subject/1929825/">https://book.douban.com/subject/1929825/</a></a></a><br />
+标签：思维        评分：三星<br />
+我的评论：谨记：莫贪小便宜，天下没有免费的午餐。  </p>
+</blockquote>
+<h3 id="2"><a name="user-content-2" href="#2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>社会: 2 本</h3>
+<h4 id="no38"><a name="user-content-no38" href="#no38" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.38 中国文化的深层结构</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1068912/">中国文化的深层结构</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1068912/"><a href="https://book.douban.com/subject/1068912/"><a href="https://book.douban.com/subject/1068912/">https://book.douban.com/subject/1068912/</a></a></a><br />
+标签：社会        评分：四星<br />
+我的评论：观点五星,结构&amp;推理三星.对传统中国社会文化层面上的总结很精辟,确实做到了深这个程度,但结构散乱,重复啰嗦,一些论据过于牵强.很明显作者受到中共特殊的&rdquo;心&rdquo;的照顾,正所谓拿人手短.  </p>
+</blockquote>
+<h4 id="no39"><a name="user-content-no39" href="#no39" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.39 最好的告别</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/26576861/">最好的告别</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/26576861/"><a href="https://book.douban.com/subject/26576861/"><a href="https://book.douban.com/subject/26576861/">https://book.douban.com/subject/26576861/</a></a></a><br />
+标签：社会        评分：三星<br />
+我的评论：生的愉悦与死的坦然都将成为生命圆满的标志。本书关注未来如何养老，是在疗养院或医院中行尸走肉般活着还是有意义有尊严地死去。畅销书特质，几句话能表达的事情。  </p>
+</blockquote>
+<h3 id="2_1"><a name="user-content-2_1" href="#2_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>政治: 2 本</h3>
+<h4 id="no40"><a name="user-content-no40" href="#no40" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.40 经济人的末日</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/26378573/">经济人的末日</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/26378573/"><a href="https://book.douban.com/subject/26378573/"><a href="https://book.douban.com/subject/26378573/">https://book.douban.com/subject/26378573/</a></a></a><br />
+标签：政治        评分：五星<br />
+我的评论：很多人都知道彼得.德鲁克是管理大师，却少有人知道他也是敏锐的社会政治观察家与预言者。在这本出版于1939年的《经济人的末日：极权主义的起源》小册子里，他详细分析了是什么导致了德意的极权主义（旧秩序的崩溃&amp;新秩序的缺失，大众的绝望），极权主义控制下的社会形态是什么样（非经济人社会，希望寄托于非理性的奇迹），以及如何战胜这股非理性混乱（在现有的经济社会基础上，发展出一个新的、自由平等的非经济社会）。德鲁克敏锐地预见了苏德同盟瓜分波兰，以及法西斯与法英美的大战。  </p>
+</blockquote>
+<h4 id="no41"><a name="user-content-no41" href="#no41" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.41 论美国的民主</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1041385/">论美国的民主</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1041385/"><a href="https://book.douban.com/subject/1041385/"><a href="https://book.douban.com/subject/1041385/">https://book.douban.com/subject/1041385/</a></a></a><br />
+标签：政治        评分：五星<br />
+我的评论：董译信达雅，大赞！要想了解美国的立国之本以及政治体制，上卷是不二选择。美国式民主得益于得天独厚的地理环境，制衡的法制以及深入骨髓的自治自由精神。乡镇自治与联邦政府分权而至，前者是自由精神的源泉，后者是强大的物质保证。  </p>
+</blockquote>
+<h3 id="2_2"><a name="user-content-2_2" href="#2_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>心理: 2 本</h3>
+<h4 id="no42"><a name="user-content-no42" href="#no42" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.42 天生敏感</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/25858882/">天生敏感</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/25858882/"><a href="https://book.douban.com/subject/25858882/"><a href="https://book.douban.com/subject/25858882/">https://book.douban.com/subject/25858882/</a></a></a><br />
+标签：心理        评分：五星<br />
+我的评论：理解天生敏感的人，敏感特质是遗传性的。敏感的人在生活中会注意到超多的细节，很多时候这些细节属于80%的噪音类，而他们无法过滤掉。他们被这些细节困扰，也不被不敏感的人理解，导致敏感的人容易缺乏安全感与抑郁。而敏感其实是把双刃剑，敏感人可以向内-心灵寻求帮助与发展。不敏感人的阅读此书可以更好地理解敏感的人，从而更好地与他们相处。  </p>
+</blockquote>
+<h4 id="no43"><a name="user-content-no43" href="#no43" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.43 心智的构建</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/10864488/">心智的构建</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/10864488/"><a href="https://book.douban.com/subject/10864488/"><a href="https://book.douban.com/subject/10864488/">https://book.douban.com/subject/10864488/</a></a></a><br />
+标签：心理        评分：四星<br />
+我的评论：眼见并不为实。富有创造性的脑利用外界的信息构建关于物质世界与他人心智的模型，当我们与外界交互时，脑根据这些模型来预测接下来会发生什么。如果预测准确，那么累积经验强化模型；如果预测不准确，那么根据反馈改善模型。这个遵循贝叶斯定律的脑活动过程往往是下意识的。这就是我们脑构建心智与完善心智的过程。  </p>
+</blockquote>
+<h3 id="1"><a name="user-content-1" href="#1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>设计: 1 本</h3>
+<h4 id="no44"><a name="user-content-no44" href="#no44" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.44 用户体验要素</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/6523997/">用户体验要素</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/6523997/"><a href="https://book.douban.com/subject/6523997/"><a href="https://book.douban.com/subject/6523997/">https://book.douban.com/subject/6523997/</a></a></a><br />
+标签：设计        评分：五星<br />
+我的评论：以用户为中心的产品设计理念。战略层面关注用户需求与产品目标，框架层面关注用户在使用场景中的行为，实现层面关注用户的感知体念。用五层十要素讲述功能性与信息型网站的设计理念与要素。  </p>
+</blockquote>
+<h3 id="1_1"><a name="user-content-1_1" href="#1_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>小说: 1 本</h3>
+<h4 id="no45"><a name="user-content-no45" href="#no45" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.45 解忧杂货店</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/25862578/">解忧杂货店</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/25862578/"><a href="https://book.douban.com/subject/25862578/"><a href="https://book.douban.com/subject/25862578/">https://book.douban.com/subject/25862578/</a></a></a><br />
+标签：小说        评分：三星<br />
+我的评论：对东野圭吾笔下这种淡如水的推理小说真心不喜欢，虽然自成逻辑。  </p>
+</blockquote>
+<h3 id="1_2"><a name="user-content-1_2" href="#1_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>哲学: 1 本</h3>
+<h4 id="no46"><a name="user-content-no46" href="#no46" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.46 士与中国文化</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1016864/">士与中国文化</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1016864/"><a href="https://book.douban.com/subject/1016864/"><a href="https://book.douban.com/subject/1016864/">https://book.douban.com/subject/1016864/</a></a></a><br />
+标签：哲学        评分：四星<br />
+我的评论：这是余英时的文集，但大体上可由“士”这根绳串起来，仅仅确实隋唐以及科举部分。士起源于低级贵族，春秋战国从王官之学到“天下裂”，下层贵族与庶民流动融合，孔子的巨大影响之下，士遂专为文士。士在战国抗争的背景下收到追捧，齐国的“稷下”制度达到顶峰，树立了道高于政的理念。随后大一统政府的控制下，道统渐弱。汉初朝廷尊黄老，体制从秦制（儒表法里），循吏从儒（以吏为师，先富后教）。到魏晋，士不再是战国时的游士而豪族门第，在精神上也走向标新立异的清谈玄理之风。到宋明，新儒家受佛教影响，弥补形而上而成理学、心学，而商业的发达，四民重新异业同道：士魂商才。  </p>
+</blockquote></article></body></html>

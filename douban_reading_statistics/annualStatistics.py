@@ -29,7 +29,7 @@ from matplotlib.font_manager import FontManager
 from pylab import mpl
 import subprocess
 
-CURRENT_YEAR = 2017
+CURRENT_YEAR = 2016
 
 ############################################################################################################
 
