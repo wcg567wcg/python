@@ -29,8 +29,7 @@ from matplotlib.font_manager import FontManager
 from pylab import mpl
 import subprocess
 
-datapath = "2017readings.txt"
-year = 2017
+CURRENT_YEAR = 2017
 
 ############################################################################################################
 
@@ -53,11 +52,23 @@ class BookInfo:
         self.tag = tag
         self.comment = comment
 
-def get_rating_save_png_name():
-    return u'{0}_read_rate.png'.format(str(year))
+def get_rating_ref_png_name(year):
+    return u'{0}_reading_rate.png'.format(str(year))
 
-def get_tags_save_png_name():
-    return u'{0}_read_tags.png'.format(str(year))
+def get_rating_save_png_name(year):
+    return u'{0}/{1}'.format(str(year), get_rating_ref_png_name(year))
+
+def get_tags_ref_png_name(year):
+    return u'{0}_reading_tags.png'.format(str(year))
+
+def get_tags_save_png_name(year):
+    return u'{0}/{1}'.format(str(year), get_tags_ref_png_name(year))
+
+def get_raw_data_path(year):
+    return u'{0}/{0}reading.data'.format(str(year), str(year))
+
+def get_markdown_path(year):
+    return u'{0}/{0}reading.md'.format(str(year), str(year))
 
 def read_file(path):
     lines = []
@@ -103,9 +114,9 @@ def output_by_rating_num(file, total, rating, books):
 
 def output_tags(file, tags, total):
     file.write('### 标签统计:\n')
-    title = u'{0}年阅读标签统计: 总计 {1} 本'.format(str(year), total)
-    generate_pie(tags, title, get_tags_save_png_name())
-    file.write('![标签统计]({0})\n\n'.format(get_tags_save_png_name()))
+    title = u'{0}年阅读标签统计: 总计 {1} 本'.format(str(CURRENT_YEAR), total)
+    generate_pie(tags, title, get_tags_save_png_name(CURRENT_YEAR))
+    file.write('![标签统计]({0})\n\n'.format(get_tags_ref_png_name(CURRENT_YEAR)))
 
     for key, value in tags:
         file.write(' > {0} {1} 本  \n'.format(key, value))
@@ -178,7 +189,7 @@ def show_pie(labels, fracs, explode, title, savefilename):
     #plt.show()
 
 def analyze_book(books, tags):
-    path = "{0}doubanreading.md".format(str(year))
+    path = get_markdown_path(CURRENT_YEAR)
     if(os.path.isfile(path)):
         os.remove(path)
     file = open(path, 'a')
@@ -191,7 +202,7 @@ def analyze_book(books, tags):
     rating2 = get_book_by_rating(books, 2)
     rating1 = get_book_by_rating(books, 1)
 
-    file.write('## {0}年阅读统计\n'.format(str(year)))
+    file.write('## {0}年阅读统计\n'.format(str(CURRENT_YEAR)))
     file.write('## 总计阅读 {0} 本\n'.format(total))
     file.write('### 评价统计:\n')
 
@@ -200,9 +211,9 @@ def analyze_book(books, tags):
     filter_dict = { key : rating_dict[key] for key in rating_dict.keys() if (rating_dict[key] > 0) }
     #items = sorted(filter_dict.iteritems(), key=lambda d:d[1], reverse = True)
     items = filter_dict.items()
-    title = u'{0}年阅读评价统计: 总计 {1} 本'.format(str(year), total)
-    generate_pie(items, title, get_rating_save_png_name())
-    file.write('![评价统计]({0})\n\n'.format(get_rating_save_png_name()))
+    title = u'{0}年阅读评价统计: 总计 {1} 本'.format(str(CURRENT_YEAR), total)
+    generate_pie(items, title, get_rating_save_png_name(CURRENT_YEAR))
+    file.write('![评价统计]({0})\n\n'.format(get_tags_ref_png_name(CURRENT_YEAR)))
 
     output_by_rating_num(file, total, 5, rating5)
     output_by_rating_num(file, total, 4, rating4)
@@ -325,4 +336,5 @@ def set_matplot_zh_font():
 ############################################################################################################
 if __name__ == '__main__':
     set_matplot_zh_font()
-    process(datapath)
+    rawdata_path = get_raw_data_path(CURRENT_YEAR)
+    process(rawdata_path)
