@@ -32,8 +32,13 @@ class BrowserData:
         self.browser.get(url)
 
     def count(self):
-        return browser.find_element_by_xpath(
-            ".//*[@id='J_DetailMeta']/div[1]/div[1]/div/ul/li[1]/div/span[2]").text.encode('utf-8')
+        count = 0
+        try:
+            count = browser.find_element_by_xpath(".//*[@id='J_DetailMeta']/div[1]/div[1]/div/ul/li[1]/div/span[2]").text.encode('utf-8')
+        except Exception as err:  
+            print(err)  
+        finally:
+            return count
 
 def output_sales(browser, info, url):
     data = BrowserData(browser, url)
