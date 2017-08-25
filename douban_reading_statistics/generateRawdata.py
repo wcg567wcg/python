@@ -155,6 +155,13 @@ def get_raw_data_path(year):
 #=============================================================================
 # 程序入口
 #=============================================================================
+CURRENT_YEAR = 2016
+htmls = ['reading001.html']
 
-if __name__ == '__main__': 
-    parse('reading001.html', 2016)
+if __name__ == '__main__':
+    path = get_raw_data_path(CURRENT_YEAR)
+    if (os.path.isfile(path)):
+        os.remove(path)
+
+    for html in htmls:
+        parse(html, CURRENT_YEAR)
