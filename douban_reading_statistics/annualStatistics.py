@@ -29,8 +29,6 @@ from matplotlib.font_manager import FontManager
 from pylab import mpl
 import subprocess
 
-CURRENT_YEAR = 2016
-
 ############################################################################################################
 
 reload(sys)
@@ -334,6 +332,9 @@ def set_matplot_zh_font():
         mpl.rcParams['axes.unicode_minus'] = False          # 解决保存图像是负号'-'显示为方块的问题
 
 ############################################################################################################
+
+CURRENT_YEAR = 2017
+
 if __name__ == '__main__':
     set_matplot_zh_font()
     rawdata_path = get_raw_data_path(CURRENT_YEAR)

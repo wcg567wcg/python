@@ -155,8 +155,19 @@ def get_raw_data_path(year):
 #=============================================================================
 # 程序入口
 #=============================================================================
-CURRENT_YEAR = 2016
-htmls = ['reading001.html']
+CURRENT_YEAR = 2017
+htmls = [
+    'html/reading06.html', 
+    'html/reading07.html',
+    'html/reading08.html',
+    'html/reading09.html',
+    'html/reading10.html',
+    'html/reading11.html',
+    'html/reading12.html',
+    'html/reading13.html',
+    'html/reading14.html',
+    'html/reading15.html',
+]
 
 if __name__ == '__main__':
     path = get_raw_data_path(CURRENT_YEAR)
