@@ -11,6 +11,8 @@
 import os
 import re
 import string
+import datetime
+
 from bs4 import BeautifulSoup
 
 # 书籍信息类
@@ -38,7 +40,7 @@ def num_to_kanji(num):
         print " ** error: invalid rating num {0}".format(num)
         return ""
 
-def parse_item_info(year, item, books):
+def parse_item_info(item, book_dict):
     # print item.prettify().encode('utf-8')
 
     # get book name and url
@@ -82,6 +84,7 @@ def parse_item_info(year, item, books):
     date = ''
     tags = ''
     star = ''
+    year = ''
     content = item.find("span", "date")
     if content != None:
         if content.string != None:
@@ -92,8 +95,10 @@ def parse_item_info(year, item, books):
                 if len(part) > 0:
                     date = "{0} {1}".format(date, part)
             date = date.strip()
-            if False == date.startswith(str(year)):
-                return
+            pattern = re.compile(r'([0-9]*)(-)([0-9]*)(-)(.*)')
+            match = pattern.search(date)
+            if match:
+                year = match.group(1)
     #print " > date: {0}".format(date)
 
     content = item.find("span", "tags")
@@ -118,61 +123,92 @@ def parse_item_info(year, item, books):
 
     # add book info to list
     bookInfo = BookInfo(name, url, image, publish, reading, comment)
-    books.append(bookInfo)
+    if book_dict.has_key(year):
+        books = book_dict[year]
+        books.append(bookInfo)
+    else:
+        books = [bookInfo]
+        book_dict[year] = books
 
-def exportToRawdata(year, books):
-    if len(books) < 1:
+def exportToRawdata(book_dict):
+    if len(book_dict) < 1:
         return
 
-    path = get_raw_data_path(year)
-    file = open(path, 'a')
+    for (year, books) in book_dict.items():
+        create_directory_if_not_exists(year)
+        path = get_raw_data_path(year)
+        print "export {0} books to {1}".format(len(books), path)
+        file = open(path, 'w')
 
-    for book in books:
-        info = "({0})[{1}]\n".format(book.url, book.name)
-        file.write(info)
-        file.write("{0}\n".format(book.publish))
-        file.write("{0}\n".format(book.reading))
-        file.write("{0}\n".format(book.comment))
-        file.write("#end#\n\n")
+        for book in books:
+            info = "({0})[{1}]\n".format(book.url, book.name)
+            file.write(info)
+            file.write("{0}\n".format(book.publish))
+            file.write("{0}\n".format(book.reading))
+            file.write("{0}\n".format(book.comment))
+            file.write("#end#\n\n")
 
-    file.close()
+        file.close()
 
-def parse(readingHtml, year):
-    books = []
+def parse(readingHtml, data_dict):
+    try:
+        fp = open(readingHtml)
+        soup = BeautifulSoup(fp, "lxml")
 
-    fp = open(readingHtml)
-    soup = BeautifulSoup(fp, "lxml")
-
-    items = soup.find_all("li", "subject-item")
-    for item in items:
-        parse_item_info(year, item, books)
-
-    exportToRawdata(year, books)
+        items = soup.find_all("li", "subject-item")
+        for item in items:
+            parse_item_info(item, data_dict)
+    except Exception as e:
+        print "failed to parse: {0}".format(readingHtml)
+        print e
 
 def get_raw_data_path(year):
     return u'{0}/{0}reading.data'.format(str(year), str(year))
 
+def clear_raw_data(start_year):
+    now = datetime.datetime.now()
+    current_year = now.year
+    for year in range(start_year, current_year + 1):
+        path = get_raw_data_path(year)
+        if (os.path.isfile(path)):
+            print "remove raw data: {0}".format(path)
+            os.remove(path)
+
+def load_raw_reading_html(raw_data_dir):
+    htmls = []
+    if (os.path.isdir(raw_data_dir)):
+        listfile = os.listdir(raw_data_dir)
+        for filename in listfile:
+            path = "{0}/{1}".format(raw_data_dir, filename)
+            if path.endswith(".html"):
+                htmls.append(path)
+                print " > raw html: {0}".format(path)
+    else:
+        print "error: invalid raw reading html directory: {0}".format(path)
+
+    return htmls
+
+def create_directory_if_not_exists(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
 #=============================================================================
 # 程序入口
 #=============================================================================
-CURRENT_YEAR = 2017
-htmls = [
-    'html/reading06.html', 
-    'html/reading07.html',
-    'html/reading08.html',
-    'html/reading09.html',
-    'html/reading10.html',
-    'html/reading11.html',
-    'html/reading12.html',
-    'html/reading13.html',
-    'html/reading14.html',
-    'html/reading15.html',
-]
+START_YEAR = 2000
+RAW_DATA_DIR = "readings"
 
 if __name__ == '__main__':
-    path = get_raw_data_path(CURRENT_YEAR)
-    if (os.path.isfile(path)):
-        os.remove(path)
+    clear_raw_data(START_YEAR)
 
+    data_dict = {}
+
+    # get all raw reading html file
+    htmls = load_raw_reading_html(RAW_DATA_DIR)
+
+    # parse
     for html in htmls:
-        parse(html, CURRENT_YEAR)
+        parse(html, data_dict)
+
+    # export
+    exportToRawdata(data_dict)
