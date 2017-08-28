@@ -1,0 +1,1357 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>body {
+  max-width: 980px;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 45px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+@font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAYcAA0AAAAACjQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAABMAAAABwAAAAca8vGTk9TLzIAAAFMAAAARAAAAFZG1VHVY21hcAAAAZAAAAA+AAABQgAP9AdjdnQgAAAB0AAAAAQAAAAEACICiGdhc3AAAAHUAAAACAAAAAj//wADZ2x5ZgAAAdwAAADRAAABEKyikaNoZWFkAAACsAAAAC0AAAA2AtXoA2hoZWEAAALgAAAAHAAAACQHngNFaG10eAAAAvwAAAAQAAAAEAwAACJsb2NhAAADDAAAAAoAAAAKALIAVG1heHAAAAMYAAAAHwAAACABEAB2bmFtZQAAAzgAAALBAAAFu3I9x/Nwb3N0AAAF/AAAAB0AAAAvaoFvbwAAAAEAAAAAzBdyYwAAAADP2IQvAAAAAM/bz7t4nGNgZGFgnMDAysDB1Ml0hoGBoR9CM75mMGLkYGBgYmBlZsAKAtJcUxgcPsR8iGF2+O/AEMPsznAYKMwIkgMA5REMOXicY2BgYGaAYBkGRgYQsAHyGMF8FgYFIM0ChED+h5j//yEk/3KoSgZGNgYYk4GRCUgwMaACRoZhDwCs7QgGAAAAIgKIAAAAAf//AAJ4nHWMMQrCQBBF/0zWrCCIKUQsTDCL2EXMohYGSSmorScInsRGL2DOYJe0Ntp7BK+gJ1BxF1stZvjz/v8DRghQzEc4kIgKwiAppcA9LtzKLSkdNhKFY3HF4lK69ExKslx7Xa+vPRVS43G98vG1DnkDMIBUgFN0MDXflU8tbaZOUkXUH0+U27RoRpOIyCKjbMCVejwypzJJG4jIwb43rfl6wbwanocrJm9XFYfskuVC5K/TPyczNU7b84CXcbxks1Un6H6tLH9vf2LRnn8Ax7A5WQAAAHicY2BkYGAA4teL1+yI57f5ysDNwgAC529f0kOmWRiYVgEpDgYmEA8AUzEKsQAAAHicY2BkYGB2+O/AEMPCAAJAkpEBFbAAADgKAe0EAAAiAAAAAAQAAAAEAAAAAAAAKgAqACoAiAAAeJxjYGRgYGBhsGFgYgABEMkFhAwM/xn0QAIAD6YBhwB4nI1Ty07cMBS9QwKlQapQW3VXySvEqDCZGbGaHULiIQ1FKgjWMxknMfLEke2A+IJu+wntrt/QbVf9gG75jK577Lg8K1qQPCfnnnt8fX1NRC/pmjrk/zprC+8D7tBy9DHgBXoWfQ44Av8t4Bj4Z8CLtBL9CniJluPXASf0Lm4CXqFX8Q84dOLnMB17N4c7tBo1AS/Qi+hTwBH4rwHHwN8DXqQ30XXAS7QaLwSc0Gn8NuAVWou/gFmnjLrEaEh9GmDdDGgL3B4JsrRPDU2hTOiMSuJUIdKQQayiAth69r6akSSFqIJuA19TrzCIaY8sIoxyrNIrL//pw7A2iMygkX5vDj+G+kuoLdX4GlGK/8Lnlz6/h9MpmoO9rafrz7ILXEHHaAx95s9lsI7AHNMBWEZHULnfAXwG9/ZqdzLI08iuwRloXE8kfhXYAvE23+23DU3t626rbs8/8adv+9DWknsHp3E17oCf+Z48rvEQNZ78paYM38qfk3v/u3l3u3GXN2Dmvmvpf1Srwk3pB/VSsp512bA/GG5i2WJ7wu430yQ5K3nFGiOqgtmSB5pJVSizwaacmUZzZhXLlZTq8qGGFY2YcSkqbth6aW1tRmlaCFs2016m5qn36SbJrqosG4uMV4aP2PHBmB3tjtmgN2izkGQyLWprekbIntJFing32a5rKWCN/SdSoga45EJykyQ7asZvHQ8PTm6cslIpwyeyjbVltNikc2HTR7YKh9LBl9DADC0U/jLcBZDKrMhUBfQBvXRzLtFtjU9eNHKin0x5InTqb8lNpfKv1s1xHzTXRqgKzek/mb7nB8RZTCDhGEX3kK/8Q75AmUM/eLkfA+0Hi908Kx4eNsMgudg5GLdRD7a84npi+YxNr5i5KIbW5izXas7cHXIMAau1OueZhfj+cOcP3P8MNIWLyYOBuxL6DRylJ4cAAAB4nGNgYoAALjDJyIAOWMCiTIxMLDmZedkABtIBygAAAA==) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headeranchor-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding-right: 6px;
+  padding-left: 30px;
+  margin-left: -30px;
+}
+
+.markdown-body .headeranchor-link:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .headeranchor,
+.markdown-body h2 .headeranchor,
+.markdown-body h3 .headeranchor,
+.markdown-body h4 .headeranchor,
+.markdown-body h5 .headeranchor,
+.markdown-body h6 .headeranchor {
+  display: none;
+  color: #000;
+  vertical-align: middle;
+}
+
+.markdown-body h1:hover .headeranchor-link,
+.markdown-body h2:hover .headeranchor-link,
+.markdown-body h3:hover .headeranchor-link,
+.markdown-body h4:hover .headeranchor-link,
+.markdown-body h5:hover .headeranchor-link,
+.markdown-body h6:hover .headeranchor-link {
+  height: 1em;
+  padding-left: 8px;
+  margin-left: -30px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .headeranchor-link .headeranchor,
+.markdown-body h2:hover .headeranchor-link .headeranchor,
+.markdown-body h3:hover .headeranchor-link .headeranchor,
+.markdown-body h4:hover .headeranchor-link .headeranchor,
+.markdown-body h5:hover .headeranchor-link .headeranchor,
+.markdown-body h6:hover .headeranchor-link .headeranchor {
+  display: inline-block;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .codehilite pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* Multimarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px octicons-anchor;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\f05c';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><title>2012reading</title></head><body><article class="markdown-body"><h2 id="2012"><a name="user-content-2012" href="#2012" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2012年阅读统计</h2>
+<h2 id="43"><a name="user-content-43" href="#43" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>总计阅读 43 本</h2>
+<h3 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>评价统计:</h3>
+<p><img alt="评价统计" src="/home/luozhaohui/Documents/github/python/douban_reading_statistics/2012/2012_reading_tags.png" /></p>
+<blockquote>
+<p>五星图书 13 本，占比 30.2%<br />
+四星图书 16 本，占比 37.2%<br />
+三星图书 12 本，占比 27.9%<br />
+两星图书 2 本，占比 4.7%  </p>
+</blockquote>
+<h3 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>标签统计:</h3>
+<p><img alt="标签统计" src="/home/luozhaohui/Documents/github/python/douban_reading_statistics/2012/2012_reading_tags.png" /></p>
+<blockquote>
+<p>编程 13 本<br />
+文学 7 本<br />
+心理 6 本<br />
+思维 4 本<br />
+社会 4 本<br />
+教育 2 本<br />
+经济 1 本<br />
+政治 1 本<br />
+人类学 1 本<br />
+哲学 1 本<br />
+科学 1 本<br />
+商业 1 本<br />
+管理 1 本  </p>
+</blockquote>
+<h3 id="13"><a name="user-content-13" href="#13" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>编程: 13 本</h3>
+<h4 id="no1-concurrent-programming-on-windows"><a name="user-content-no1-concurrent-programming-on-windows" href="#no1-concurrent-programming-on-windows" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.1 Concurrent Programming on Windows</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/2977175/">Concurrent Programming on Windows</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/2977175/"><a href="https://book.douban.com/subject/2977175/"><a href="https://book.douban.com/subject/2977175/">https://book.douban.com/subject/2977175/</a></a></a><br />
+标签：编程        评分：五星<br />
+我的评论：全面深入解析windows多线程的方方面面，覆盖Win32和.NET，全面超越《Win32多线程程序设计》。  </p>
+</blockquote>
+<h4 id="no2-c"><a name="user-content-no2-c" href="#no2-c" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.2 C#高效编程</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/5360961/">C#高效编程</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/5360961/"><a href="https://book.douban.com/subject/5360961/"><a href="https://book.douban.com/subject/5360961/">https://book.douban.com/subject/5360961/</a></a></a><br />
+标签：编程        评分：五星<br />
+我的评论：C#进阶书籍，都是经验之谈，对得起Effective这个称号~~  </p>
+</blockquote>
+<h4 id="no3-cnet-45"><a name="user-content-no3-cnet-45" href="#no3-cnet-45" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.3 C#与.NET 4高级程序设计（第5版）</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/6062550/">C#与.NET 4高级程序设计（第5版）</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/6062550/"><a href="https://book.douban.com/subject/6062550/"><a href="https://book.douban.com/subject/6062550/">https://book.douban.com/subject/6062550/</a></a></a><br />
+标签：编程        评分：五星<br />
+我的评论：不愧是C#圣经，详尽，通俗，适度深入地介绍C#的各种语法特性，入门必读。。。  </p>
+</blockquote>
+<h4 id="no4-clr-via-c"><a name="user-content-no4-clr-via-c" href="#no4-clr-via-c" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.4 CLR via C</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/4924165/">CLR via C#</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/4924165/"><a href="https://book.douban.com/subject/4924165/"><a href="https://book.douban.com/subject/4924165/">https://book.douban.com/subject/4924165/</a></a></a><br />
+标签：编程        评分：五星<br />
+我的评论：CLR &amp; C# 全面深入剖析，C#深入必备利器。。。  </p>
+</blockquote>
+<h4 id="no5-win32"><a name="user-content-no5-win32" href="#no5-win32" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.5 Win32多线程程序设计</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1231702/">Win32多线程程序设计</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1231702/"><a href="https://book.douban.com/subject/1231702/"><a href="https://book.douban.com/subject/1231702/">https://book.douban.com/subject/1231702/</a></a></a><br />
+标签：编程        评分：四星<br />
+我的评论：比较详细，深入浅出地讲解windows下多线程的书籍，值得一读，。。。  </p>
+</blockquote>
+<h4 id="no6-more-effective-c"><a name="user-content-no6-more-effective-c" href="#no6-more-effective-c" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.6 More Effective C#中文版</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/4101150/">More Effective C#中文版</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/4101150/"><a href="https://book.douban.com/subject/4101150/"><a href="https://book.douban.com/subject/4101150/">https://book.douban.com/subject/4101150/</a></a></a><br />
+标签：编程        评分：四星<br />
+我的评论：带上 Effective 标签就有水准保障，个人感觉这本 More 比无 More 前缀的那本要 More 一些。。。C# 进阶必读  </p>
+</blockquote>
+<h4 id="no7-net"><a name="user-content-no7-net" href="#no7-net" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.7 .NET设计规范</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1829262/">.NET设计规范</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1829262/"><a href="https://book.douban.com/subject/1829262/"><a href="https://book.douban.com/subject/1829262/">https://book.douban.com/subject/1829262/</a></a></a><br />
+标签：编程        评分：四星<br />
+我的评论：若说《CLR VIA C#》是讲语法及语法背后的事情，那么这本就是讲编程规则的：语法要/不要怎样用以及为什么要/不要的问题。最新版本为第2版，这个版本的有点老了。  </p>
+</blockquote>
+<h4 id="no8-javascript-dom-2"><a name="user-content-no8-javascript-dom-2" href="#no8-javascript-dom-2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.8 JavaScript DOM编程艺术 （第2版）</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/6038371/">JavaScript DOM编程艺术 （第2版）</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/6038371/"><a href="https://book.douban.com/subject/6038371/"><a href="https://book.douban.com/subject/6038371/">https://book.douban.com/subject/6038371/</a></a></a><br />
+标签：编程        评分：四星<br />
+我的评论：Javascript 入门书籍，还不错的~~  </p>
+</blockquote>
+<h4 id="no9-wpf"><a name="user-content-no9-wpf" href="#no9-wpf" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.9 深入浅出WPF</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/4935260/">深入浅出WPF</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/4935260/"><a href="https://book.douban.com/subject/4935260/"><a href="https://book.douban.com/subject/4935260/">https://book.douban.com/subject/4935260/</a></a></a><br />
+标签：编程        评分：四星<br />
+我的评论：口语化写作，讲得还不错，入门的话值得翻翻~~  </p>
+</blockquote>
+<h4 id="no10-windows"><a name="user-content-no10-windows" href="#no10-windows" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.10 Windows并发编程指南</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/4214617/">Windows并发编程指南</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/4214617/"><a href="https://book.douban.com/subject/4214617/"><a href="https://book.douban.com/subject/4214617/">https://book.douban.com/subject/4214617/</a></a></a><br />
+标签：编程        评分：三星<br />
+我的评论：原著是还不错，就是翻译的欠火候。。。  </p>
+</blockquote>
+<h4 id="no11-opengl-es-20-programming-guide"><a name="user-content-no11-opengl-es-20-programming-guide" href="#no11-opengl-es-20-programming-guide" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.11 OpenGL ES 2.0 Programming Guide</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/3175883/">OpenGL ES 2.0 Programming Guide</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/3175883/"><a href="https://book.douban.com/subject/3175883/"><a href="https://book.douban.com/subject/3175883/">https://book.douban.com/subject/3175883/</a></a></a><br />
+标签：编程        评分：三星<br />
+我的评论：就像 API 文档一样，不是太好。。。  </p>
+</blockquote>
+<h4 id="no12-pro-net-40-parallel-programming-in-c"><a name="user-content-no12-pro-net-40-parallel-programming-in-c" href="#no12-pro-net-40-parallel-programming-in-c" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.12 Pro .NET 4.0 Parallel Programming in C</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/5931348/">Pro .NET 4.0 Parallel Programming in C#</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/5931348/"><a href="https://book.douban.com/subject/5931348/"><a href="https://book.douban.com/subject/5931348/">https://book.douban.com/subject/5931348/</a></a></a><br />
+标签：编程        评分：三星<br />
+我的评论：教你如何使用.NET 4.0 并行库进行编程，API示例级别的，非常详细，适合入门。《Windows并发编程》是将底层的技术，这边是入门级别的。  </p>
+</blockquote>
+<h4 id="no13"><a name="user-content-no13" href="#no13" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.13 反模式</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/2364818/">反模式</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/2364818/"><a href="https://book.douban.com/subject/2364818/"><a href="https://book.douban.com/subject/2364818/">https://book.douban.com/subject/2364818/</a></a></a><br />
+标签：编程        评分：三星<br />
+我的评论：从编码设计，架构，管理三个层次来讲述项目失败的各种反“模式”，并给出解决方案或重构方案，个人认为架构与管理两个层次讲解得出色一些。  </p>
+</blockquote>
+<h3 id="7"><a name="user-content-7" href="#7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>文学: 7 本</h3>
+<h4 id="no14"><a name="user-content-no14" href="#no14" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.14 吾国与吾民</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/3200831/">吾国与吾民</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/3200831/"><a href="https://book.douban.com/subject/3200831/"><a href="https://book.douban.com/subject/3200831/">https://book.douban.com/subject/3200831/</a></a></a><br />
+标签：文学        评分：五星<br />
+我的评论：菊与刀是了解日本人的，那么《吾国与吾民》是了解中国人的（或许还可算上辜鸿铭的《中国人的精神》）  </p>
+</blockquote>
+<h4 id="no15"><a name="user-content-no15" href="#no15" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.15 大地三部曲</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/4067609/">大地三部曲</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/4067609/"><a href="https://book.douban.com/subject/4067609/"><a href="https://book.douban.com/subject/4067609/">https://book.douban.com/subject/4067609/</a></a></a><br />
+标签：文学        评分：四星<br />
+我的评论：讲述在清末，军阀，中国明国初期祖孙三代人的生活经历，从苏北农村地主到军阀，到海滨城市新青年/洋学者/革命者的三部曲。就像轮回，我们现在也经历着从农村，到城市，到留洋。  </p>
+</blockquote>
+<h4 id="no16"><a name="user-content-no16" href="#no16" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.16 少年巴比伦</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/3194071/">少年巴比伦</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/3194071/"><a href="https://book.douban.com/subject/3194071/"><a href="https://book.douban.com/subject/3194071/">https://book.douban.com/subject/3194071/</a></a></a><br />
+标签：文学        评分：四星<br />
+我的评论：读过的第二步路内的小说了，笔风依旧，油腔滑嘴嬉皮笑脸背后的却是大感伤与悲苍，青春易逝，物非人亦非。撩起了看王小波小说的欲望了。。。  </p>
+</blockquote>
+<h4 id="no17"><a name="user-content-no17" href="#no17" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.17 追随她的旅程</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/3406518/">追随她的旅程</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/3406518/"><a href="https://book.douban.com/subject/3406518/"><a href="https://book.douban.com/subject/3406518/">https://book.douban.com/subject/3406518/</a></a></a><br />
+标签：文学        评分：四星<br />
+我的评论：端午在家一口气看完的青春小说。说了一群生活在小城戴城的少年们的成长往事，文字幽默畅快，而又伤感缠绵。  </p>
+</blockquote>
+<h4 id="no18"><a name="user-content-no18" href="#no18" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.18 迟到的间隔年</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/3905366/">迟到的间隔年</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/3905366/"><a href="https://book.douban.com/subject/3905366/"><a href="https://book.douban.com/subject/3905366/">https://book.douban.com/subject/3905366/</a></a></a><br />
+标签：文学        评分：三星<br />
+我的评论：一个人的游记，看看不同人的生活吧。。。  </p>
+</blockquote>
+<h4 id="no19"><a name="user-content-no19" href="#no19" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.19 贫嘴张大民的幸福生活</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1085777/">贫嘴张大民的幸福生活</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1085777/"><a href="https://book.douban.com/subject/1085777/"><a href="https://book.douban.com/subject/1085777/">https://book.douban.com/subject/1085777/</a></a></a><br />
+标签：文学        评分：三星<br />
+我的评论：贫人贫嘴辛酸地自嘲。。。  </p>
+</blockquote>
+<h4 id="no20"><a name="user-content-no20" href="#no20" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.20 浮生若梦</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/3017133/">浮生若梦</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/3017133/"><a href="https://book.douban.com/subject/3017133/"><a href="https://book.douban.com/subject/3017133/">https://book.douban.com/subject/3017133/</a></a></a><br />
+标签：文学        评分：三星<br />
+我的评论：可算作是林语堂的半自传吧，个人觉得予之信仰那一部分讲东西哲学及各自利弊部分相当精彩。或许看看《吾国与吾民》就无需看此书了。  </p>
+</blockquote>
+<h3 id="6"><a name="user-content-6" href="#6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>心理: 6 本</h3>
+<h4 id="no21"><a name="user-content-no21" href="#no21" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.21 态度改变与社会影响</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/2328178/">态度改变与社会影响</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/2328178/"><a href="https://book.douban.com/subject/2328178/"><a href="https://book.douban.com/subject/2328178/">https://book.douban.com/subject/2328178/</a></a></a><br />
+标签：心理        评分：五星<br />
+我的评论：这书牛得不行，作者是曾写过《心理学与生活》的那位津巴多大牛。。。  </p>
+</blockquote>
+<h4 id="no22"><a name="user-content-no22" href="#no22" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.22 怪诞行为学</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/4929844/">怪诞行为学</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/4929844/"><a href="https://book.douban.com/subject/4929844/"><a href="https://book.douban.com/subject/4929844/">https://book.douban.com/subject/4929844/</a></a></a><br />
+标签：心理        评分：五星<br />
+我的评论：从不同的角度来解析非理性行为。。。  </p>
+</blockquote>
+<h4 id="no23"><a name="user-content-no23" href="#no23" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.23 直觉</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/4821383/">直觉</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/4821383/"><a href="https://book.douban.com/subject/4821383/"><a href="https://book.douban.com/subject/4821383/">https://book.douban.com/subject/4821383/</a></a></a><br />
+标签：心理        评分：四星<br />
+我的评论：总结得比较全的有关行为经济学方面的书籍。  </p>
+</blockquote>
+<h4 id="no24"><a name="user-content-no24" href="#no24" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.24 心理和脑</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/2193673/">心理和脑</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/2193673/"><a href="https://book.douban.com/subject/2193673/"><a href="https://book.douban.com/subject/2193673/">https://book.douban.com/subject/2193673/</a></a></a><br />
+标签：心理        评分：四星<br />
+我的评论：虽然是非常薄的一本书，信息量挺大，引用到的资料巨多，内容从大脑结构，注意力，听觉，视觉，运动，组合，推理，记忆力等多方面来讲述人类行为的根由，值得一看。唯一遗憾的是，翻译不是一般的生涩。  </p>
+</blockquote>
+<h4 id="no25"><a name="user-content-no25" href="#no25" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.25 大脑与心智</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1104764/">大脑与心智</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1104764/"><a href="https://book.douban.com/subject/1104764/"><a href="https://book.douban.com/subject/1104764/">https://book.douban.com/subject/1104764/</a></a></a><br />
+标签：心理        评分：四星<br />
+我的评论：解析大脑，神经传导，记忆，非常不错的科普书籍~~  </p>
+</blockquote>
+<h4 id="no26"><a name="user-content-no26" href="#no26" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.26 看不见的大猩猩</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/5910460/">看不见的大猩猩</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/5910460/"><a href="https://book.douban.com/subject/5910460/"><a href="https://book.douban.com/subject/5910460/">https://book.douban.com/subject/5910460/</a></a></a><br />
+标签：心理        评分：三星<br />
+我的评论：讲述人类认知模式的副作用-错觉，大众读物，看看如下链接足矣：<a href="http://book.sina.com.cn/z/biggorilla/index.shtml">http://book.sina.com.cn/z/biggorilla/index.shtml</a>  </p>
+</blockquote>
+<h3 id="4"><a name="user-content-4" href="#4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>思维: 4 本</h3>
+<h4 id="no27"><a name="user-content-no27" href="#no27" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.27 创造性问题求解的策略</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1318736/">创造性问题求解的策略</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1318736/"><a href="https://book.douban.com/subject/1318736/"><a href="https://book.douban.com/subject/1318736/">https://book.douban.com/subject/1318736/</a></a></a><br />
+标签：思维        评分：五星<br />
+我的评论：相当不错的问题求解指导，从认准问题，创造解法，决定解决方案，实施，评估检验五个环节予以详细指导，作者在书中还整合借鉴了大量其他资料与思想。非常不错！  </p>
+</blockquote>
+<h4 id="no28"><a name="user-content-no28" href="#no28" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.28 世界是平的</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1861805/">世界是平的</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1861805/"><a href="https://book.douban.com/subject/1861805/"><a href="https://book.douban.com/subject/1861805/">https://book.douban.com/subject/1861805/</a></a></a><br />
+标签：思维        评分：四星<br />
+我的评论：佩服作者视角的广度与深度，能在10年前就较全面地分析与预测全球化体系以及其与各国人文，社会等传统力量之间的关系！内容写得啰嗦了点，如果能压缩到200以内就更好！  </p>
+</blockquote>
+<h4 id="no29"><a name="user-content-no29" href="#no29" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.29 拆掉思维里的墙</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/4953695/">拆掉思维里的墙</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/4953695/"><a href="https://book.douban.com/subject/4953695/"><a href="https://book.douban.com/subject/4953695/">https://book.douban.com/subject/4953695/</a></a></a><br />
+标签：思维        评分：三星<br />
+我的评论：人活着第一要紧的是明白什么是自己想要的，什么是最重要的，其余的学会忽视和放下。。。  </p>
+</blockquote>
+<h4 id="no30"><a name="user-content-no30" href="#no30" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.30 金字塔原理</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1020644/">金字塔原理</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1020644/"><a href="https://book.douban.com/subject/1020644/"><a href="https://book.douban.com/subject/1020644/">https://book.douban.com/subject/1020644/</a></a></a><br />
+标签：思维        评分：三星<br />
+我的评论：学会去表达，如何让别人更容易理解你所写所说。。。  </p>
+</blockquote>
+<h3 id="4_1"><a name="user-content-4_1" href="#4_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>社会: 4 本</h3>
+<h4 id="no31"><a name="user-content-no31" href="#no31" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.31 黑猩猩的政治</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/3785326/">黑猩猩的政治</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/3785326/"><a href="https://book.douban.com/subject/3785326/"><a href="https://book.douban.com/subject/3785326/">https://book.douban.com/subject/3785326/</a></a></a><br />
+标签：社会        评分：五星<br />
+我的评论：一群黑猩猩的社会活动&ndash;或曰“政治”纪录片，别小瞧动物们。。。  </p>
+</blockquote>
+<h4 id="no32"><a name="user-content-no32" href="#no32" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.32 中国在梁庄</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/5350804/">中国在梁庄</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/5350804/"><a href="https://book.douban.com/subject/5350804/"><a href="https://book.douban.com/subject/5350804/">https://book.douban.com/subject/5350804/</a></a></a><br />
+标签：社会        评分：五星<br />
+我的评论：真实记录在一味只顾经济发展大背景下的乡村变迁，在回家路上看的，在家观察对比，发现中国农村发展大体差不多，农村日渐荒芜，环境恶化。。。  </p>
+</blockquote>
+<h4 id="no33"><a name="user-content-no33" href="#no33" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.33 重新发现社会</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/4199761/">重新发现社会</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/4199761/"><a href="https://book.douban.com/subject/4199761/"><a href="https://book.douban.com/subject/4199761/">https://book.douban.com/subject/4199761/</a></a></a><br />
+标签：社会        评分：四星<br />
+我的评论：不错的民主自由社会启蒙读物，前面四章写得不错，后面的太罗嗦。。。。  </p>
+</blockquote>
+<h4 id="no34"><a name="user-content-no34" href="#no34" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.34 失控</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/5375620/">失控</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/5375620/"><a href="https://book.douban.com/subject/5375620/"><a href="https://book.douban.com/subject/5375620/">https://book.douban.com/subject/5375620/</a></a></a><br />
+标签：社会        评分：四星<br />
+我的评论：以跨学科背景来讲述系统的运转，进化以及将来的走向，这个系统可以是生态系统，可以互联网系统，可以是人类组织社会，可以虚拟现实等一切系统。行文冗长，可以先看最后两节中的九律一窥全貌。  </p>
+</blockquote>
+<h3 id="2"><a name="user-content-2" href="#2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>教育: 2 本</h3>
+<h4 id="no35"><a name="user-content-no35" href="#no35" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.35 零压力社交</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/6532122/">零压力社交</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/6532122/"><a href="https://book.douban.com/subject/6532122/"><a href="https://book.douban.com/subject/6532122/">https://book.douban.com/subject/6532122/</a></a></a><br />
+标签：教育        评分：三星<br />
+我的评论：总结在外向型交际法则主导的社会活动中，内向型人如何开展符合自身特点的社交活动。  </p>
+</blockquote>
+<h4 id="no36"><a name="user-content-no36" href="#no36" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.36 五天学会绘画</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/5263615/">五天学会绘画</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/5263615/"><a href="https://book.douban.com/subject/5263615/"><a href="https://book.douban.com/subject/5263615/">https://book.douban.com/subject/5263615/</a></a></a><br />
+标签：教育        评分：两星<br />
+我的评论：和《二十一天学会XX语言》一个套路？  </p>
+</blockquote>
+<h3 id="1"><a name="user-content-1" href="#1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>经济: 1 本</h3>
+<h4 id="no37-12"><a name="user-content-no37-12" href="#no37-12" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.37 经济学的思维方式（修订第12版）</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/10510736/">经济学的思维方式（修订第12版）</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/10510736/"><a href="https://book.douban.com/subject/10510736/"><a href="https://book.douban.com/subject/10510736/">https://book.douban.com/subject/10510736/</a></a></a><br />
+标签：经济        评分：五星<br />
+我的评论：非常不错的经济学普及读物，通俗易懂，有理有据。虽然2012还有小半年，估计这本是将会是我今年最佳的读物了。  </p>
+</blockquote>
+<h3 id="1_1"><a name="user-content-1_1" href="#1_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>政治: 1 本</h3>
+<h4 id="no38"><a name="user-content-no38" href="#no38" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.38 美丽新世界</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1321789/">美丽新世界</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1321789/"><a href="https://book.douban.com/subject/1321789/"><a href="https://book.douban.com/subject/1321789/">https://book.douban.com/subject/1321789/</a></a></a><br />
+标签：政治        评分：四星<br />
+我的评论：反乌托邦三书之一，书中由少数精英控制的社会宣扬的是“社会、本分、安定”，真理，科学，宗教，幸福等其他真，善与美的东西都是为了稳定而必须牺牲的代价物。。。  </p>
+</blockquote>
+<h3 id="1_2"><a name="user-content-1_2" href="#1_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>人类学: 1 本</h3>
+<h4 id="no39"><a name="user-content-no39" href="#no39" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.39 天真的人类学家</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/1129216/">天真的人类学家</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/1129216/"><a href="https://book.douban.com/subject/1129216/"><a href="https://book.douban.com/subject/1129216/">https://book.douban.com/subject/1129216/</a></a></a><br />
+标签：人类学        评分：四星<br />
+我的评论：了解下几近原始部落的生活，意识形态以及人类学调查的方式，绝对新颖，作者描述得也很有趣~~~  </p>
+</blockquote>
+<h3 id="1_3"><a name="user-content-1_3" href="#1_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>哲学: 1 本</h3>
+<h4 id="no40"><a name="user-content-no40" href="#no40" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.40 冥想的艺术</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/4742960/">冥想的艺术</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/4742960/"><a href="https://book.douban.com/subject/4742960/"><a href="https://book.douban.com/subject/4742960/">https://book.douban.com/subject/4742960/</a></a></a><br />
+标签：哲学        评分：两星<br />
+我的评论：抱着猎奇的心理看完这本书，了解了很多佛教概念，但书中提到的佛教概念太唯心了，把一切都当作投射，有时候就像精神胜利法一样。。。  </p>
+</blockquote>
+<h3 id="1_4"><a name="user-content-1_4" href="#1_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>科学: 1 本</h3>
+<h4 id="no41-digital-imaging-and-communications-in-medicine"><a name="user-content-no41-digital-imaging-and-communications-in-medicine" href="#no41-digital-imaging-and-communications-in-medicine" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.41 Digital Imaging and Communications in Medicine</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/10314720/">Digital Imaging and Communications in Medicine</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/10314720/"><a href="https://book.douban.com/subject/10314720/"><a href="https://book.douban.com/subject/10314720/">https://book.douban.com/subject/10314720/</a></a></a><br />
+标签：科学        评分：五星<br />
+我的评论：可以称之为DICOM 圣经吧，作者结合自身丰富的PACS实践经验，介绍了DICOM的优缺点，并列举出许多实际应用要注意的事项。  </p>
+</blockquote>
+<h3 id="1_5"><a name="user-content-1_5" href="#1_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>商业: 1 本</h3>
+<h4 id="no42-facebook"><a name="user-content-no42-facebook" href="#no42-facebook" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.42 Facebook效应</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/5313010/">Facebook效应</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/5313010/"><a href="https://book.douban.com/subject/5313010/"><a href="https://book.douban.com/subject/5313010/">https://book.douban.com/subject/5313010/</a></a></a><br />
+标签：商业        评分：五星<br />
+我的评论：社会，至少是网络社会会朝着分享与透明继续前行，从而让世界更美好。我想这是Facebook坚持的理念。  </p>
+</blockquote>
+<h3 id="1_6"><a name="user-content-1_6" href="#1_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>管理: 1 本</h3>
+<h4 id="no43"><a name="user-content-no43" href="#no43" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>No.43 谁说大象不能跳舞(珍藏版)</h4>
+<blockquote>
+<p>图书名称：<a href="https://book.douban.com/subject/4178327/">谁说大象不能跳舞(珍藏版)</a><br />
+豆瓣链接：<a href="https://book.douban.com/subject/4178327/"><a href="https://book.douban.com/subject/4178327/"><a href="https://book.douban.com/subject/4178327/">https://book.douban.com/subject/4178327/</a></a></a><br />
+标签：管理        评分：三星<br />
+我的评论：世界上还有这样一些人，每天都在思考战略，每天都在做出艰难的决策，他们有着非凡和气魄，能够成功的挽救一个庞大的企业。  </p>
+</blockquote></article></body></html>
