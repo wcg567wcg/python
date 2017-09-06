@@ -125,7 +125,9 @@ def parse_item_info(item, book_dict):
     bookInfo = BookInfo(name, url, image, publish, reading, comment)
     if book_dict.has_key(year):
         books = book_dict[year]
-        books.append(bookInfo)
+        contains = [book for book in books if book.url == url]
+        if len(contains) == 0:
+            books.append(bookInfo)
     else:
         books = [bookInfo]
         book_dict[year] = books
