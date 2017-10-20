@@ -11,6 +11,7 @@
 
 import os
 import threading
+from multiprocessing.dummy import Pool as ThreadPool
 import time
 import datetime
 import re
@@ -21,6 +22,9 @@ from bs4 import BeautifulSoup
 
 gHeader = {"User-Agent": "Mozilla-Firefox5.0"}
 
+#=============================================================================
+# classes
+#=============================================================================
 # 
 class LevelInfo:
     name = ''
@@ -60,6 +64,54 @@ class ChapterInfo:
     def __str__( self ):
         return "Chapter:{0}, url:{1}, mp3:{2}".format(self.name, self.url, self.mp3Url)
 
+# 
+class DownloadInfo:
+    name = ''
+    path = ''
+    mp3Url = ''
+
+    def __init__(self, name, path, mp3):
+        self.name = name
+        self.path = path
+        self.mp3Url = mp3
+
+    def __str__( self ):
+        return "Download:path:{0}, mp3:{1}".format(self.path, self.mp3Url)
+
+#=============================================================================
+# utilities
+#=============================================================================
+
+def get_root_url(url):
+    rootUrl = url
+    start = url.find(".")
+    if start > 0:
+        index = url.find("/", start);
+        if index > 0:
+            rootUrl = url[0:index]
+    return rootUrl
+
+def slow_down():
+    time.sleep(0.5)         # slow down a little
+
+def mkdir(path):
+    if (False == os.path.exists(path)):
+        os.mkdir(path)
+
+def get_postfix(resUrl):
+    index = resUrl.rfind('.')
+    if index > 0:
+        return resUrl[index:]
+    return ""
+
+def get_cpu_count():
+    """Return the number of logical CPUs in the system."""
+    try:
+        return os.sysconf("SC_NPROCESSORS_ONLN")
+    except ValueError:
+        # mimic os.cpu_count() behavior
+        return None
+
 # 获取 url 内容
 def getHtml(url):
     try :
@@ -74,70 +126,10 @@ def getHtml(url):
             print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
             print "Reason: %s" % e.reason
     return data
-
-
-def get_root_url(url):
-    rootUrl = url
-    start = url.find(".")
-    if start > 0:
-        index = url.find("/", start);
-        if index > 0:
-            rootUrl = url[0:index]
-    return rootUrl
-
-# parse resource url
-def parse(url):
-    start = timeit.default_timer()
-
-    rootUrl = get_root_url(url)
-    print "rootUrl: " + rootUrl
-
-    levelInfos = []
-
-    page = getHtml(url)
-    soup = BeautifulSoup(page, 'html.parser')
-
-    # get doulist title
-    #pageTitle = soup.html.head.title.string.encode('utf-8')
-    #print " > page title：" + pageTitle
-
-    # get resource title
-    resourceTitle = ""
-    content = soup.find(id="containertow")
-    if content != None:
-        titleContent = content.find("div", "catmenutitle");
-        if titleContent != None and titleContent.string != None:
-            resourceTitle = titleContent.string.strip().encode('utf-8')
-            #print " > resource title：" + resourceTitle
-
-    # get level infos
-    mainleftlist = soup.find(id="mainleftlist");
-    if (mainleftlist != None):
-        #print mainleftlist.prettify()
-        leftTitles = mainleftlist.find_all("div", "leftTitle")
-        print "find %d levels" % len(leftTitles)
-        for leftTitle in leftTitles:
-            #print leftTitle.prettify()
-            link = leftTitle.find("a");
-            if link != None:
-                levelName = ""
-                if link.string != None:
-                    levelName = link.string.strip().encode('utf-8')
-                href = link['href'].encode('utf-8')
-                levelUrl = rootUrl + href;
-
-                levelInfo = LevelInfo(levelName, levelUrl)
-                levelInfos.append(levelInfo)
-                #print levelInfo
-
-    for levelInfo in levelInfos:
-        parse_level(levelInfo)
-
-    store_resource(resourceTitle, levelInfos)
-
-def slow_down():
-	time.sleep(0.5)         # slow down a little
-
+    
+#=============================================================================
+# parse
+#=============================================================================
 def parse_level(levelInfo):
     name = levelInfo.name
     url = levelInfo.url
@@ -205,7 +197,10 @@ def parse_chapter(chapterUrl):
     return mp3Url
 
 def store_resource(title, levelInfos):
-    path = "{0}.md".format(title)
+    mkdir(title)
+
+    fileName = "{0}.md".format(title)
+    path = os.path.join(title, fileName)
     if(os.path.isfile(path)):
         os.remove(path)
 
@@ -214,7 +209,7 @@ def store_resource(title, levelInfos):
     file = open(path, 'a')
     file.write('## {0}\n'.format(title))
     file.write('### 总计 {0} levels\n'.format(len(levelInfos)))
-    file.write('### update time: {0}\n'.format(todayStr))
+    file.write('### 更新时间: {0}\n'.format(todayStr))
 
     i = 0
     for level in levelInfos:
@@ -232,6 +227,124 @@ def store_resource(title, levelInfos):
             j = j + 1
         i = i + 1
     file.close()
+    return path
+
+# parse resource url
+def parse(url):
+    start = timeit.default_timer()
+
+    rootUrl = get_root_url(url)
+    print "rootUrl: " + rootUrl
+
+    levelInfos = []
+
+    page = getHtml(url)
+    soup = BeautifulSoup(page, 'html.parser')
+
+    # get page title
+    #pageTitle = soup.html.head.title.string.encode('utf-8')
+    #print " > page title：" + pageTitle
+
+    # get resource title
+    resourceTitle = ""
+    content = soup.find(id="containertow")
+    if content != None:
+        titleContent = content.find("div", "catmenutitle");
+        if titleContent != None and titleContent.string != None:
+            resourceTitle = titleContent.string.strip().encode('utf-8')
+            #print " > resource title：" + resourceTitle
+
+    # get level infos
+    mainleftlist = soup.find(id="mainleftlist");
+    if (mainleftlist != None):
+        #print mainleftlist.prettify()
+        leftTitles = mainleftlist.find_all("div", "leftTitle")
+        print "find %d levels" % len(leftTitles)
+        for leftTitle in leftTitles:
+            #print leftTitle.prettify()
+            link = leftTitle.find("a");
+            if link != None:
+                levelName = ""
+                if link.string != None:
+                    levelName = link.string.strip().encode('utf-8')
+                href = link['href'].encode('utf-8')
+                levelUrl = rootUrl + href;
+
+                levelInfo = LevelInfo(levelName, levelUrl)
+                levelInfos.append(levelInfo)
+                #print levelInfo
+
+    for levelInfo in levelInfos:
+        parse_level(levelInfo)
+
+    path = store_resource(resourceTitle, levelInfos)
+
+    download_resource(path)
+
+    elapsed = timeit.default_timer() - start
+    print " > 下载完成，耗时 {0} 秒".format(elapsed)
+
+#=============================================================================
+# download
+#=============================================================================
+def download_resource(resPath):
+    downloadInfos = []
+
+    rootDir = os.path.dirname(resPath)
+    currentLevelDir = ""
+    currentBookDir = ""
+    with open(resPath, "r") as file:
+        for line in file:
+            ##### Chapter.1 爱情与金钱：1 Chapter, http://x8.tingvoa.com/Sound/shuchong/aqyjq/tingvoa.com_1.mp3
+            pattern = re.compile(r'(#*)(\s*Chapter\.[0-9]*)(.*)')
+            match = pattern.search(line)
+            if match:
+                info = match.group(3).strip()
+                items = info.split(',')
+                if len(items) >= 2:
+                    name = items[0]
+                    mp3Url = items[1]
+                    path = os.path.join(currentBookDir, "{0}{1}".format(name, get_postfix(mp3Url)))
+
+                    downloadInfo = DownloadInfo(name, path, mp3Url)
+                    downloadInfos.append(downloadInfo)
+                    #print ">> current chapter: {0}".format(downloadInfo)
+                continue
+
+            #### Book.1 爱情与金钱
+            pattern = re.compile(r'(#*)(\s*Book\.[0-9]*)(.*)')
+            match = pattern.search(line)
+            if match:
+                name = match.group(3).strip()
+                currentBookDir = os.path.join(currentLevelDir, name)
+                mkdir(currentBookDir)
+                print ">> current book: {0}".format(currentBookDir)
+                continue
+
+            ### Level.1 书虫第一级
+            pattern = re.compile(r'(#*)(\s*Level\.[0-9]*)(.*)')
+            match = pattern.search(line)
+            if match:
+                name = match.group(3).strip()
+                currentLevelDir = os.path.join(rootDir, name)
+                mkdir(currentLevelDir)
+                print ">> current level: {0}".format(currentLevelDir)
+                continue
+
+    download(downloadInfos, get_cpu_count())
+
+def download(infos, threads=2):
+    pool = ThreadPool(threads)
+    pool.map(download_info, infos)
+    pool.close()
+    pool.join()
+    print ">> download parllel done!"
+
+def download_info(info):
+    print "> download {0} to {1}".format(info.mp3Url, info.path)
+    remote = urllib2.urlopen(info.mp3Url) 
+    with open(info.path, "wb") as local:
+       local.write(remote.read()) 
 
 #=============================================================================
 # main
@@ -240,3 +353,5 @@ gResourceUrl = "http://www.tingvoa.com/bookworm/"
 
 if __name__ == '__main__': 
     parse(gResourceUrl)
+
+    #download_resource("书虫牛津英语读物/书虫牛津英语读物.md")
