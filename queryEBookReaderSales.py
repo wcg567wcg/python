@@ -43,7 +43,7 @@ class BrowserData:
 
 def output_sales(browser, info, url):
     data = BrowserData(browser, url)
-    print '{0}		当日月销量为: {1}\n'.format(info, data.count())
+    print '{0}        当日月销量为: {1}\n'.format(info, data.count())
 
 def log_date():
     print time.strftime('%Y-%m-%d',time.localtime(time.time()))

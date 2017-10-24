@@ -249,8 +249,8 @@ def listdir(rootDir):
 
 def readLine(filepath):
     with open(filepath) as f:
-      for line in f.readlines():
-         print line
+        for line in f.readlines():
+            print line
      
 # functions
 print '\n------------Functions----------------'
