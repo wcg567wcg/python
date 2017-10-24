@@ -47,5 +47,4 @@ def process(path):
     return total
 
 process('countline.py')
-print os.path.basename("/luo/countline.py")
-#process('/home/kesalin/test/Settings')
+#process('matplot')
