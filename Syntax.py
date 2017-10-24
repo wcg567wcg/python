@@ -230,6 +230,28 @@ for eachLine in handle:
         print eachLine,
 handle.close()
 
+def walk(rootDir): 
+    list_dirs = os.walk(rootDir) 
+    for root, dirs, files in list_dirs: 
+        for d in dirs: 
+            path = os.path.join(root, d)
+            print path
+            walk(path)      
+        for f in files: 
+            print os.path.join(root, f)
+
+def listdir(rootDir):
+    for lists in os.listdir(rootDir): 
+        path = os.path.join(rootDir, lists) 
+        print path 
+        if os.path.isdir(path): 
+            listdir(path)
+
+def readLine(filepath):
+    with open(filepath) as f:
+      for line in f.readlines():
+         print line
+     
 # functions
 print '\n------------Functions----------------'
 a = 123

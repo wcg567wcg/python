@@ -72,13 +72,12 @@ def get_markdown_path(year):
 def read_file(path):
     lines = []
 
-    if(os.path.isfile(path)):
-        handle = open(path, 'r')
-        for line in handle:
-            line = line.strip()
-            if len(line) > 0:
-                lines.append(line)
-        handle.close()
+    if os.path.isfile(path):
+        with open(path, 'r') as handle:
+            for line in handle.readlines():
+                line = line.strip()
+                if len(line) > 0:
+                    lines.append(line)
     return lines
 
 def is_begin(line):
@@ -190,7 +189,7 @@ def show_pie(labels, fracs, explode, title, savefilename):
 
 def analyze_book(books, tags, year):
     path = get_markdown_path(year)
-    if(os.path.isfile(path)):
+    if os.path.isfile(path):
         os.remove(path)
     file = open(path, 'a')
 

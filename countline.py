@@ -10,42 +10,42 @@ import codecs
 
 def process_file(path):
     total = 0
-    if (path.endswith('.java') or path.endswith('.py')):
-        handle = codecs.open(path, 'r', 'utf-8')
-        for eachLine in handle:
-            print(eachLine)
-            eachLine = eachLine.lstrip()
-            if len(eachLine) > 1:
-                if (eachLine.startswith("//") == False):
-                    total += 1
-        handle.close()
+    if path.endswith('.java') or path.endswith('.py'):
+        with codecs.open(path, 'r', 'utf-8') as handle:
+            for line in handle.readlines():
+                #print(line)
+                line = line.lstrip()
+                if len(line) > 1:
+                    if line.startswith("//") == False and line.startswith("#") == False:
+                        total += 1
         #print("%s has %d lines"%(path, total))
     return total
 
 def process_dir(path):
     total = 0
-    listfile = os.listdir(path)
-    for filename in listfile:
-        filepath = path + '/' + filename
-        if(os.path.isdir(filepath)):
+
+    for filename in os.listdir(path): 
+        filepath = os.path.join(path, filename) 
+        if os.path.isdir(filepath):
             # exclude hidden dirs
-            if(filename[0] == '.'):
+            if filename.startswith("."):
                 pass
             else:
                 total += process_dir(filepath)
-        elif(os.path.isfile(filepath)):
+        elif os.path.isfile(filepath):
             total += process_file(filepath)
     return total
 
 def process(path):
     total = 0
-    if(os.path.isdir(path)):
+    if os.path.isdir(path):
         total = process_dir(path)
-    elif(os.path.isfile(path)):
+    elif os.path.isfile(path):
         total = process_file(path)
 
-    print('>>> total lines : %d'%total)
+    print('>>> total code lines : %d' % total)
     return total
 
-process('/home/luozhaohui/test.py')
+process('countline.py')
+print os.path.basename("/luo/countline.py")
 #process('/home/kesalin/test/Settings')
