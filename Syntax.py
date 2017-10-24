@@ -10,6 +10,7 @@ import array
 from collections import OrderedDict
 import sys
 import inspect
+from functools import partial
 
 print 'Hello Python!'
 
