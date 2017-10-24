@@ -8,6 +8,7 @@
 # Version       : 1.0.0.0
 # Python Version: Python 2.7.3
 #
+# store to excel nees to install openpyxl: pip install openpyxl
 
 import os
 import threading
@@ -19,6 +20,8 @@ import string
 import urllib2
 import timeit
 from bs4 import BeautifulSoup
+from openpyxl import Workbook
+from openpyxl import load_workbook
 
 gHeader = {"User-Agent": "Mozilla-Firefox5.0"}
 
@@ -199,9 +202,10 @@ def parse_chapter(chapterUrl):
 def store_resource(title, levelInfos):
     mkdir(title)
 
+    # store as markdown
     fileName = "{0}.md".format(title)
     path = os.path.join(title, fileName)
-    if(os.path.isfile(path)):
+    if os.path.isfile(path):
         os.remove(path)
 
     today = datetime.datetime.now()
@@ -211,23 +215,80 @@ def store_resource(title, levelInfos):
     file.write('### 总计 {0} levels\n'.format(len(levelInfos)))
     file.write('### 更新时间: {0}\n'.format(todayStr))
 
-    i = 0
-    for level in levelInfos:
+    for i, level in enumerate(levelInfos):
         file.write('\n### Level.{0:d} {1}\n'.format(i + 1, level.name))
 
-        j = 0
-        for book in level.bookInfos:
+        for j, book in enumerate(level.bookInfos):
             file.write('\n#### Book.{0:d} {1}\n'.format(j + 1, book.name))
 
-            k = 0
-            for chapter in book.chapterInfos:
+            for k, chapter in enumerate(book.chapterInfos):
                 file.write('##### Chapter.{0:d} {1}, {2}\n'.format(k + 1, chapter.name, chapter.mp3Url))
-                k = k + 1
 
-            j = j + 1
-        i = i + 1
     file.close()
     return path
+
+
+def store_to_excel(resPath):
+    workbook = Workbook()
+    resBasename = os.path.basename(resPath);
+    sheetName = os.path.splitext(resBasename)[0]
+    workSheet = workbook.create_sheet(0, sheetName.decode('utf-8'))
+
+    # for i, sheetName in enumerate(workbook.get_sheet_names()):
+    #     print "sheet {0}: {1}".format(i, sheetName)
+
+    rootDir = os.path.dirname(resPath)
+    currentLevelDir = ""
+    currentBookDir = ""
+    with open(resPath, "r") as file:
+        for line in file:
+            ##### Chapter.1 爱情与金钱：1 Chapter, http://x8.tingvoa.com/Sound/shuchong/aqyjq/tingvoa.com_1.mp3
+            pattern = re.compile(r'(#*)(\s*Chapter\.[0-9]*)(.*)')
+            match = pattern.search(line)
+            if match:
+                info = match.group(3).strip()
+                items = info.split(',')
+                if len(items) >= 2:
+                    name = items[0]
+                    mp3Url = items[1]
+                    path = os.path.join(currentBookDir, "{0}{1}".format(name, get_postfix(mp3Url)))
+                    workSheet.append([name, path, mp3Url]);
+                continue
+
+            #### Book.1 爱情与金钱
+            pattern = re.compile(r'(#*)(\s*Book\.[0-9]*)(.*)')
+            match = pattern.search(line)
+            if match:
+                name = match.group(3).strip()
+                currentBookDir = os.path.join(currentLevelDir, name)
+
+                info = "{0}{1}".format(match.group(2), match.group(3))
+                workSheet.append([""])
+                workSheet.append([info])
+
+                print ">> current book: {0}".format(currentBookDir)
+                continue
+
+            ### Level.1 书虫第一级
+            pattern = re.compile(r'(#*)(\s*Level\.[0-9]*)(.*)')
+            match = pattern.search(line)
+            if match:
+                name = match.group(3).strip()
+                currentLevelDir = os.path.join(rootDir, name)
+
+                info = "{0}{1}".format(match.group(2), match.group(3))
+                workSheet.append([""])
+                workSheet.append([info.strip()])
+
+                print ">> current level: {0}".format(currentLevelDir)
+                continue
+
+    # Save the file
+    excelFile = "{0}.xlsx".format(sheetName)
+    excelPath = os.path.join(os.path.dirname(resPath), excelFile)
+    if os.path.isfile(excelPath):
+        os.remove(excelPath)
+    workbook.save(excelPath)
 
 # parse resource url
 def parse(url):
@@ -280,6 +341,8 @@ def parse(url):
     path = store_resource(resourceTitle, levelInfos)
 
     download_resource(path)
+
+    store_to_excel(path)
 
     elapsed = timeit.default_timer() - start
     print " > 下载完成，耗时 {0} 秒".format(elapsed)
