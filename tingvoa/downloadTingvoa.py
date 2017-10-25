@@ -46,10 +46,9 @@ class BookInfo:
     url = ''
     chapterInfos = []
 
-    def __init__(self, name, url, infos):
+    def __init__(self, name, url):
         self.name = name
         self.url = url
-        self.chapterInfos = infos
 
     def __str__( self ):
         return "Book:{0}, url:{1}, chapters:[2]".format(self.name, self.url, len(self.chapterInfos))
@@ -98,7 +97,7 @@ def slow_down():
     time.sleep(0.5)         # slow down a little
 
 def mkdir(path):
-    if (False == os.path.exists(path)):
+    if False == os.path.exists(path):
         os.mkdir(path)
 
 def get_postfix(resUrl):
@@ -133,16 +132,17 @@ def getHtml(url):
 #=============================================================================
 # parse
 #=============================================================================
-def parse_level(levelInfo):
+def get_book_infos(levelInfo):
     name = levelInfo.name
     url = levelInfo.url
     rootUrl = get_root_url(url)
-    #print "rootUrl: " + rootUrl
+    #print levelInfo
 
     slow_down()
     page = getHtml(url)
     soup = BeautifulSoup(page, 'html.parser')
 
+    bookInfos = []
     # get book infos
     mainleftlist = soup.find(id="mainleftlist");
     if (mainleftlist != None):
@@ -159,6 +159,10 @@ def parse_level(levelInfo):
                 href = link['href'].encode('utf-8')
                 bookUrl = rootUrl + href;
 
+                bookInfo = BookInfo(bookName, bookUrl)
+                bookInfos.append(bookInfo)
+
+                # get chapter infos
                 chapterInfos = []
                 subleftList = leftTitle.findNext("div")
                 if subleftList != None:
@@ -170,18 +174,17 @@ def parse_level(levelInfo):
                             chapterName = link.string.strip().encode('utf-8')
                         href = link['href'].encode('utf-8')
                         chapterUrl = rootUrl + href;
-                        mp3Url = parse_chapter(chapterUrl)
+                        mp3Url = get_mp3_url(chapterUrl)
                         chapterInfo = ChapterInfo(chapterName, chapterUrl, mp3Url)
                         chapterInfos.append(chapterInfo)
                         #print chapterInfo
 
-                bookInfo = BookInfo(bookName, bookUrl, chapterInfos)
-                levelInfo.bookInfos.append(bookInfo)
+                bookInfo.chapterInfos = chapterInfos
                 #print bookInfo
 
-    #print "parse: %s" % levelInfo
+    return bookInfos
 
-def parse_chapter(chapterUrl):
+def get_mp3_url(chapterUrl):
     rootUrl = get_root_url(chapterUrl)
 
     slow_down()
@@ -290,6 +293,16 @@ def store_to_excel(resPath):
         os.remove(excelPath)
     workbook.save(excelPath)
 
+def print_level_infos(levelInfos):
+    for i, level in enumerate(levelInfos):
+        print '\n### Level.{0:d} {1}\n'.format(i + 1, level.name)
+
+        for j, book in enumerate(level.bookInfos):
+            print '\n#### Book.{0:d} {1}\n'.format(j + 1, book.name)
+
+            for k, chapter in enumerate(book.chapterInfos):
+                print '##### Chapter.{0:d} {1}, {2}\n'.format(k + 1, chapter.name, chapter.mp3Url)
+
 # parse resource url
 def parse(url):
     start = timeit.default_timer()
@@ -333,10 +346,12 @@ def parse(url):
 
                 levelInfo = LevelInfo(levelName, levelUrl)
                 levelInfos.append(levelInfo)
-                #print levelInfo
+                print levelInfo
 
     for levelInfo in levelInfos:
-        parse_level(levelInfo)
+        levelInfo.bookInfos = get_book_infos(levelInfo)
+
+    print_level_infos(levelInfos)
 
     path = store_resource(resourceTitle, levelInfos)
 
@@ -418,3 +433,4 @@ if __name__ == '__main__':
     parse(gResourceUrl)
 
     #download_resource("书虫牛津英语读物/书虫牛津英语读物.md")
+    #store_to_excel("书虫牛津英语读物/书虫牛津英语读物.md")
