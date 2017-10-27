@@ -30,34 +30,24 @@ gHeader = {"User-Agent": "Mozilla-Firefox5.0"}
 #=============================================================================
 # 
 class LevelInfo:
-    name = ''
-    url = ''
-    bookInfos = []
-
     def __init__(self, name, url):
         self.name = name
         self.url = url
+        self.bookInfos = []
 
     def __str__( self ):
         return "Level:{0}, url:{1}, books:{2}\n".format(self.name, self.url, len(self.bookInfos))
 # 
 class BookInfo:
-    name = ''
-    url = ''
-    chapterInfos = []
-
     def __init__(self, name, url):
         self.name = name
         self.url = url
+        self.chapterInfos = []
 
     def __str__( self ):
         return "Book:{0}, url:{1}, chapters:[2]".format(self.name, self.url, len(self.chapterInfos))
 # 
 class ChapterInfo:
-    name = ''
-    url = ''
-    mp3Url = ''
-
     def __init__(self, name, url, mp3):
         self.name = name
         self.url = url
@@ -68,10 +58,6 @@ class ChapterInfo:
 
 # 
 class DownloadInfo:
-    name = ''
-    path = ''
-    mp3Url = ''
-
     def __init__(self, name, path, mp3):
         self.name = name
         self.path = path
@@ -178,9 +164,12 @@ def get_book_infos(levelInfo):
                         chapterInfo = ChapterInfo(chapterName, chapterUrl, mp3Url)
                         chapterInfos.append(chapterInfo)
                         #print chapterInfo
+                        break
 
                 bookInfo.chapterInfos = chapterInfos
                 #print bookInfo
+
+            break
 
     return bookInfos
 
@@ -347,6 +336,7 @@ def parse(url):
                 levelInfo = LevelInfo(levelName, levelUrl)
                 levelInfos.append(levelInfo)
                 print levelInfo
+                break
 
     for levelInfo in levelInfos:
         levelInfo.bookInfos = get_book_infos(levelInfo)
@@ -409,7 +399,7 @@ def download_resource(resPath):
                 print ">> current level: {0}".format(currentLevelDir)
                 continue
 
-    download(downloadInfos, get_cpu_count())
+    # download(downloadInfos, get_cpu_count())
 
 def download(infos, threads=2):
     pool = ThreadPool(threads)
