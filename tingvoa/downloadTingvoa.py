@@ -79,18 +79,22 @@ def get_root_url(url):
             rootUrl = url[0:index]
     return rootUrl
 
+
 def slow_down():
     time.sleep(0.5)         # slow down a little
+
 
 def mkdir(path):
     if False == os.path.exists(path):
         os.mkdir(path)
+
 
 def get_postfix(resUrl):
     index = resUrl.rfind('.')
     if index > 0:
         return resUrl[index:]
     return ""
+
 
 def get_cpu_count():
     """Return the number of logical CPUs in the system."""
@@ -99,6 +103,7 @@ def get_cpu_count():
     except ValueError:
         # mimic os.cpu_count() behavior
         return None
+
 
 # 获取 url 内容
 def getHtml(url):
@@ -114,7 +119,8 @@ def getHtml(url):
             print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
             print "Reason: %s" % e.reason
     return data
-    
+
+
 #=============================================================================
 # parse
 #=============================================================================
@@ -164,14 +170,12 @@ def get_book_infos(levelInfo):
                         chapterInfo = ChapterInfo(chapterName, chapterUrl, mp3Url)
                         chapterInfos.append(chapterInfo)
                         #print chapterInfo
-                        break
 
                 bookInfo.chapterInfos = chapterInfos
                 #print bookInfo
 
-            break
-
     return bookInfos
+
 
 def get_mp3_url(chapterUrl):
     rootUrl = get_root_url(chapterUrl)
@@ -190,6 +194,7 @@ def get_mp3_url(chapterUrl):
         mp3Url = "http://x8.tingvoa.com/{1}".format(rootUrl, mp3)
         #print mp3Url
     return mp3Url
+
 
 def store_resource(title, levelInfos):
     mkdir(title)
@@ -282,6 +287,7 @@ def store_to_excel(resPath):
         os.remove(excelPath)
     workbook.save(excelPath)
 
+
 def print_level_infos(levelInfos):
     for i, level in enumerate(levelInfos):
         print '\n### Level.{0:d} {1}\n'.format(i + 1, level.name)
@@ -291,6 +297,7 @@ def print_level_infos(levelInfos):
 
             for k, chapter in enumerate(book.chapterInfos):
                 print '##### Chapter.{0:d} {1}, {2}\n'.format(k + 1, chapter.name, chapter.mp3Url)
+
 
 # parse resource url
 def parse(url):
@@ -336,7 +343,6 @@ def parse(url):
                 levelInfo = LevelInfo(levelName, levelUrl)
                 levelInfos.append(levelInfo)
                 print levelInfo
-                break
 
     for levelInfo in levelInfos:
         levelInfo.bookInfos = get_book_infos(levelInfo)
@@ -399,7 +405,7 @@ def download_resource(resPath):
                 print ">> current level: {0}".format(currentLevelDir)
                 continue
 
-    # download(downloadInfos, get_cpu_count())
+    download(downloadInfos, get_cpu_count())
 
 def download(infos, threads=2):
     pool = ThreadPool(threads)
