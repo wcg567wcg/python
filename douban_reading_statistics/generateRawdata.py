@@ -9,10 +9,11 @@
 # Python Version: Python 2.7.3
 
 import os
+import re
+import sys
 import threading
 import time
 import datetime
-import re
 import string
 import urllib2
 from bs4 import BeautifulSoup
@@ -24,10 +25,11 @@ from bs4 import BeautifulSoup
 gUseCookie = True
 gHeaders = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
-    'Cookie': 'Put your cookie here. Press F12 in Chrome and read cookie of header under network tab.'
+    'Cookie': 'll="108296"; bid=QqbV6W9lThs; __yadk_uid=PArq4bWkwH1LCt6z8tjUkHxB31VewUw3; gr_user_id=416fd9ae-4ba1-4164-8100-a1bb367e1943; ue="kesalin@gmail.com"; _ga=GA1.2.1803441693.1504866255; dbcl2="1297475:yjGFS1gVpyE"; ck=zaaO; __ads_session=9rTQkRI7/Qi2eQ4VWgA=; ct=y; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1509350469%2C%22https%3A%2F%2Fcn.bing.com%2F%22%5D; _pk_id.100001.8cb4=20707fa82277db33.1504866254.63.1509350495.1509348527.; _pk_ses.100001.8cb4=*; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03=cbb91b54-3fdf-41c1-a4c0-747f1ed17c3d; gr_cs1_cbb91b54-3fdf-41c1-a4c0-747f1ed17c3d=user_id%3A1; _vwo_uuid_v2=E6B96E6E0DC495108AF8D89976726D4C|2a01436b9ba8615ff28464a0d0ebd27a; __utmt_douban=1; push_noty_num=0; push_doumail_num=0; ap=1; __utma=30149280.1803441693.1504866255.1509342971.1509348520.65; __utmb=30149280.15.10.1509348520; __utmc=30149280; __utmz=30149280.1509097526.61.8.utmcsr=cn.bing.com|utmccn=(referral)|utmcmd=referral|utmcct=/; __utmv=30149280.129'
 }
 
 def getHtml(url):
+    data = ''
     try :
         if gUseCookie:
             opener = urllib2.build_opener()
@@ -69,8 +71,11 @@ def num_to_kanji(num):
         print " ** error: invalid rating num {0}".format(num)
         return ""
 
-def parse_item_info(item, yearBookDict):
+def parse_item_info(item, yearBookDict, currentYearOnly):
     # print item.prettify().encode('utf-8')
+
+    now = datetime.date.today()
+    currentYear = now.year
 
     # get book name and url
     name = ''
@@ -130,6 +135,11 @@ def parse_item_info(item, yearBookDict):
                 year = match.group(1)
     #print " > date: {0}".format(date)
 
+    if True == currentYearOnly:
+        readYear = int(year)
+        if readYear < currentYear:
+            return False
+
     content = item.find("span", "tags")
     if content != None:
         if content.string != None:
@@ -160,6 +170,7 @@ def parse_item_info(item, yearBookDict):
     else:
         books = [bookInfo]
         yearBookDict[year] = books
+    return True
 
 def exportToRawdata(yearBookDict):
     if len(yearBookDict) < 1:
@@ -191,7 +202,7 @@ def create_directory_if_not_exists(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-def parse_page(url, yearBookDict):
+def parse_page(url, yearBookDict, currentYearOnly):
     try:
         slow_down()
         page = getHtml(url)
@@ -199,7 +210,9 @@ def parse_page(url, yearBookDict):
 
         items = soup.find_all("li", "subject-item")
         for item in items:
-            parse_item_info(item, yearBookDict)
+            proceed = parse_item_info(item, yearBookDict, currentYearOnly)
+            if False == proceed:
+                break
     except Exception as e:
         print "failed to parse page : {0}".format(url)
         print e
@@ -256,6 +269,7 @@ def parse_pages(entry_url):
 #=============================================================================
 
 username = 'kesalin'
+current_year_only = True
 
 if __name__ == '__main__':
     entry_url = 'https://book.douban.com/people/{0}/collect'.format(username)
@@ -263,7 +277,7 @@ if __name__ == '__main__':
     
     yearBookDict = {}
     for url in pageUrls:
-        parse_page(url, yearBookDict)
+        parse_page(url, yearBookDict, current_year_only)
 
     # export
     exportToRawdata(yearBookDict)
