@@ -255,9 +255,10 @@ def parse_pages(entry_url):
 # 程序入口
 #=============================================================================
 
-entry_url = 'https://book.douban.com/people/kesalin/collect'
+username = 'kesalin'
 
 if __name__ == '__main__':
+    entry_url = 'https://book.douban.com/people/{0}/collect'.format(username)
     pageUrls = parse_pages(entry_url)
     
     yearBookDict = {}
