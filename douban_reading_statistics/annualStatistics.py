@@ -194,7 +194,7 @@ def analyze_book(books, tags, year):
     rating2 = get_book_by_rating(books, 2)
     rating1 = get_book_by_rating(books, 1)
 
-    file.write('## {0}年阅读统计\n'.format(str(year)))
+    file.write('## {0}年阅读统计，本页面由代码自动生成\n'.format(str(year)))
     file.write('## 总计阅读 {0} 本\n'.format(total))
     file.write('### 评价统计:\n')
 

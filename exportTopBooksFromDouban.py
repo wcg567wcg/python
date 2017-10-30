@@ -287,7 +287,7 @@ def spider(tag, minNum, maxNum, k):
             producer.start()
             producers.append(producer)
             #print " > process page : {0}".format(pageUrl)
-            time.sleep(0.1)         # slow down a little
+            time.sleep(0.3)         # slow down a little
 
         # wait for all producers
         for producer in producers:
@@ -401,7 +401,7 @@ if __name__ == '__main__':
         # ["散文", None, 50, 8000, 0.25],
         # ["诗歌", None, 50, 4000, 0.25],
         # ["漫画,日本漫画", None, 50, 8000, 0.275],
-        ["绘本", pictureBookBL, 20, 5000, 0.25],
+        # ["绘本", pictureBookBL, 20, 5000, 0.25],
         # ["科幻,科幻小说", None, 50, 8000, 0.275],
         # ["魔幻,魔幻小说,玄幻,玄幻小说", None, 50, 8000, 0.275],
         # ["推理,推理小说", None, 50, 8000, 0.275],
@@ -440,6 +440,9 @@ if __name__ == '__main__':
         # ["外国文学,外国名著", None, 50, 8000, 0.3],
         # ["日本文学,日本", japanLibBL, 50, 8000, 0.3],
         # ["中国文学", None, 50, 8000, 0.3],
+        ["逻辑", None, 30, 3000, 0.3],
+        ["教育", None, 30, 3000, 0.3],
+        ["音乐", None, 30, 3000, 0.3],
     ]
 
     start = timeit.default_timer()
