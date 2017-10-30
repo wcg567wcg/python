@@ -9,21 +9,50 @@
 # Python Version: Python 2.7.3
 
 import os
+import threading
+import time
+import datetime
 import re
 import string
-import datetime
-
+import urllib2
 from bs4 import BeautifulSoup
+
+# 获取 url 内容
+# How to get your cookie?
+# Press F12 in Chrome and read cookie of header under network tab.
+#
+gUseCookie = True
+gHeaders = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+    'Cookie': 'Put your cookie here. Press F12 in Chrome and read cookie of header under network tab.'
+}
+
+def getHtml(url):
+    try :
+        if gUseCookie:
+            opener = urllib2.build_opener()
+            for k, v in gHeaders.items():
+                opener.addheaders.append((k, v))
+            response = opener.open(url)
+            data = response.read().decode('utf-8')
+        else:
+            request = urllib2.Request(url, None, gHeaders['User-Agent'])
+            response = urllib2.urlopen(request)
+            data = response.read().decode('utf-8')
+    except urllib2.URLError, e :
+        if hasattr(e, "code"):
+            print "The server couldn't fulfill the request: " + url
+            print "Error code: %s" % e.code
+        elif hasattr(e, "reason"):
+            print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
+            print "Reason: %s" % e.reason
+    return data
+
+def slow_down():
+    time.sleep(0.5)         # slow down a little
 
 # 书籍信息类
 class BookInfo:
-    name = ''
-    url = ''
-    icon = ''
-    publish = ''
-    reading = ''
-    comment = ''
-
     def __init__(self, name, url, icon, publish, reading, comment):
         self.name = name
         self.url = url
@@ -40,7 +69,7 @@ def num_to_kanji(num):
         print " ** error: invalid rating num {0}".format(num)
         return ""
 
-def parse_item_info(item, book_dict):
+def parse_item_info(item, yearBookDict):
     # print item.prettify().encode('utf-8')
 
     # get book name and url
@@ -123,22 +152,25 @@ def parse_item_info(item, book_dict):
 
     # add book info to list
     bookInfo = BookInfo(name, url, image, publish, reading, comment)
-    if book_dict.has_key(year):
-        books = book_dict[year]
+    if yearBookDict.has_key(year):
+        books = yearBookDict[year]
         contains = [book for book in books if book.url == url]
         if len(contains) == 0:
             books.append(bookInfo)
     else:
         books = [bookInfo]
-        book_dict[year] = books
+        yearBookDict[year] = books
 
-def exportToRawdata(book_dict):
-    if len(book_dict) < 1:
+def exportToRawdata(yearBookDict):
+    if len(yearBookDict) < 1:
         return
 
-    for (year, books) in book_dict.items():
+    for (year, books) in yearBookDict.items():
         create_directory_if_not_exists(year)
         path = get_raw_data_path(year)
+        if os.path.isfile(path):
+            os.remove(path)
+
         print "export {0} books to {1}".format(len(books), path)
         file = open(path, 'w')
 
@@ -152,65 +184,85 @@ def exportToRawdata(book_dict):
 
         file.close()
 
-def parse(readingHtml, data_dict):
-    try:
-        fp = open(readingHtml)
-        soup = BeautifulSoup(fp, "lxml")
-
-        items = soup.find_all("li", "subject-item")
-        for item in items:
-            parse_item_info(item, data_dict)
-    except Exception as e:
-        print "failed to parse: {0}".format(readingHtml)
-        print e
-
 def get_raw_data_path(year):
     return u'{0}/{0}reading.data'.format(str(year), str(year))
-
-def clear_raw_data(start_year):
-    now = datetime.datetime.now()
-    current_year = now.year
-    for year in range(start_year, current_year + 1):
-        path = get_raw_data_path(year)
-        if (os.path.isfile(path)):
-            print "remove raw data: {0}".format(path)
-            os.remove(path)
-
-def load_raw_reading_html(raw_data_dir):
-    htmls = []
-    if (os.path.isdir(raw_data_dir)):
-        listfile = os.listdir(raw_data_dir)
-        for filename in listfile:
-            path = "{0}/{1}".format(raw_data_dir, filename)
-            if path.endswith(".html"):
-                htmls.append(path)
-                print " > raw html: {0}".format(path)
-    else:
-        print "error: invalid raw reading html directory: {0}".format(path)
-
-    return htmls
 
 def create_directory_if_not_exists(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
+def parse_page(url, yearBookDict):
+    try:
+        slow_down()
+        page = getHtml(url)
+        soup = BeautifulSoup(page, "lxml")
+
+        items = soup.find_all("li", "subject-item")
+        for item in items:
+            parse_item_info(item, yearBookDict)
+    except Exception as e:
+        print "failed to parse page : {0}".format(url)
+        print e
+
+def parse_pages(entry_url):
+    page = getHtml(entry_url)
+    soup = BeautifulSoup(page, 'html.parser')
+
+    urls = []
+    paginator = soup.find('div', 'paginator')
+    if paginator != None:
+        next = paginator.find('span', 'next')
+        if next == None:
+            urls.append(entry_url)
+            return urls
+
+        pageStep = 0
+        lastPageStart = 0
+        p1 = ''
+        p2 = ''
+        p4 = ''
+        nextLink = next.find('a')
+        if nextLink != None:
+            href = nextLink['href'].encode('utf-8')
+            pattern = re.compile(r'(.*)(start=)([0-9]+)(.*)')
+            match = pattern.search(href)
+            if match:
+                p1 = match.group(1)
+                p2 = match.group(2)
+                p4 = match.group(4)
+                pageStep = int(match.group(3))
+
+        links = paginator.find_all('a');
+        for link in links:
+            href = link['href'].encode('utf-8')
+            pattern = re.compile(r'(.*)(start=)([0-9]+)(.*)')
+            match = pattern.search(href)
+            if match:
+                start = int(match.group(3))
+                if start > lastPageStart:
+                    lastPageStart = start
+
+        print "last page starts at %d, page step %d" % (lastPageStart, pageStep)
+        for i in range(0, lastPageStart + 1, pageStep):
+            url = '{0}{1}{2}{3}'.format(p1, p2, i, p4)
+            #print " page start at %d : %s" % (i, url)
+            urls.append(url)
+
+    print 'total %d pages' % len(urls)
+    return urls
+
 #=============================================================================
 # 程序入口
 #=============================================================================
-START_YEAR = 2000
-RAW_DATA_DIR = "readings"
+
+entry_url = 'https://book.douban.com/people/kesalin/collect'
 
 if __name__ == '__main__':
-    clear_raw_data(START_YEAR)
-
-    data_dict = {}
-
-    # get all raw reading html file
-    htmls = load_raw_reading_html(RAW_DATA_DIR)
-
-    # parse
-    for html in htmls:
-        parse(html, data_dict)
+    pageUrls = parse_pages(entry_url)
+    
+    yearBookDict = {}
+    for url in pageUrls:
+        parse_page(url, yearBookDict)
 
     # export
-    exportToRawdata(data_dict)
+    exportToRawdata(yearBookDict)

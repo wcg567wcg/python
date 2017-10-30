@@ -19,31 +19,25 @@ import urllib2
 import timeit
 from bs4 import BeautifulSoup
 
-gHeader = {"User-Agent": "Mozilla-Firefox5.0"}
-
-# 书籍信息类
-class BookInfo:
-    name = ''
-    url = ''
-    icon = ''
-    ratingNum = 0.0
-    ratingPeople = 0
-    comment = ''
-
-    def __init__(self, name, url, icon, nums, people, comment):
-        self.name = name
-        self.url = url
-        self.icon = icon
-        self.ratingNum = nums
-        self.ratingPeople = people
-        self.comment = comment 
-
 # 获取 url 内容
+gUseCookie = True
+gHeaders = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+    'Cookie': 'Put your cookie here'
+}
+
 def getHtml(url):
     try :
-        request = urllib2.Request(url, None, gHeader)
-        response = urllib2.urlopen(request)
-        data = response.read().decode('utf-8')
+        if gUseCookie:
+            opener = urllib2.build_opener()
+            for k, v in gHeaders.items():
+                opener.addheaders.append((k, v))
+            response = opener.open(url)
+            data = response.read().decode('utf-8')
+        else:
+            request = urllib2.Request(url, None, gHeaders['User-Agent'])
+            response = urllib2.urlopen(request)
+            data = response.read().decode('utf-8')
     except urllib2.URLError, e :
         if hasattr(e, "code"):
             print "The server couldn't fulfill the request: " + url
@@ -52,6 +46,16 @@ def getHtml(url):
             print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
             print "Reason: %s" % e.reason
     return data
+
+# 书籍信息类
+class BookInfo:
+    def __init__(self, name, url, icon, nums, people, comment):
+        self.name = name
+        self.url = url
+        self.icon = icon
+        self.ratingNum = nums
+        self.ratingPeople = people
+        self.comment = comment 
 
 # 导出为 Markdown 格式文件
 def exportToMarkdown(doulistTile, doulistAbout, bookInfos):

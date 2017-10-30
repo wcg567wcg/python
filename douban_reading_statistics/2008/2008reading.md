@@ -1,7 +1,7 @@
 ## 2008年阅读统计
 ## 总计阅读 27 本
 ### 评价统计:
-![评价统计](2008_reading_rate.png)
+![评价统计](2008_reading_tags.png)
 
  > 五星图书 12 本，占比 44.4%  
  > 四星图书 11 本，占比 40.7%  
@@ -17,113 +17,113 @@
  > 管理 1 本  
 
 ### 编程: 20 本
-#### No.1 设计模式
- > 图书名称：[设计模式](https://book.douban.com/subject/1052241/)  
- > 豆瓣链接：[https://book.douban.com/subject/1052241/](https://book.douban.com/subject/1052241/)  
- > 标签：编程        评分：五星  
- > 我的评论：设计模式，买了N年，读了数遍还是半瓶子水，几年之后的一个夜晚在长途火车上消磨时间，读去一切如流水一般舒畅，那个爽啊，只限当时周边无人可以分享那种感觉。。。  
-
-#### No.2 深度探索C++对象模型
- > 图书名称：[深度探索C++对象模型](https://book.douban.com/subject/1091086/)  
- > 豆瓣链接：[https://book.douban.com/subject/1091086/](https://book.douban.com/subject/1091086/)  
- > 标签：编程        评分：五星  
- > 我的评论：C++的内存布局，各个特性的背后实现，读了至少三次才懂的。。。  
-
-#### No.3 深入浅出设计模式（影印版）
- > 图书名称：[深入浅出设计模式（影印版）](https://book.douban.com/subject/1488876/)  
- > 豆瓣链接：[https://book.douban.com/subject/1488876/](https://book.douban.com/subject/1488876/)  
- > 标签：编程        评分：五星  
- > 我的评论：设计模式:简洁明了！  
-
-#### No.4 Effective C++
- > 图书名称：[Effective C++](https://book.douban.com/subject/1842426/)  
- > 豆瓣链接：[https://book.douban.com/subject/1842426/](https://book.douban.com/subject/1842426/)  
- > 标签：编程        评分：五星  
- > 我的评论：Effective C++  
-
-#### No.5 C++语言的设计和演化
- > 图书名称：[C++语言的设计和演化](https://book.douban.com/subject/1096216/)  
- > 豆瓣链接：[https://book.douban.com/subject/1096216/](https://book.douban.com/subject/1096216/)  
- > 标签：编程        评分：五星  
- > 我的评论：C++ 的设计及其演化进程。。。高手进阶必备啊。。。  
-
-#### No.6 C专家编程
- > 图书名称：[C专家编程](https://book.douban.com/subject/2377310/)  
- > 豆瓣链接：[https://book.douban.com/subject/2377310/](https://book.douban.com/subject/2377310/)  
- > 标签：编程        评分：五星  
- > 我的评论：不可不读的一本关于C的书籍！  
-
-#### No.7 游戏编程精粹6
- > 图书名称：[游戏编程精粹6](https://book.douban.com/subject/2305250/)  
- > 豆瓣链接：[https://book.douban.com/subject/2305250/](https://book.douban.com/subject/2305250/)  
- > 标签：编程        评分：五星  
- > 我的评论：游戏编程精粹6  
-
-#### No.8 游戏编程精粹5
- > 图书名称：[游戏编程精粹5](https://book.douban.com/subject/2248414/)  
- > 豆瓣链接：[https://book.douban.com/subject/2248414/](https://book.douban.com/subject/2248414/)  
- > 标签：编程        评分：五星  
- > 我的评论：游戏编程精粹5  
-
-#### No.9 C++编程思想第2卷
+#### No.1 C++编程思想第2卷
  > 图书名称：[C++编程思想第2卷](https://book.douban.com/subject/1445308/)  
  > 豆瓣链接：[https://book.douban.com/subject/1445308/](https://book.douban.com/subject/1445308/)  
  > 标签：编程        评分：五星  
  > 我的评论：C++编程思想（第2卷）实用编程技术  
 
-#### No.10 C++编程规范
+#### No.2 C++编程规范
  > 图书名称：[C++编程规范](https://book.douban.com/subject/1480481/)  
  > 豆瓣链接：[https://book.douban.com/subject/1480481/](https://book.douban.com/subject/1480481/)  
  > 标签：编程        评分：五星  
  > 我的评论：C++高手养成必读书籍～～  
 
-#### No.11 3D数学基础
+#### No.3 3D数学基础
  > 图书名称：[3D数学基础](https://book.douban.com/subject/1400419/)  
  > 豆瓣链接：[https://book.douban.com/subject/1400419/](https://book.douban.com/subject/1400419/)  
  > 标签：编程        评分：五星  
  > 我的评论：不错的3D数学基础知识书籍  
 
-#### No.12 Direct3D游戏编程入门教程
- > 图书名称：[Direct3D游戏编程入门教程](https://book.douban.com/subject/1225606/)  
- > 豆瓣链接：[https://book.douban.com/subject/1225606/](https://book.douban.com/subject/1225606/)  
- > 标签：编程        评分：四星  
- > 我的评论：入门还算不错的。。。  
+#### No.4 深入浅出设计模式（影印版）
+ > 图书名称：[深入浅出设计模式（影印版）](https://book.douban.com/subject/1488876/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1488876/](https://book.douban.com/subject/1488876/)  
+ > 标签：编程        评分：五星  
+ > 我的评论：设计模式:简洁明了！  
 
-#### No.13 Windows 程序设计：第5版
- > 图书名称：[Windows 程序设计：第5版](https://book.douban.com/subject/1088168/)  
- > 豆瓣链接：[https://book.douban.com/subject/1088168/](https://book.douban.com/subject/1088168/)  
- > 标签：编程        评分：四星  
- > 我的评论：windows程序开发入门教程  
+#### No.5 Effective C++
+ > 图书名称：[Effective C++](https://book.douban.com/subject/1842426/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1842426/](https://book.douban.com/subject/1842426/)  
+ > 标签：编程        评分：五星  
+ > 我的评论：Effective C++  
 
-#### No.14 人月神话
- > 图书名称：[人月神话](https://book.douban.com/subject/1102259/)  
- > 豆瓣链接：[https://book.douban.com/subject/1102259/](https://book.douban.com/subject/1102259/)  
- > 标签：编程        评分：四星  
- > 我的评论：“没有银弹”、“人月”均出自作者，全书总结IBM一个大型项目失败的经验教训，提出了概念的完整性/一致性对软件项目成败起着至关重要的作用。此外抨击了外行习惯性以增加人手来来提速的谬误，俗话说：十个孕妇也不可能在一个月生下小孩来。  
+#### No.6 C++语言的设计和演化
+ > 图书名称：[C++语言的设计和演化](https://book.douban.com/subject/1096216/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1096216/](https://book.douban.com/subject/1096216/)  
+ > 标签：编程        评分：五星  
+ > 我的评论：C++ 的设计及其演化进程。。。高手进阶必备啊。。。  
 
-#### No.15 Essential C++中文版
+#### No.7 C专家编程
+ > 图书名称：[C专家编程](https://book.douban.com/subject/2377310/)  
+ > 豆瓣链接：[https://book.douban.com/subject/2377310/](https://book.douban.com/subject/2377310/)  
+ > 标签：编程        评分：五星  
+ > 我的评论：不可不读的一本关于C的书籍！  
+
+#### No.8 游戏编程精粹6
+ > 图书名称：[游戏编程精粹6](https://book.douban.com/subject/2305250/)  
+ > 豆瓣链接：[https://book.douban.com/subject/2305250/](https://book.douban.com/subject/2305250/)  
+ > 标签：编程        评分：五星  
+ > 我的评论：游戏编程精粹6  
+
+#### No.9 游戏编程精粹5
+ > 图书名称：[游戏编程精粹5](https://book.douban.com/subject/2248414/)  
+ > 豆瓣链接：[https://book.douban.com/subject/2248414/](https://book.douban.com/subject/2248414/)  
+ > 标签：编程        评分：五星  
+ > 我的评论：游戏编程精粹5  
+
+#### No.10 设计模式
+ > 图书名称：[设计模式](https://book.douban.com/subject/1052241/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1052241/](https://book.douban.com/subject/1052241/)  
+ > 标签：编程        评分：五星  
+ > 我的评论：设计模式，买了N年，读了数遍还是半瓶子水，几年之后的一个夜晚在长途火车上消磨时间，读去一切如流水一般舒畅，那个爽啊，只限当时周边无人可以分享那种感觉。。。  
+
+#### No.11 深度探索C++对象模型
+ > 图书名称：[深度探索C++对象模型](https://book.douban.com/subject/1091086/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1091086/](https://book.douban.com/subject/1091086/)  
+ > 标签：编程        评分：五星  
+ > 我的评论：C++的内存布局，各个特性的背后实现，读了至少三次才懂的。。。  
+
+#### No.12 Essential C++中文版
  > 图书名称：[Essential C++中文版](https://book.douban.com/subject/1215826/)  
  > 豆瓣链接：[https://book.douban.com/subject/1215826/](https://book.douban.com/subject/1215826/)  
  > 标签：编程        评分：四星  
  > 我的评论：适合入门的C++书籍。。。  
 
-#### No.16 C++编程思想
+#### No.13 C++编程思想
  > 图书名称：[C++编程思想](https://book.douban.com/subject/1057170/)  
  > 豆瓣链接：[https://book.douban.com/subject/1057170/](https://book.douban.com/subject/1057170/)  
  > 标签：编程        评分：四星  
  > 我的评论：C++编程思想  
 
-#### No.17 程序员修炼之道
+#### No.14 程序员修炼之道
  > 图书名称：[程序员修炼之道](https://book.douban.com/subject/1152111/)  
  > 豆瓣链接：[https://book.douban.com/subject/1152111/](https://book.douban.com/subject/1152111/)  
  > 标签：编程        评分：四星  
  > 我的评论：程序员修炼之道  
 
-#### No.18 Pro OGRE 3D Programming
+#### No.15 Pro OGRE 3D Programming
  > 图书名称：[Pro OGRE 3D Programming](https://book.douban.com/subject/2006050/)  
  > 豆瓣链接：[https://book.douban.com/subject/2006050/](https://book.douban.com/subject/2006050/)  
  > 标签：编程        评分：四星  
  > 我的评论：Pro OGRE 3D programming  
+
+#### No.16 Windows 程序设计：第5版
+ > 图书名称：[Windows 程序设计：第5版](https://book.douban.com/subject/1088168/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1088168/](https://book.douban.com/subject/1088168/)  
+ > 标签：编程        评分：四星  
+ > 我的评论：windows程序开发入门教程  
+
+#### No.17 人月神话
+ > 图书名称：[人月神话](https://book.douban.com/subject/1102259/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1102259/](https://book.douban.com/subject/1102259/)  
+ > 标签：编程        评分：四星  
+ > 我的评论：“没有银弹”、“人月”均出自作者，全书总结IBM一个大型项目失败的经验教训，提出了概念的完整性/一致性对软件项目成败起着至关重要的作用。此外抨击了外行习惯性以增加人手来来提速的谬误，俗话说：十个孕妇也不可能在一个月生下小孩来。  
+
+#### No.18 Direct3D游戏编程入门教程
+ > 图书名称：[Direct3D游戏编程入门教程](https://book.douban.com/subject/1225606/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1225606/](https://book.douban.com/subject/1225606/)  
+ > 标签：编程        评分：四星  
+ > 我的评论：入门还算不错的。。。  
 
 #### No.19 游戏之旅
  > 图书名称：[游戏之旅](https://book.douban.com/subject/1441780/)  
@@ -165,17 +165,17 @@
 
 
 ### 社会: 2 本
-#### No.25 菊与刀
- > 图书名称：[菊与刀](https://book.douban.com/subject/1022238/)  
- > 豆瓣链接：[https://book.douban.com/subject/1022238/](https://book.douban.com/subject/1022238/)  
- > 标签：社会        评分：四星  
- > 我的评论：探究日本文化的不二经典，虽然有一些内容已经不适用于战后现代化进程中日本，但深层的文化底蕴思想依然是一样的。  
-
-#### No.26 丑陋的中国人
+#### No.25 丑陋的中国人
  > 图书名称：[丑陋的中国人](https://book.douban.com/subject/3067169/)  
  > 豆瓣链接：[https://book.douban.com/subject/3067169/](https://book.douban.com/subject/3067169/)  
  > 标签：社会        评分：四星  
  > 我的评论：丑陋的中国人  
+
+#### No.26 菊与刀
+ > 图书名称：[菊与刀](https://book.douban.com/subject/1022238/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1022238/](https://book.douban.com/subject/1022238/)  
+ > 标签：社会        评分：四星  
+ > 我的评论：探究日本文化的不二经典，虽然有一些内容已经不适用于战后现代化进程中日本，但深层的文化底蕴思想依然是一样的。  
 
 
 ### 管理: 1 本

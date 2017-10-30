@@ -23,7 +23,38 @@ from bs4 import BeautifulSoup
 from openpyxl import Workbook
 from openpyxl import load_workbook
 
-gHeader = {"User-Agent": "Mozilla-Firefox5.0"}
+#=============================================================================
+# request & response
+#=============================================================================
+
+# 获取 url 内容
+gUseCookie = False
+gHeaders = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+    'Cookie': 'Put your cookie here'
+}
+
+def getHtml(url):
+    try :
+        if gUseCookie:
+            opener = urllib2.build_opener()
+            for k, v in gHeaders.items():
+                opener.addheaders.append((k, v))
+            response = opener.open(url)
+            data = response.read().decode('utf-8')
+        else:
+            request = urllib2.Request(url, None, gHeaders['User-Agent'])
+            response = urllib2.urlopen(request)
+            data = response.read().decode('utf-8')
+    except urllib2.URLError, e :
+        if hasattr(e, "code"):
+            print "The server couldn't fulfill the request: " + url
+            print "Error code: %s" % e.code
+        elif hasattr(e, "reason"):
+            print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
+            print "Reason: %s" % e.reason
+    return data
+
 
 #=============================================================================
 # classes
@@ -103,22 +134,6 @@ def get_cpu_count():
     except ValueError:
         # mimic os.cpu_count() behavior
         return None
-
-
-# 获取 url 内容
-def getHtml(url):
-    try :
-        request = urllib2.Request(url, None, gHeader)
-        response = urllib2.urlopen(request)
-        data = response.read().decode('utf-8')
-    except urllib2.URLError, e :
-        if hasattr(e, "code"):
-            print "The server couldn't fulfill the request: " + url
-            print "Error code: %s" % e.code
-        elif hasattr(e, "reason"):
-            print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
-            print "Reason: %s" % e.reason
-    return data
 
 
 #=============================================================================

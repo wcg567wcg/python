@@ -22,25 +22,45 @@ from threading import Thread
 from Queue import Queue
 from bs4 import BeautifulSoup
 
-gHeader = {"User-Agent": "Mozilla-Firefox5.0"}
+
+# 获取 url 内容
+gUseCookie = True
+gHeaders = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+    'Cookie': 'Put your cookie here'
+}
+
+def getHtml(url):
+    try :
+        if gUseCookie:
+            opener = urllib2.build_opener()
+            for k, v in gHeaders.items():
+                opener.addheaders.append((k, v))
+            response = opener.open(url)
+            data = response.read().decode('utf-8')
+        else:
+            request = urllib2.Request(url, None, gHeaders['User-Agent'])
+            response = urllib2.urlopen(request)
+            data = response.read().decode('utf-8')
+    except urllib2.URLError, e :
+        if hasattr(e, "code"):
+            print "The server couldn't fulfill the request: " + url
+            print "Error code: %s" % e.code
+        elif hasattr(e, "reason"):
+            print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
+            print "Reason: %s" % e.reason
+    return data
 
 # 书籍信息类
 class BookInfo:
-    name = ''
-    url = ''
-    icon = ''
-    ratingNum = 0.0
-    ratingPeople = 0
-    comment = ''
-    compositeRating = 0.0
-
     def __init__(self, name, url, icon, num, people, comment):
         self.name = name
         self.url = url
         self.icon = icon
         self.ratingNum = num
         self.ratingPeople = people
-        self.comment = comment 
+        self.comment = comment
+        self.compositeRating = 0.0
 
     def __sortByRating(self, other):
         val = self.ratingNum - other.ratingNum
@@ -83,22 +103,6 @@ class BookInfo:
 
     def __cmp__(self, other):
         return self.__sortByCompositeRating(other)
-
-
-# 获取 url 内容
-def getHtml(url):
-    try :
-        request = urllib2.Request(url, None, gHeader)
-        response = urllib2.urlopen(request)
-        data = response.read().decode('utf-8')
-    except urllib2.URLError, e :
-        if hasattr(e, "code"):
-            print "The server couldn't fulfill the request: " + url
-            print "Error code: %s" % e.code
-        elif hasattr(e, "reason"):
-            print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
-            print "Reason: %s" % e.reason
-    return data
 
 
 # 导出为 Markdown 格式文件

@@ -36,13 +36,6 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 class BookInfo:
-    name = ''
-    url = ''
-    ratingNums = ''
-    readMonth = ''
-    tag = ''
-    comment = ''
-
     def __init__(self, name, url, nums, month, tag, comment):
         self.name = name
         self.url = url
@@ -311,7 +304,10 @@ def process(datapath, year):
 
     analyze_book(books, tags, year)
 
-############################################################################################################
+
+#=============================================================================
+# matplot
+#=============================================================================
 
 def get_matplot_zh_font():
     fm = FontManager()
@@ -332,17 +328,23 @@ def set_matplot_zh_font():
         mpl.rcParams['font.sans-serif'] = [available[0]]    # 指定默认字体
         mpl.rcParams['axes.unicode_minus'] = False          # 解决保存图像是负号'-'显示为方块的问题
 
-############################################################################################################
 
-START_YEAR = 2000
+#=============================================================================
+# 程序入口
+#=============================================================================
 
 if __name__ == '__main__':
     set_matplot_zh_font()
 
-    now = datetime.datetime.now()
-    current_year = now.year
-    for year in range(START_YEAR, current_year + 1):
-        rawdata_path = get_raw_data_path(year)
-        if os.path.exists(rawdata_path):
-            print "process {0}".format(rawdata_path)
-            process(rawdata_path, year)
+    rootDir = os.path.dirname(os.path.abspath(__file__))
+
+    for year in os.listdir(rootDir): 
+        path = os.path.join(rootDir, year) 
+        if os.path.isdir(path): 
+            pattern = re.compile(r'([0-9]{4})')
+            match = pattern.search(year)
+            if match:
+                rawdataPath = get_raw_data_path(year)
+                if os.path.exists(rawdataPath):
+                    print "process {0}".format(rawdataPath)
+                    process(rawdataPath, year)

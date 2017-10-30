@@ -1,7 +1,7 @@
 ## 2012年阅读统计
 ## 总计阅读 43 本
 ### 评价统计:
-![评价统计](2012_reading_rate.png)
+![评价统计](2012_reading_tags.png)
 
  > 五星图书 13 本，占比 30.2%  
  > 四星图书 16 本，占比 37.2%  
@@ -20,9 +20,9 @@
  > 经济 1 本  
  > 政治 1 本  
  > 人类学 1 本  
- > 哲学 1 本  
- > 科学 1 本  
  > 商业 1 本  
+ > 科学 1 本  
+ > 哲学 1 本  
  > 管理 1 本  
 
 ### 编程: 13 本
@@ -32,23 +32,23 @@
  > 标签：编程        评分：五星  
  > 我的评论：全面深入解析windows多线程的方方面面，覆盖Win32和.NET，全面超越《Win32多线程程序设计》。  
 
-#### No.2 C#高效编程
+#### No.2 CLR via C#
+ > 图书名称：[CLR via C#](https://book.douban.com/subject/4924165/)  
+ > 豆瓣链接：[https://book.douban.com/subject/4924165/](https://book.douban.com/subject/4924165/)  
+ > 标签：编程        评分：五星  
+ > 我的评论：CLR & C# 全面深入剖析，C#深入必备利器。。。  
+
+#### No.3 C#高效编程
  > 图书名称：[C#高效编程](https://book.douban.com/subject/5360961/)  
  > 豆瓣链接：[https://book.douban.com/subject/5360961/](https://book.douban.com/subject/5360961/)  
  > 标签：编程        评分：五星  
  > 我的评论：C#进阶书籍，都是经验之谈，对得起Effective这个称号~~  
 
-#### No.3 C#与.NET 4高级程序设计（第5版）
+#### No.4 C#与.NET 4高级程序设计（第5版）
  > 图书名称：[C#与.NET 4高级程序设计（第5版）](https://book.douban.com/subject/6062550/)  
  > 豆瓣链接：[https://book.douban.com/subject/6062550/](https://book.douban.com/subject/6062550/)  
  > 标签：编程        评分：五星  
  > 我的评论：不愧是C#圣经，详尽，通俗，适度深入地介绍C#的各种语法特性，入门必读。。。  
-
-#### No.4 CLR via C#
- > 图书名称：[CLR via C#](https://book.douban.com/subject/4924165/)  
- > 豆瓣链接：[https://book.douban.com/subject/4924165/](https://book.douban.com/subject/4924165/)  
- > 标签：编程        评分：五星  
- > 我的评论：CLR & C# 全面深入剖析，C#深入必备利器。。。  
 
 #### No.5 Win32多线程程序设计
  > 图书名称：[Win32多线程程序设计](https://book.douban.com/subject/1231702/)  
@@ -80,23 +80,23 @@
  > 标签：编程        评分：四星  
  > 我的评论：口语化写作，讲得还不错，入门的话值得翻翻~~  
 
-#### No.10 Windows并发编程指南
- > 图书名称：[Windows并发编程指南](https://book.douban.com/subject/4214617/)  
- > 豆瓣链接：[https://book.douban.com/subject/4214617/](https://book.douban.com/subject/4214617/)  
- > 标签：编程        评分：三星  
- > 我的评论：原著是还不错，就是翻译的欠火候。。。  
-
-#### No.11 OpenGL ES 2.0 Programming Guide
+#### No.10 OpenGL ES 2.0 Programming Guide
  > 图书名称：[OpenGL ES 2.0 Programming Guide](https://book.douban.com/subject/3175883/)  
  > 豆瓣链接：[https://book.douban.com/subject/3175883/](https://book.douban.com/subject/3175883/)  
  > 标签：编程        评分：三星  
  > 我的评论：就像 API 文档一样，不是太好。。。  
 
-#### No.12 Pro .NET 4.0 Parallel Programming in C#
+#### No.11 Pro .NET 4.0 Parallel Programming in C#
  > 图书名称：[Pro .NET 4.0 Parallel Programming in C#](https://book.douban.com/subject/5931348/)  
  > 豆瓣链接：[https://book.douban.com/subject/5931348/](https://book.douban.com/subject/5931348/)  
  > 标签：编程        评分：三星  
  > 我的评论：教你如何使用.NET 4.0 并行库进行编程，API示例级别的，非常详细，适合入门。《Windows并发编程》是将底层的技术，这边是入门级别的。  
+
+#### No.12 Windows并发编程指南
+ > 图书名称：[Windows并发编程指南](https://book.douban.com/subject/4214617/)  
+ > 豆瓣链接：[https://book.douban.com/subject/4214617/](https://book.douban.com/subject/4214617/)  
+ > 标签：编程        评分：三星  
+ > 我的评论：原著是还不错，就是翻译的欠火候。。。  
 
 #### No.13 反模式
  > 图书名称：[反模式](https://book.douban.com/subject/2364818/)  
@@ -214,29 +214,29 @@
 
 
 ### 社会: 4 本
-#### No.31 黑猩猩的政治
- > 图书名称：[黑猩猩的政治](https://book.douban.com/subject/3785326/)  
- > 豆瓣链接：[https://book.douban.com/subject/3785326/](https://book.douban.com/subject/3785326/)  
- > 标签：社会        评分：五星  
- > 我的评论：一群黑猩猩的社会活动--或曰“政治”纪录片，别小瞧动物们。。。  
-
-#### No.32 中国在梁庄
+#### No.31 中国在梁庄
  > 图书名称：[中国在梁庄](https://book.douban.com/subject/5350804/)  
  > 豆瓣链接：[https://book.douban.com/subject/5350804/](https://book.douban.com/subject/5350804/)  
  > 标签：社会        评分：五星  
  > 我的评论：真实记录在一味只顾经济发展大背景下的乡村变迁，在回家路上看的，在家观察对比，发现中国农村发展大体差不多，农村日渐荒芜，环境恶化。。。  
 
-#### No.33 重新发现社会
- > 图书名称：[重新发现社会](https://book.douban.com/subject/4199761/)  
- > 豆瓣链接：[https://book.douban.com/subject/4199761/](https://book.douban.com/subject/4199761/)  
- > 标签：社会        评分：四星  
- > 我的评论：不错的民主自由社会启蒙读物，前面四章写得不错，后面的太罗嗦。。。。  
+#### No.32 黑猩猩的政治
+ > 图书名称：[黑猩猩的政治](https://book.douban.com/subject/3785326/)  
+ > 豆瓣链接：[https://book.douban.com/subject/3785326/](https://book.douban.com/subject/3785326/)  
+ > 标签：社会        评分：五星  
+ > 我的评论：一群黑猩猩的社会活动--或曰“政治”纪录片，别小瞧动物们。。。  
 
-#### No.34 失控
+#### No.33 失控
  > 图书名称：[失控](https://book.douban.com/subject/5375620/)  
  > 豆瓣链接：[https://book.douban.com/subject/5375620/](https://book.douban.com/subject/5375620/)  
  > 标签：社会        评分：四星  
  > 我的评论：以跨学科背景来讲述系统的运转，进化以及将来的走向，这个系统可以是生态系统，可以互联网系统，可以是人类组织社会，可以虚拟现实等一切系统。行文冗长，可以先看最后两节中的九律一窥全貌。  
+
+#### No.34 重新发现社会
+ > 图书名称：[重新发现社会](https://book.douban.com/subject/4199761/)  
+ > 豆瓣链接：[https://book.douban.com/subject/4199761/](https://book.douban.com/subject/4199761/)  
+ > 标签：社会        评分：四星  
+ > 我的评论：不错的民主自由社会启蒙读物，前面四章写得不错，后面的太罗嗦。。。。  
 
 
 ### 教育: 2 本
@@ -277,12 +277,12 @@
  > 我的评论：了解下几近原始部落的生活，意识形态以及人类学调查的方式，绝对新颖，作者描述得也很有趣~~~  
 
 
-### 哲学: 1 本
-#### No.40 冥想的艺术
- > 图书名称：[冥想的艺术](https://book.douban.com/subject/4742960/)  
- > 豆瓣链接：[https://book.douban.com/subject/4742960/](https://book.douban.com/subject/4742960/)  
- > 标签：哲学        评分：两星  
- > 我的评论：抱着猎奇的心理看完这本书，了解了很多佛教概念，但书中提到的佛教概念太唯心了，把一切都当作投射，有时候就像精神胜利法一样。。。  
+### 商业: 1 本
+#### No.40 Facebook效应
+ > 图书名称：[Facebook效应](https://book.douban.com/subject/5313010/)  
+ > 豆瓣链接：[https://book.douban.com/subject/5313010/](https://book.douban.com/subject/5313010/)  
+ > 标签：商业        评分：五星  
+ > 我的评论：社会，至少是网络社会会朝着分享与透明继续前行，从而让世界更美好。我想这是Facebook坚持的理念。  
 
 
 ### 科学: 1 本
@@ -293,12 +293,12 @@
  > 我的评论：可以称之为DICOM 圣经吧，作者结合自身丰富的PACS实践经验，介绍了DICOM的优缺点，并列举出许多实际应用要注意的事项。  
 
 
-### 商业: 1 本
-#### No.42 Facebook效应
- > 图书名称：[Facebook效应](https://book.douban.com/subject/5313010/)  
- > 豆瓣链接：[https://book.douban.com/subject/5313010/](https://book.douban.com/subject/5313010/)  
- > 标签：商业        评分：五星  
- > 我的评论：社会，至少是网络社会会朝着分享与透明继续前行，从而让世界更美好。我想这是Facebook坚持的理念。  
+### 哲学: 1 本
+#### No.42 冥想的艺术
+ > 图书名称：[冥想的艺术](https://book.douban.com/subject/4742960/)  
+ > 豆瓣链接：[https://book.douban.com/subject/4742960/](https://book.douban.com/subject/4742960/)  
+ > 标签：哲学        评分：两星  
+ > 我的评论：抱着猎奇的心理看完这本书，了解了很多佛教概念，但书中提到的佛教概念太唯心了，把一切都当作投射，有时候就像精神胜利法一样。。。  
 
 
 ### 管理: 1 本

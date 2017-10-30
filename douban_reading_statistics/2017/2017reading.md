@@ -1,69 +1,70 @@
 ## 2017年阅读统计
-## 总计阅读 30 本
+## 总计阅读 34 本
 ### 评价统计:
-![评价统计](2017_reading_rate.png)
+![评价统计](2017_reading_tags.png)
 
- > 五星图书 13 本，占比 43.3%  
- > 四星图书 10 本，占比 33.3%  
- > 三星图书 6 本，占比 20.0%  
- > 两星图书 1 本，占比 3.3%  
+ > 五星图书 14 本，占比 41.2%  
+ > 四星图书 11 本，占比 32.4%  
+ > 三星图书 8 本，占比 23.5%  
+ > 两星图书 1 本，占比 2.9%  
 
 ### 标签统计:
 ![标签统计](2017_reading_tags.png)
 
  > 编程 13 本  
  > 政治 5 本  
- > 历史 3 本  
+ > 历史 4 本  
+ > 文学 3 本  
  > 教育 2 本  
  > 法学 2 本  
  > 经济 1 本  
  > 设计 1 本  
- > 人类学 1 本  
  > 思维 1 本  
+ > 人类学 1 本  
  > 科学 1 本  
 
 ### 编程: 13 本
-#### No.1 UNIX环境高级编程
+#### No.1 大话设计模式
+ > 图书名称：[大话设计模式](https://book.douban.com/subject/2334288/)  
+ > 豆瓣链接：[https://book.douban.com/subject/2334288/](https://book.douban.com/subject/2334288/)  
+ > 标签：编程        评分：五星  
+ > 我的评论：设计模式入门，相当地“大话”，通俗易懂，可以和《Head First Design Pattern》媲美。  
+
+#### No.2 UNIX环境高级编程
  > 图书名称：[UNIX环境高级编程](https://book.douban.com/subject/1788421/)  
  > 豆瓣链接：[https://book.douban.com/subject/1788421/](https://book.douban.com/subject/1788421/)  
  > 标签：编程        评分：五星  
  > 我的评论：条理清晰，钜细靡遗，非常基础的 unix/linux 编程入门书籍。  
 
-#### No.2 深入理解程序设计
+#### No.3 深入理解程序设计
  > 图书名称：[深入理解程序设计](https://book.douban.com/subject/25789594/)  
  > 豆瓣链接：[https://book.douban.com/subject/25789594/](https://book.douban.com/subject/25789594/)  
  > 标签：编程        评分：五星  
  > 我的评论：简明易懂的AT&T汇编入门书籍，将各种程序概念讲的通俗易懂，最后的推荐书单非常经典。英语CET4水平即可读懂英文版，中文版为《深入理解程序设计》  
 
-#### No.3 Programming From The Ground Up
+#### No.4 Programming From The Ground Up
  > 图书名称：[Programming From The Ground Up](https://book.douban.com/subject/1787855/)  
  > 豆瓣链接：[https://book.douban.com/subject/1787855/](https://book.douban.com/subject/1787855/)  
  > 标签：编程        评分：五星  
  > 我的评论：简明易懂的AT&T汇编入门书籍，将各种程序概念讲的通俗易懂，最后的推荐书单非常经典。英语CET4水平即可读懂英文版，中文版为《深入理解程序设计》  
 
-#### No.4 深入理解C++11
+#### No.5 深入理解C++11
  > 图书名称：[深入理解C++11](https://book.douban.com/subject/24738301/)  
  > 豆瓣链接：[https://book.douban.com/subject/24738301/](https://book.douban.com/subject/24738301/)  
  > 标签：编程        评分：五星  
  > 我的评论：讲C++11新出来的特性，对于已经熟悉C++的人来说，很合适，能够快速了解C++11有哪些新特性，讲的也非常好，简洁易懂，适度深入。  
 
-#### No.5 计算机程序的构造和解释
+#### No.6 计算机程序的构造和解释
  > 图书名称：[计算机程序的构造和解释](https://book.douban.com/subject/1148282/)  
  > 豆瓣链接：[https://book.douban.com/subject/1148282/](https://book.douban.com/subject/1148282/)  
  > 标签：编程        评分：五星  
  > 我的评论：跳过语法、开发环境等杂碎，直接享受纯思维的乐趣，也只有scheme这么纯的语言能够做到：程序抽象、数据抽象、语言抽象、机器抽象，顺带介绍了lambda表达式、流、惰性求值、寄存器、垃圾回收、编译与解释等等概念。当作程序入门读难度有点大，也许<How to Design Programs>更适合担当此任。从今而后，我要把程序员分为两种：一种读过SICP，另一种没读过SICP。  
 
-#### No.6 C++ API设计
+#### No.7 C++ API设计
  > 图书名称：[C++ API设计](https://book.douban.com/subject/24869855/)  
  > 豆瓣链接：[https://book.douban.com/subject/24869855/](https://book.douban.com/subject/24869855/)  
  > 标签：编程        评分：五星  
  > 我的评论：C++API领域中的《代码大全》，非常适合框架、库的开发者。  
-
-#### No.7 大话设计模式
- > 图书名称：[大话设计模式](https://book.douban.com/subject/2334288/)  
- > 豆瓣链接：[https://book.douban.com/subject/2334288/](https://book.douban.com/subject/2334288/)  
- > 标签：编程        评分：五星  
- > 我的评论：设计模式入门，相当地“大话”，通俗易懂，可以和《Head First Design Pattern》媲美。  
 
 #### No.8 七周七语言
  > 图书名称：[七周七语言](https://book.douban.com/subject/10555435/)  
@@ -134,12 +135,12 @@
  > 我的评论：书中提到的大部分案例在《近距离看美国》系列中基本都提到过，这一本可算是那个系统的花絮和外传吧。书中介绍了独具一格的美国南方小镇的自治状态。  
 
 
-### 历史: 3 本
-#### No.19 中国法律与中国社会
- > 图书名称：[中国法律与中国社会](https://book.douban.com/subject/1224279/)  
- > 豆瓣链接：[https://book.douban.com/subject/1224279/](https://book.douban.com/subject/1224279/)  
+### 历史: 4 本
+#### No.19 太平天国
+ > 图书名称：[太平天国](https://book.douban.com/subject/6860955/)  
+ > 豆瓣链接：[https://book.douban.com/subject/6860955/](https://book.douban.com/subject/6860955/)  
  > 标签：历史        评分：四星  
- > 我的评论：单就学术著作可评五星。透过对纲常名教剖析可以看到赤裸裸的吃人真相。中国过去的法，甚至是至现在的法律现实，都是法表儒里-搞有差别化对待，什么刑不上大夫、党内处分，几千年有啥变化？  
+ > 我的评论：去掉了阶级定性的所谓农民革命的光环，剩下的只是一个略显荒诞，新瓶装旧酒的故事。这本书聚焦于洪秀全本人以及他诠释或篡改的教义事实上，罗列资料，较少价值判断，是其长；对于对手的描述，着墨于官军或湘军较少，而洋人反而较多，实则曾国藩对于平定这场类似白莲教运动叛乱功不可没，是其短。  
 
 #### No.20 开放中的变迁
  > 图书名称：[开放中的变迁](https://book.douban.com/subject/5906321/)  
@@ -147,21 +148,47 @@
  > 标签：历史        评分：四星  
  > 我的评论：用一个超稳定框架+意识形态的万能膏药来解释一切，不免有点武断和牵强，尤其是1924年之后的部分。我能说要集体文化来解释传统的一切，用个体文化来预示未来也可以么？总体来说，作者的一些观点与总结还是值得赞赏。  
 
-#### No.21 明治维新的国度
+#### No.21 中国法律与中国社会
+ > 图书名称：[中国法律与中国社会](https://book.douban.com/subject/1224279/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1224279/](https://book.douban.com/subject/1224279/)  
+ > 标签：历史        评分：四星  
+ > 我的评论：单就学术著作可评五星。透过对纲常名教剖析可以看到赤裸裸的吃人真相。中国过去的法，甚至是至现在的法律现实，都是法表儒里-搞有差别化对待，什么刑不上大夫、党内处分，几千年有啥变化？  
+
+#### No.22 明治维新的国度
  > 图书名称：[明治维新的国度](https://book.douban.com/subject/25962185/)  
  > 豆瓣链接：[https://book.douban.com/subject/25962185/](https://book.douban.com/subject/25962185/)  
  > 标签：历史        评分：三星  
  > 我的评论：广有余而深不足，内容较多前后重述，图多，搞得像游记类图书，贵在客观。对于不了解明治维新那一段变革，可以翻一翻  
 
 
+### 文学: 3 本
+#### No.23 杀死一只知更鸟
+ > 图书名称：[杀死一只知更鸟](https://book.douban.com/subject/6781808/)  
+ > 豆瓣链接：[https://book.douban.com/subject/6781808/](https://book.douban.com/subject/6781808/)  
+ > 标签：文学        评分：五星  
+ > 我的评论：最具童心的法学启蒙读本，正义是一种教养，杀死一只知更鸟是一种罪恶！  
+
+#### No.24 荆棘鸟
+ > 图书名称：[荆棘鸟](https://book.douban.com/subject/1086249/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1086249/](https://book.douban.com/subject/1086249/)  
+ > 标签：文学        评分：三星  
+ > 我的评论：澳大利亚的“《飘》”不如美国的《飘》，相当程度低美化了德罗海达庄园的生活。讲述一家三代女人的爱情，单纯的爱，单纯的迷恋，单纯的伤害。翻译很用心很用心。  
+
+#### No.25 陆犯焉识
+ > 图书名称：[陆犯焉识](https://book.douban.com/subject/6880158/)  
+ > 豆瓣链接：[https://book.douban.com/subject/6880158/](https://book.douban.com/subject/6880158/)  
+ > 标签：文学        评分：三星  
+ > 我的评论：经历比较曲折吧，经历了民国、留美、上海抗战、重庆抗战、被反右、西北改造、被平反、回上海又被儿女单位化了。主线还是爱情，所以不算是严肃文学。前后两部分主角的心理状态变化过程衔接不太好，顺变的感觉，给出的理由又不够有说服力。  
+
+
 ### 教育: 2 本
-#### No.22 游戏力
+#### No.26 游戏力
  > 图书名称：[游戏力](https://book.douban.com/subject/6084402/)  
  > 豆瓣链接：[https://book.douban.com/subject/6084402/](https://book.douban.com/subject/6084402/)  
  > 标签：教育        评分：四星  
  > 我的评论：游戏是探索求知、亲情培养、社交情商、情绪调节多方面的灵丹妙药。洗澡的不听--玩水的乖乖来，这就是游戏力的魔力。  
 
-#### No.23 把你的英语用起来！
+#### No.27 把你的英语用起来！
  > 图书名称：[把你的英语用起来！](https://book.douban.com/subject/3748247/)  
  > 豆瓣链接：[https://book.douban.com/subject/3748247/](https://book.douban.com/subject/3748247/)  
  > 标签：教育        评分：三星  
@@ -169,13 +196,13 @@
 
 
 ### 法学: 2 本
-#### No.24 为权利而斗争
+#### No.28 为权利而斗争
  > 图书名称：[为权利而斗争](https://book.douban.com/subject/2009914/)  
  > 豆瓣链接：[https://book.douban.com/subject/2009914/](https://book.douban.com/subject/2009914/)  
  > 标签：法学        评分：五星  
  > 我的评论：如果习惯于容忍不法而无奈放弃，那么当这种奴性的萎缩的麻木的法感情，遇到的不是个人而是有关全民族的权利侵害时，诸如宪法废弃或颠覆、外敌攻击等问题，谁又会相信他会摇身一变感情饱满、精力充沛地投入行动？没有勇敢地保护自己权利习惯的人又怎会迫于冲动心甘情愿地为了全体献出自己的生命和财产？  
 
-#### No.25 美国宪政历程
+#### No.29 美国宪政历程
  > 图书名称：[美国宪政历程](https://book.douban.com/subject/1144185/)  
  > 豆瓣链接：[https://book.douban.com/subject/1144185/](https://book.douban.com/subject/1144185/)  
  > 标签：法学        评分：五星  
@@ -183,7 +210,7 @@
 
 
 ### 经济: 1 本
-#### No.26 经济为什么会崩溃
+#### No.30 经济为什么会崩溃
  > 图书名称：[经济为什么会崩溃](https://book.douban.com/subject/6743298/)  
  > 豆瓣链接：[https://book.douban.com/subject/6743298/](https://book.douban.com/subject/6743298/)  
  > 标签：经济        评分：五星  
@@ -191,31 +218,31 @@
 
 
 ### 设计: 1 本
-#### No.27 设计心理学
+#### No.31 设计心理学
  > 图书名称：[设计心理学](https://book.douban.com/subject/4606471/)  
  > 豆瓣链接：[https://book.douban.com/subject/4606471/](https://book.douban.com/subject/4606471/)  
  > 标签：设计        评分：五星  
  > 我的评论：论可视性与反馈的重要性，非常经典的设计方面的书籍。  
 
 
-### 人类学: 1 本
-#### No.28 金枝
- > 图书名称：[金枝](https://book.douban.com/subject/2101774/)  
- > 豆瓣链接：[https://book.douban.com/subject/2101774/](https://book.douban.com/subject/2101774/)  
- > 标签：人类学        评分：四星  
- > 我的评论：通过海量的民俗或宗教仪式案例探讨巫术、宗教、科学之间的关系与发展历程。巫术无非交感与顺势两种思维方式，加上认为灵魂可以独立于体外保存和活动的概念，衍生出重点驱魔辟邪、永葆生命力等众多巫术或宗教仪式。人类学经典之作，对理解传统社会的一些习俗很有借鉴意义。  
-
-
 ### 思维: 1 本
-#### No.29 优秀的绵羊
+#### No.32 优秀的绵羊
  > 图书名称：[优秀的绵羊](https://book.douban.com/subject/26747208/)  
  > 豆瓣链接：[https://book.douban.com/subject/26747208/](https://book.douban.com/subject/26747208/)  
  > 标签：思维        评分：四星  
  > 我的评论：在狭隘的精英教育下只顾成长的一代缺失了意义感、好奇心，这是社会阶层固化，各自只顾各自小圈子的必然现象。  
 
 
+### 人类学: 1 本
+#### No.33 金枝
+ > 图书名称：[金枝](https://book.douban.com/subject/2101774/)  
+ > 豆瓣链接：[https://book.douban.com/subject/2101774/](https://book.douban.com/subject/2101774/)  
+ > 标签：人类学        评分：四星  
+ > 我的评论：通过海量的民俗或宗教仪式案例探讨巫术、宗教、科学之间的关系与发展历程。巫术无非交感与顺势两种思维方式，加上认为灵魂可以独立于体外保存和活动的概念，衍生出重点驱魔辟邪、永葆生命力等众多巫术或宗教仪式。人类学经典之作，对理解传统社会的一些习俗很有借鉴意义。  
+
+
 ### 科学: 1 本
-#### No.30 黑猩猩在召唤
+#### No.34 黑猩猩在召唤
  > 图书名称：[黑猩猩在召唤](https://book.douban.com/subject/1951398/)  
  > 豆瓣链接：[https://book.douban.com/subject/1951398/](https://book.douban.com/subject/1951398/)  
  > 标签：科学        评分：四星  

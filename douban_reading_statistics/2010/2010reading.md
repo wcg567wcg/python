@@ -1,10 +1,10 @@
 ## 2010年阅读统计
 ## 总计阅读 47 本
 ### 评价统计:
-![评价统计](2010_reading_rate.png)
+![评价统计](2010_reading_tags.png)
 
- > 五星图书 15 本，占比 31.9%  
- > 四星图书 20 本，占比 42.6%  
+ > 五星图书 14 本，占比 29.8%  
+ > 四星图书 21 本，占比 44.7%  
  > 三星图书 12 本，占比 25.5%  
 
 ### 标签统计:
@@ -35,17 +35,17 @@
  > 标签：思维        评分：五星  
  > 我的评论：刻意练习与一万小时理论是成为天才的不二法宝。。。  
 
-#### No.3 引爆点
- > 图书名称：[引爆点](https://book.douban.com/subject/1473323/)  
- > 豆瓣链接：[https://book.douban.com/subject/1473323/](https://book.douban.com/subject/1473323/)  
+#### No.3 低智商社会
+ > 图书名称：[低智商社会](https://book.douban.com/subject/4292120/)  
+ > 豆瓣链接：[https://book.douban.com/subject/4292120/](https://book.douban.com/subject/4292120/)  
  > 标签：思维        评分：四星  
- > 我的评论：流行三要素：个别人物法则（传播信息的人）、附着力原则（传播信息本身）、环境威力法则（信息所处的环境）。个别人物法则(Law of the Few)：三种关键角色联系员、内行、销售员。联系员维系着大规模的弱联系，是小世界中的社交经纪，他们不会回避对于社交关系的义务，在维持简单、随意、广泛的社交中获得快乐；内行会主动摄取信息，并想方设法散布出去，是信息的经纪；销售员是完成“最后一公里”的人，需要极强的说服能力。  
+ > 我的评论：生活在芜杂信息轰炸的时代，多动脑子，主动思考，批判性思考才是生存之道。。。  
 
-#### No.4 别做正常的傻瓜
- > 图书名称：[别做正常的傻瓜](https://book.douban.com/subject/1874488/)  
- > 豆瓣链接：[https://book.douban.com/subject/1874488/](https://book.douban.com/subject/1874488/)  
+#### No.4 随机致富的傻瓜
+ > 图书名称：[随机致富的傻瓜](https://book.douban.com/subject/1962687/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1962687/](https://book.douban.com/subject/1962687/)  
  > 标签：思维        评分：四星  
- > 我的评论：叫人如何做出正常的决策，挺不错的说~~~  
+ > 我的评论：大众眼中有的是存活者偏差，而忽视随机性。。。  
 
 #### No.5 异类
  > 图书名称：[异类](https://book.douban.com/subject/3688489/)  
@@ -71,17 +71,17 @@
  > 标签：思维        评分：四星  
  > 我的评论：让人有危机感，具有世界一体化意识，虽然对大前所说的即战力三大能力“外语能力”，“理财能力”以及“解决问题的能力”不是很认同，但是能从中学到不少，尤其是理财上面的。  
 
-#### No.9 低智商社会
- > 图书名称：[低智商社会](https://book.douban.com/subject/4292120/)  
- > 豆瓣链接：[https://book.douban.com/subject/4292120/](https://book.douban.com/subject/4292120/)  
+#### No.9 引爆点
+ > 图书名称：[引爆点](https://book.douban.com/subject/1473323/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1473323/](https://book.douban.com/subject/1473323/)  
  > 标签：思维        评分：四星  
- > 我的评论：生活在芜杂信息轰炸的时代，多动脑子，主动思考，批判性思考才是生存之道。。。  
+ > 我的评论：流行三要素：个别人物法则（传播信息的人）、附着力原则（传播信息本身）、环境威力法则（信息所处的环境）。个别人物法则(Law of the Few)：三种关键角色联系员、内行、销售员。联系员维系着大规模的弱联系，是小世界中的社交经纪，他们不会回避对于社交关系的义务，在维持简单、随意、广泛的社交中获得快乐；内行会主动摄取信息，并想方设法散布出去，是信息的经纪；销售员是完成“最后一公里”的人，需要极强的说服能力。  
 
-#### No.10 随机致富的傻瓜
- > 图书名称：[随机致富的傻瓜](https://book.douban.com/subject/1962687/)  
- > 豆瓣链接：[https://book.douban.com/subject/1962687/](https://book.douban.com/subject/1962687/)  
+#### No.10 别做正常的傻瓜
+ > 图书名称：[别做正常的傻瓜](https://book.douban.com/subject/1874488/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1874488/](https://book.douban.com/subject/1874488/)  
  > 标签：思维        评分：四星  
- > 我的评论：大众眼中有的是存活者偏差，而忽视随机性。。。  
+ > 我的评论：叫人如何做出正常的决策，挺不错的说~~~  
 
 #### No.11 你的灯亮着吗?
  > 图书名称：[你的灯亮着吗?](https://book.douban.com/subject/1135754/)  
@@ -171,23 +171,23 @@
  > 标签：心理        评分：五星  
  > 我的评论：非常值得一看的心理学著作，通过一个个经典的心理学实验，揭示人类的心理状态，以及他们是如何影响我们的行为的。  
 
-#### No.25 影响力2
- > 图书名称：[影响力2](https://book.douban.com/subject/3130904/)  
- > 豆瓣链接：[https://book.douban.com/subject/3130904/](https://book.douban.com/subject/3130904/)  
- > 标签：心理        评分：四星  
- > 我的评论：虽然打着《影响力 2》的幌子，其实与西奥迪尼写《影响力》一点关系也没有。不过书中还是从个人，社会与组织三个层面提出了很多有影响力的实用指导方法。  
-
-#### No.26 活出意义来
+#### No.25 活出意义来
  > 图书名称：[活出意义来](https://book.douban.com/subject/1359005/)  
  > 豆瓣链接：[https://book.douban.com/subject/1359005/](https://book.douban.com/subject/1359005/)  
  > 标签：心理        评分：四星  
  > 我的评论：活出意义来，没有的话使劲开窍想点意义来，积极心理学一般的。。。  
 
-#### No.27 乌合之众
+#### No.26 乌合之众
  > 图书名称：[乌合之众](https://book.douban.com/subject/1012611/)  
  > 豆瓣链接：[https://book.douban.com/subject/1012611/](https://book.douban.com/subject/1012611/)  
  > 标签：心理        评分：四星  
  > 我的评论：关于群体的心理学部分很精辟，不过作者对女性有歧视，并宣扬种族主义。  
+
+#### No.27 影响力2
+ > 图书名称：[影响力2](https://book.douban.com/subject/3130904/)  
+ > 豆瓣链接：[https://book.douban.com/subject/3130904/](https://book.douban.com/subject/3130904/)  
+ > 标签：心理        评分：四星  
+ > 我的评论：虽然打着《影响力 2》的幌子，其实与西奥迪尼写《影响力》一点关系也没有。不过书中还是从个人，社会与组织三个层面提出了很多有影响力的实用指导方法。  
 
 #### No.28 马斯洛的智慧
  > 图书名称：[马斯洛的智慧](https://book.douban.com/subject/1426702/)  
@@ -229,43 +229,43 @@
 
 
 ### 文学: 4 本
-#### No.34 兄弟（下）
- > 图书名称：[兄弟（下）](https://book.douban.com/subject/1703544/)  
- > 豆瓣链接：[https://book.douban.com/subject/1703544/](https://book.douban.com/subject/1703544/)  
- > 标签：文学        评分：三星  
- > 我的评论：奔余华的大名而看的，远不如《活着》，《许三观卖血记》，就当一般的小说吧。。。  
-
-#### No.35 兄弟（上）
- > 图书名称：[兄弟（上）](https://book.douban.com/subject/1401425/)  
- > 豆瓣链接：[https://book.douban.com/subject/1401425/](https://book.douban.com/subject/1401425/)  
- > 标签：文学        评分：三星  
- > 我的评论：奔余华的大名而看的，远不如《活着》，《许三观卖血记》，就当一般的小说吧。。。  
-
-#### No.36 天才在左 疯子在右
- > 图书名称：[天才在左 疯子在右](https://book.douban.com/subject/4242172/)  
- > 豆瓣链接：[https://book.douban.com/subject/4242172/](https://book.douban.com/subject/4242172/)  
- > 标签：文学        评分：三星  
- > 我的评论：精神病人眼中的世界，比较另类。。。  
-
-#### No.37 行者无疆
+#### No.34 行者无疆
  > 图书名称：[行者无疆](https://book.douban.com/subject/1054889/)  
  > 豆瓣链接：[https://book.douban.com/subject/1054889/](https://book.douban.com/subject/1054889/)  
  > 标签：文学        评分：三星  
  > 我的评论：没啥深度，远不如文化苦旅…  
 
+#### No.35 兄弟（下）
+ > 图书名称：[兄弟（下）](https://book.douban.com/subject/1703544/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1703544/](https://book.douban.com/subject/1703544/)  
+ > 标签：文学        评分：三星  
+ > 我的评论：奔余华的大名而看的，远不如《活着》，《许三观卖血记》，就当一般的小说吧。。。  
+
+#### No.36 兄弟（上）
+ > 图书名称：[兄弟（上）](https://book.douban.com/subject/1401425/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1401425/](https://book.douban.com/subject/1401425/)  
+ > 标签：文学        评分：三星  
+ > 我的评论：奔余华的大名而看的，远不如《活着》，《许三观卖血记》，就当一般的小说吧。。。  
+
+#### No.37 天才在左 疯子在右
+ > 图书名称：[天才在左 疯子在右](https://book.douban.com/subject/4242172/)  
+ > 豆瓣链接：[https://book.douban.com/subject/4242172/](https://book.douban.com/subject/4242172/)  
+ > 标签：文学        评分：三星  
+ > 我的评论：精神病人眼中的世界，比较另类。。。  
+
 
 ### 经济: 2 本
-#### No.38 激荡三十年
- > 图书名称：[激荡三十年](https://book.douban.com/subject/3151575/)  
- > 豆瓣链接：[https://book.douban.com/subject/3151575/](https://book.douban.com/subject/3151575/)  
- > 标签：经济        评分：三星  
- > 我的评论：对近三十年中国经济还算不错的“事后分析”，值得了解一下，不过过于粗略，尤其是2000年以后的，只能说是一部大众读物。  
-
-#### No.39 激荡三十年（上）
+#### No.38 激荡三十年（上）
  > 图书名称：[激荡三十年（上）](https://book.douban.com/subject/1970428/)  
  > 豆瓣链接：[https://book.douban.com/subject/1970428/](https://book.douban.com/subject/1970428/)  
  > 标签：经济        评分：三星  
  > 我的评论：可以当故事书读读。。。  
+
+#### No.39 激荡三十年
+ > 图书名称：[激荡三十年](https://book.douban.com/subject/3151575/)  
+ > 豆瓣链接：[https://book.douban.com/subject/3151575/](https://book.douban.com/subject/3151575/)  
+ > 标签：经济        评分：三星  
+ > 我的评论：对近三十年中国经济还算不错的“事后分析”，值得了解一下，不过过于粗略，尤其是2000年以后的，只能说是一部大众读物。  
 
 
 ### 历史: 2 本
@@ -292,22 +292,22 @@
 #### No.43 民主的细节
  > 图书名称：[民主的细节](https://book.douban.com/subject/3813669/)  
  > 豆瓣链接：[https://book.douban.com/subject/3813669/](https://book.douban.com/subject/3813669/)  
- > 标签：政治        评分：五星  
- > 我的评论：理解“美帝”民主制度细节的上佳读物。。。  
+ > 标签：政治        评分：四星  
+ > 我的评论：理解“美帝”民主制度细节的启蒙读物，零散不够系统，建议阅读林达《近距离看美国》系列。  
 
 
 ### 科学: 2 本
-#### No.44 追寻记忆的痕迹
- > 图书名称：[追寻记忆的痕迹](https://book.douban.com/subject/1944205/)  
- > 豆瓣链接：[https://book.douban.com/subject/1944205/](https://book.douban.com/subject/1944205/)  
- > 标签：科学        评分：五星  
- > 我的评论：这是一位科学巨匠追寻记忆痕迹走过的半个多世纪的心路历程。他对前辈和同行的尊重与谦和，对年轻一代的提携和鼓励，对故土维也纳的眷念，以及身为犹太人所特有的民族自豪感，这一切都深深地打动了我们，一种发自内心的敬意和钦佩之情油然而生。  
-
-#### No.45 从一到无穷大
+#### No.44 从一到无穷大
  > 图书名称：[从一到无穷大](https://book.douban.com/subject/1441922/)  
  > 豆瓣链接：[https://book.douban.com/subject/1441922/](https://book.douban.com/subject/1441922/)  
  > 标签：科学        评分：五星  
  > 我的评论：相当不错的，从夸克到无限的宇宙，讲述得清晰明了。。。  
+
+#### No.45 追寻记忆的痕迹
+ > 图书名称：[追寻记忆的痕迹](https://book.douban.com/subject/1944205/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1944205/](https://book.douban.com/subject/1944205/)  
+ > 标签：科学        评分：五星  
+ > 我的评论：这是一位科学巨匠追寻记忆痕迹走过的半个多世纪的心路历程。他对前辈和同行的尊重与谦和，对年轻一代的提携和鼓励，对故土维也纳的眷念，以及身为犹太人所特有的民族自豪感，这一切都深深地打动了我们，一种发自内心的敬意和钦佩之情油然而生。  
 
 
 ### 商业: 1 本

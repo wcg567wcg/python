@@ -1,7 +1,7 @@
 ## 2011年阅读统计
 ## 总计阅读 41 本
 ### 评价统计:
-![评价统计](2011_reading_rate.png)
+![评价统计](2011_reading_tags.png)
 
  > 五星图书 13 本，占比 31.7%  
  > 四星图书 14 本，占比 34.1%  
@@ -15,13 +15,12 @@
  > 编程 12 本  
  > 历史 3 本  
  > 管理 3 本  
+ > 教育 2 本  
  > 设计 2 本  
  > 心理 2 本  
  > 经济 1 本  
  > 社会 1 本  
- > 教育 1 本  
  > 文学 1 本  
- > 英语 1 本  
 
 ### 思维: 14 本
 #### No.1 未来是湿的
@@ -54,35 +53,35 @@
  > 标签：思维        评分：四星  
  > 我的评论：《影响力》续集把，对影响力的几个原理进行实例化讲解，值得看看。  
 
-#### No.6 改变
- > 图书名称：[改变](https://book.douban.com/subject/3006742/)  
- > 豆瓣链接：[https://book.douban.com/subject/3006742/](https://book.douban.com/subject/3006742/)  
- > 标签：思维        评分：四星  
- > 我的评论：以群论为模型来解释问题形成与解决的原则，第一序改变通常解决不了问题，必须设法引入第二序改变。这本书对界定问题，解决问题的思路挺有一套的。。。  
-
-#### No.7 思想的未来
+#### No.6 思想的未来
  > 图书名称：[思想的未来](https://book.douban.com/subject/1186899/)  
  > 豆瓣链接：[https://book.douban.com/subject/1186899/](https://book.douban.com/subject/1186899/)  
  > 标签：思维        评分：四星  
  > 我的评论：数字知识产权不同于财产权，你增加一份（Copy）数字拷贝，并不会减少我的那一份，不应受到像传统物质专利那样严格的控制。若控制太严，严重影响创新。互联网的本意是开放式的端对端，数字时代需要重新衡量现有的法规。。。  
 
-#### No.8 隐藏的逻辑
+#### No.7 隐藏的逻辑
  > 图书名称：[隐藏的逻辑](https://book.douban.com/subject/3766438/)  
  > 豆瓣链接：[https://book.douban.com/subject/3766438/](https://book.douban.com/subject/3766438/)  
  > 标签：思维        评分：四星  
  > 我的评论：复杂的社会表象背后，往往藏有简单的逻辑。作者用物理学的观点来解释人类社会，即所谓的社会物理学。别样的思考方向。。。  
 
-#### No.9 黑天鹅
+#### No.8 黑天鹅
  > 图书名称：[黑天鹅](https://book.douban.com/subject/3025921/)  
  > 豆瓣链接：[https://book.douban.com/subject/3025921/](https://book.douban.com/subject/3025921/)  
  > 标签：思维        评分：四星  
  > 我的评论：黑天鹅现象的三个特征：小概率事件（发生非常罕见）、影响巨大（革命性的改变）、事前不可预测（但事后可解释）。  
 
-#### No.10 Power Sleep
+#### No.9 Power Sleep
  > 图书名称：[Power Sleep](https://book.douban.com/subject/1984347/)  
  > 豆瓣链接：[https://book.douban.com/subject/1984347/](https://book.douban.com/subject/1984347/)  
  > 标签：思维        评分：四星  
  > 我的评论：对睡眠的过程，机理讲的还可以。。。  
+
+#### No.10 改变
+ > 图书名称：[改变](https://book.douban.com/subject/3006742/)  
+ > 豆瓣链接：[https://book.douban.com/subject/3006742/](https://book.douban.com/subject/3006742/)  
+ > 标签：思维        评分：四星  
+ > 我的评论：以群论为模型来解释问题形成与解决的原则，第一序改变通常解决不了问题，必须设法引入第二序改变。这本书对界定问题，解决问题的思路挺有一套的。。。  
 
 #### No.11 万里任禅游
  > 图书名称：[万里任禅游](https://book.douban.com/subject/1855097/)  
@@ -134,17 +133,17 @@
  > 标签：编程        评分：五星  
  > 我的评论：叹为观止啊，软件开发之皇皇巨著，面面俱到，所到皆精。。。拜读ing...  
 
-#### No.19 iPhone 3开发基础教程
- > 图书名称：[iPhone 3开发基础教程](https://book.douban.com/subject/4111365/)  
- > 豆瓣链接：[https://book.douban.com/subject/4111365/](https://book.douban.com/subject/4111365/)  
- > 标签：编程        评分：四星  
- > 我的评论：写得相当好的 iphone 入门教程，细致&全面。不像高某某写的那些一个Button 就用上一章的 Android 书籍。  
-
-#### No.20 iPad开发基础教程
+#### No.19 iPad开发基础教程
  > 图书名称：[iPad开发基础教程](https://book.douban.com/subject/5384810/)  
  > 豆瓣链接：[https://book.douban.com/subject/5384810/](https://book.douban.com/subject/5384810/)  
  > 标签：编程        评分：四星  
  > 我的评论：同 iphone 开发基础教程是一个系列，非常好的 iPad 入门书籍(前提是熟悉 obj-c 和 iPhone 开发)。  
+
+#### No.20 iPhone 3开发基础教程
+ > 图书名称：[iPhone 3开发基础教程](https://book.douban.com/subject/4111365/)  
+ > 豆瓣链接：[https://book.douban.com/subject/4111365/](https://book.douban.com/subject/4111365/)  
+ > 标签：编程        评分：四星  
+ > 我的评论：写得相当好的 iphone 入门教程，细致&全面。不像高某某写的那些一个Button 就用上一章的 Android 书籍。  
 
 #### No.21 Cocoa Programming for Mac OS X For Dummies (For Dummies (Computer/Tech))
  > 图书名称：[Cocoa Programming for Mac OS X For Dummies (For Dummies (Computer/Tech))](https://book.douban.com/subject/3878281/)  
@@ -204,33 +203,47 @@
 
 
 ### 管理: 3 本
-#### No.30 赢
- > 图书名称：[赢](https://book.douban.com/subject/1313124/)  
- > 豆瓣链接：[https://book.douban.com/subject/1313124/](https://book.douban.com/subject/1313124/)  
- > 标签：管理        评分：五星  
- > 我的评论：一个公司要有使命感指导其前进的方向，要有价值观帮助其实现其使命，内部要形成坦诚的氛围，其实于个人何尝不是如此？值得一看的关于公司 & 管理的书。  
-
-#### No.31 首先，打破一切常规
+#### No.30 首先，打破一切常规
  > 图书名称：[首先，打破一切常规](https://book.douban.com/subject/1015133/)  
  > 豆瓣链接：[https://book.douban.com/subject/1015133/](https://book.douban.com/subject/1015133/)  
  > 标签：管理        评分：五星  
  > 我的评论：优秀经理的职责：选拔才干，界定结果，发挥优势，因才适用。  
 
-#### No.32 从优秀到卓越
+#### No.31 从优秀到卓越
  > 图书名称：[从优秀到卓越](https://book.douban.com/subject/1059769/)  
  > 豆瓣链接：[https://book.douban.com/subject/1059769/](https://book.douban.com/subject/1059769/)  
  > 标签：管理        评分：五星  
  > 我的评论：如何将一个优秀的公司变成卓越的公司！人事优先！  
 
+#### No.32 赢
+ > 图书名称：[赢](https://book.douban.com/subject/1313124/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1313124/](https://book.douban.com/subject/1313124/)  
+ > 标签：管理        评分：五星  
+ > 我的评论：一个公司要有使命感指导其前进的方向，要有价值观帮助其实现其使命，内部要形成坦诚的氛围，其实于个人何尝不是如此？值得一看的关于公司 & 管理的书。  
+
+
+### 教育: 2 本
+#### No.33 剑桥国际英语语音教程
+ > 图书名称：[剑桥国际英语语音教程](https://book.douban.com/subject/4251170/)  
+ > 豆瓣链接：[https://book.douban.com/subject/4251170/](https://book.douban.com/subject/4251170/)  
+ > 标签：教育        评分：四星  
+ > 我的评论：美式英语语音入门知识，想到不错，用的是最新版音标符号。  
+
+#### No.34 风格的要素
+ > 图书名称：[风格的要素](https://book.douban.com/subject/1451400/)  
+ > 豆瓣链接：[https://book.douban.com/subject/1451400/](https://book.douban.com/subject/1451400/)  
+ > 标签：教育        评分：两星  
+ > 我的评论：排版，翻译之差，严重糟蹋了好书。BTW，原著还是相当经典的，建议看原版《The elements of style》。只可惜阅读量太少，里面讲的模式，还有很多没感觉。。。  
+
 
 ### 设计: 2 本
-#### No.33 写给大家看的设计书（第3版）
+#### No.35 写给大家看的设计书（第3版）
  > 图书名称：[写给大家看的设计书（第3版）](https://book.douban.com/subject/3323633/)  
  > 豆瓣链接：[https://book.douban.com/subject/3323633/](https://book.douban.com/subject/3323633/)  
  > 标签：设计        评分：五星  
  > 我的评论：前半部分的四个基本原则听不错的，后半部分感觉一般般了。总的来说，还是相当值得一看的。。。  
 
-#### No.34 The Non-Designer's Design Book
+#### No.36 The Non-Designer's Design Book
  > 图书名称：[The Non-Designer's Design Book](https://book.douban.com/subject/5312108/)  
  > 豆瓣链接：[https://book.douban.com/subject/5312108/](https://book.douban.com/subject/5312108/)  
  > 标签：设计        评分：五星  
@@ -238,13 +251,13 @@
 
 
 ### 心理: 2 本
-#### No.35 直觉
+#### No.37 直觉
  > 图书名称：[直觉](https://book.douban.com/subject/3194672/)  
  > 豆瓣链接：[https://book.douban.com/subject/3194672/](https://book.douban.com/subject/3194672/)  
  > 标签：心理        评分：四星  
  > 我的评论：一系列行为心理学实验报告汇总，直觉不总是对的。。。  
 
-#### No.36 亲密关系
+#### No.38 亲密关系
  > 图书名称：[亲密关系](https://book.douban.com/subject/6052834/)  
  > 豆瓣链接：[https://book.douban.com/subject/6052834/](https://book.douban.com/subject/6052834/)  
  > 标签：心理        评分：三星  
@@ -252,7 +265,7 @@
 
 
 ### 经济: 1 本
-#### No.37 牛奶可乐经济学
+#### No.39 牛奶可乐经济学
  > 图书名称：[牛奶可乐经济学](https://book.douban.com/subject/3000997/)  
  > 豆瓣链接：[https://book.douban.com/subject/3000997/](https://book.douban.com/subject/3000997/)  
  > 标签：经济        评分：三星  
@@ -260,34 +273,18 @@
 
 
 ### 社会: 1 本
-#### No.38 寻路中国
+#### No.40 寻路中国
  > 图书名称：[寻路中国](https://book.douban.com/subject/5414391/)  
  > 豆瓣链接：[https://book.douban.com/subject/5414391/](https://book.douban.com/subject/5414391/)  
  > 标签：社会        评分：四星  
  > 我的评论：一个外国人，不远来到中国，西进南下，写书讲故事，理解着没有逻辑的中国。。。  
 
 
-### 教育: 1 本
-#### No.39 剑桥国际英语语音教程
- > 图书名称：[剑桥国际英语语音教程](https://book.douban.com/subject/4251170/)  
- > 豆瓣链接：[https://book.douban.com/subject/4251170/](https://book.douban.com/subject/4251170/)  
- > 标签：教育        评分：四星  
- > 我的评论：美式英语语音入门知识，想到不错，用的是最新版音标符号。  
-
-
 ### 文学: 1 本
-#### No.40 大生活
+#### No.41 大生活
  > 图书名称：[大生活](https://book.douban.com/subject/1426453/)  
  > 豆瓣链接：[https://book.douban.com/subject/1426453/](https://book.douban.com/subject/1426453/)  
  > 标签：文学        评分：四星  
  > 我的评论：嬉笑怒骂的文风，朴实中透露着心酸与无奈。。。  
-
-
-### 英语: 1 本
-#### No.41 风格的要素
- > 图书名称：[风格的要素](https://book.douban.com/subject/1451400/)  
- > 豆瓣链接：[https://book.douban.com/subject/1451400/](https://book.douban.com/subject/1451400/)  
- > 标签：英语        评分：两星  
- > 我的评论：排版，翻译之差，严重糟蹋了好书。BTW，原著还是相当经典的，建议看原版《The elements of style》。只可惜阅读量太少，里面讲的模式，还有很多没感觉。。。  
 
 
