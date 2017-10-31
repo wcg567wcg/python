@@ -94,6 +94,9 @@ def kanji_to_num(kanji):
     dict = {"一" : 1, "二" : 2, "两" : 2, "三" : 3, "四" : 4, "五" : 5}
     return dict[kanji]
 
+def get_spaces():
+    return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+
 def get_book_by_rating(books, rating):
     return [book for book in books if book.ratingNums == rating]
 
@@ -129,8 +132,8 @@ def output_by_rating(file, index, rating, books):
         file.write(' > 图书名称：[{0}]({1})  \n'.format(book.name, book.url))
         file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
         file.write(' > 出版信息：{0}  \n'.format(book.publish))
-        #file.write(' > 标签：{0}\t\t评分：**{1}**  \n'.format(book.tag, num_to_kanji(book.ratingNums)))
-        file.write(' > 标签：{0}\t\t评分：**{1}**  \n'.format(book.tag, num_to_stars(book.ratingNums)))
+        #file.write(' > 标签：{0}{1}评分：**{2}**  \n'.format(book.tag, get_spaces(), num_to_kanji(book.ratingNums)))
+        file.write(' > 标签：{0}{1}评分：**{2}**  \n'.format(book.tag, get_spaces(), num_to_stars(book.ratingNums)))
         file.write(' > 我的评论：{0}  \n'.format(book.comment))
         file.write('\n')
         index = index + 1
@@ -151,8 +154,8 @@ def output_by_tag(file, books, index, tag):
         file.write(' > 图书名称：[{0}]({1})  \n'.format(book.name, book.url))
         file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
         file.write(' > 出版信息：{0}  \n'.format(book.publish))
-        #file.write(' > 标签：{0}\t\t评分：**{1}**  \n'.format(book.tag, num_to_kanji(book.ratingNums)))
-        file.write(' > 标签：{0}\t\t评分：**{1}**  \n'.format(book.tag, num_to_stars(book.ratingNums)))
+        #file.write(' > 标签：{0}{1}评分：**{2}**  \n'.format(book.tag, get_spaces(), num_to_kanji(book.ratingNums)))
+        file.write(' > 标签：{0}{1}评分：**{2}**  \n'.format(book.tag, get_spaces(), num_to_stars(book.ratingNums)))
         file.write(' > 我的评论：{0}  \n'.format(book.comment))
         file.write('\n')
         index = index + 1
