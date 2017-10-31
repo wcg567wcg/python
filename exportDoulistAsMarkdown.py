@@ -76,10 +76,13 @@ def exportToMarkdown(doulistTile, doulistAbout, bookInfos):
         file.write(' > **图书名称**： [{0}]({1})  \n'.format(book.name, book.url))
         file.write(' > **豆瓣链接**： [{0}]({1})  \n'.format(book.url, book.url))
         file.write(' > **豆瓣评分**： {0}  \n'.format(book.ratingNum))
-        file.write(' > **评分人数**： {0} 人 \n'.format(book.ratingPeople))
+        file.write(' > **评分人数**： {0} 人  \n'.format(book.ratingPeople))
         file.write(' > **我的评论**： {0}  \n'.format(book.comment))
         i = i + 1
     file.close()
+
+def slow_down():
+    time.sleep(0.5)         # slow down a little
 
 # 解析图书信息
 def parseItemInfo(page, bookInfos):
@@ -190,6 +193,7 @@ def parse(url):
 
     # get books from follow pages
     for pageStart in range(nextPageStart, lastPageStart + nextPageStart, nextPageStart):
+        slow_down()
         pageUrl = "{0}?start={1:d}&sort=seq&sub_type=".format(url, pageStart)
         print ' > process page :  {0}'.format(pageUrl)
         page = getHtml(pageUrl)
