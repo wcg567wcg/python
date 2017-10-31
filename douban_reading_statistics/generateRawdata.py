@@ -185,18 +185,18 @@ def exportToRawdata(yearBookDict):
         print "export {0} books to {1}".format(len(books), path)
         file = open(path, 'w')
 
-        for book in books:
-            info = "({0})[{1}]\n".format(book.url, book.name)
-            file.write(info)
-            file.write("{0}\n".format(book.publish))
-            file.write("{0}\n".format(book.reading))
-            file.write("{0}\n".format(book.comment))
-            file.write("#end#\n\n")
+        for i, book in enumerate(books):
+            file.write("##No.{0} {1}\n".format(i + 1, book.name))
+            file.write("> Name: [{0}]({1})\n".format(book.name, book.url))
+            file.write("> Publish: {0}\n".format(book.publish))
+            file.write("> Reading: {0}\n".format(book.reading))
+            file.write("> Comment: {0}\n".format(book.comment))
+            file.write("\n")
 
         file.close()
 
 def get_raw_data_path(year):
-    return u'{0}/{0}reading.data'.format(str(year), str(year))
+    return u'{0}/{0}reading_raw.md'.format(str(year), str(year))
 
 def create_directory_if_not_exists(directory):
     if not os.path.exists(directory):
@@ -269,7 +269,7 @@ def parse_pages(entry_url):
 #=============================================================================
 
 username = 'kesalin'
-current_year_only = True
+current_year_only = False
 
 if __name__ == '__main__':
     entry_url = 'https://book.douban.com/people/{0}/collect'.format(username)

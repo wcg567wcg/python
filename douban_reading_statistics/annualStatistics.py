@@ -36,13 +36,14 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 class BookInfo:
-    def __init__(self, name, url, nums, month, tag, comment):
+    def __init__(self, name, url, nums, month, tag, comment, publish):
         self.name = name
         self.url = url
         self.ratingNums = nums
         self.readMonth = month
         self.tag = tag
         self.comment = comment
+        self.publish = publish
 
 def get_rating_ref_png_name(year):
     return u'{0}_reading_rate.png'.format(str(year))
@@ -57,7 +58,7 @@ def get_tags_save_png_name(year):
     return u'{0}/{1}'.format(str(year), get_tags_ref_png_name(year))
 
 def get_raw_data_path(year):
-    return u'{0}/{0}reading.data'.format(str(year), str(year))
+    return u'{0}/{0}reading_raw.md'.format(str(year), str(year))
 
 def get_markdown_path(year):
     return u'{0}/{0}reading.md'.format(str(year), str(year))
@@ -72,12 +73,6 @@ def read_file(path):
                 if len(line) > 0:
                     lines.append(line)
     return lines
-
-def is_begin(line):
-    return line.startswith('(https:')
-
-def is_end(line):
-    return line.startswith('#end#')
 
 def num_to_kanji(num):
     dict = {1 : "一星", 2 : "两星", 3 : "三星", 4 : "四星", 5 : "五星"}
@@ -145,6 +140,7 @@ def output_by_tag(file, books, index, tag):
         file.write('#### No.{0:d} {1}\n'.format(index, book.name))
         file.write(' > 图书名称：[{0}]({1})  \n'.format(book.name, book.url))
         file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
+        file.write(' > 出版信息：{0}  \n'.format(book.publish))
         file.write(' > 标签：{0}        评分：{1}  \n'.format(book.tag, num_to_kanji(book.ratingNums)))
         file.write(' > 我的评论：{0}  \n'.format(book.comment))
         file.write('\n')
@@ -234,6 +230,14 @@ def analyze_book(books, tags, year):
 
     file.close()
 
+def is_begin(line):
+    pattern = re.compile(r'(##No\.)([0-9]+)(.*)')
+    match = pattern.search(line)
+    return match != None
+
+def is_end(line, index):
+    return len(line) == 0 and index >= 4
+
 def process(datapath, year):
     books = []
     tags = {}
@@ -244,58 +248,71 @@ def process(datapath, year):
     readMonth = -1
     tag = ''
     comment = ''
+    publish = ''
 
     index = 0
     lines = read_file(datapath)
     for line in lines:
         index = index + 1
 
-        if is_end(line):
-            book = BookInfo(name, url, ratingNums, readMonth, tag, comment)
-            books.append(book)
+        pattern = re.compile(r'(##No\.)([0-9]+)(.*)')
+        match = pattern.search(line)
+        if match != None:
             index = 0
-            continue
-
-        if is_begin(line):
-            index = 1
             name = ''
             url = ''
             ratingNums = 0
             readMonth = -1
             tag = ''
             comment = ''
-
-            pattern = re.compile(r'(\()(.*)(\))(\[)(.*)(\])')
-            match = pattern.search(line)
-            if match:
-                url = match.group(2)
-                name = match.group(5)
-                #print " >> new book {0}, url: {1}".format(name, url)
-            else:
-                print " == error: invalid begin line: {0}".format(line)
+            publish = ''
             continue
 
-        if index == 3:
-            pattern = re.compile(r'(.*)(星\s*)(\d{4})(-)(\d{2})(-)(\d{2})(.*)(标签:\s*)(.*)')
-            match = pattern.search(line)
-            if match:
-                ratingNums = kanji_to_num(match.group(1))
-                readMonth = int(match.group(5))
-                tag = match.group(10)
-                for t in tag.split(' '):
-                    if t in tags:
-                        tags[t] = tags[t] + 1
-                    else:
-                        tags[t] = 1
+        pattern = re.compile(r'(> )([a-zA-Z]+)(: )(.*)')
+        match = pattern.search(line)
+        if match != None:
+            itemName = match.group(2)
+            itemContent = match.group(4).strip()
 
-                #print " >> rating {0}, month: {1}, tag: {2}".format(ratingNums, readMonth, tag)
-            else:
-                print " == error: invalid rating line: {0}".format(line)
-            continue
+            if itemName == 'Name':
+                pattern = re.compile(r'(\[)(.*)(\])(\()(.*)(\))')
+                match = pattern.search(itemContent)
+                if match:
+                    name = match.group(2).strip()
+                    url = match.group(5)
+                    #print " >> new book {0}, url: {1}".format(name, url)
+                else:
+                    print " == error: invalid begin line: {0}".format(line)
+                continue
 
-        if index == 4:
-            comment = line
-            continue
+            elif itemName == "Publish":
+                publish = itemContent
+                continue
+
+            elif itemName == 'Reading':
+                pattern = re.compile(r'(.*)(星\s*)(\d{4})(-)(\d{2})(-)(\d{2})(.*)(标签:\s*)(.*)')
+                match = pattern.search(itemContent)
+                if match:
+                    ratingNums = kanji_to_num(match.group(1))
+                    readMonth = int(match.group(5))
+                    tag = match.group(10)
+                    for t in tag.split(' '):
+                        if t in tags:
+                            tags[t] = tags[t] + 1
+                        else:
+                            tags[t] = 1
+
+                    #print " >> rating {0}, month: {1}, tag: {2}".format(ratingNums, readMonth, tag)
+                else:
+                    print " == error: invalid rating line: {0}".format(line)
+                continue
+
+            elif itemName == 'Comment':
+                comment = itemContent
+
+                # end parse item
+                book = BookInfo(name, url, ratingNums, readMonth, tag, comment, publish)
+                books.append(book)
 
         if index > 5:
             print " ** unknown info: {0}".format(line)
