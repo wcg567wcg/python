@@ -20,7 +20,7 @@
 # > Reading: 三星 2017-09-30 读过 标签: 文学
 # > Comment: 澳大利亚的“《飘》”不如美国的《飘》，相当程度低美化了德罗海达庄园的生活。讲述一家三代女人的爱情，单纯的爱，单纯的迷恋，单纯的伤害。翻译很用心很用心。
 
-# import os
+import os
 import re
 import sys
 import string
@@ -82,6 +82,14 @@ def num_to_kanji(num):
         print " ** error: invalid rating num {0}".format(num)
         return ""
 
+def num_to_stars(num):
+    dict = {1 : "★", 2 : "★★", 3 : "★★★", 4 : "★★★★", 5 : "★★★★★"}
+    if num >= 1 and num <= 5:
+        return dict[num]
+    else:
+        print " ** error: invalid rating num {0}".format(num)
+        return "☆"
+
 def kanji_to_num(kanji):
     dict = {"一" : 1, "二" : 2, "两" : 2, "三" : 3, "四" : 4, "五" : 5}
     return dict[kanji]
@@ -120,7 +128,9 @@ def output_by_rating(file, index, rating, books):
         file.write('#### No.{0:d} {1}\n'.format(index, book.name))
         file.write(' > 图书名称：[{0}]({1})  \n'.format(book.name, book.url))
         file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
-        file.write(' > 标签：{0}        评分：{1}  \n'.format(book.tag, num_to_kanji(book.ratingNums)))
+        file.write(' > 出版信息：{0}  \n'.format(book.publish))
+        #file.write(' > 标签：{0}\t\t评分：**{1}**  \n'.format(book.tag, num_to_kanji(book.ratingNums)))
+        file.write(' > 标签：{0}\t\t评分：**{1}**  \n'.format(book.tag, num_to_stars(book.ratingNums)))
         file.write(' > 我的评论：{0}  \n'.format(book.comment))
         file.write('\n')
         index = index + 1
@@ -141,7 +151,8 @@ def output_by_tag(file, books, index, tag):
         file.write(' > 图书名称：[{0}]({1})  \n'.format(book.name, book.url))
         file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
         file.write(' > 出版信息：{0}  \n'.format(book.publish))
-        file.write(' > 标签：{0}        评分：{1}  \n'.format(book.tag, num_to_kanji(book.ratingNums)))
+        #file.write(' > 标签：{0}\t\t评分：**{1}**  \n'.format(book.tag, num_to_kanji(book.ratingNums)))
+        file.write(' > 标签：{0}\t\t评分：**{1}**  \n'.format(book.tag, num_to_stars(book.ratingNums)))
         file.write(' > 我的评论：{0}  \n'.format(book.comment))
         file.write('\n')
         index = index + 1
