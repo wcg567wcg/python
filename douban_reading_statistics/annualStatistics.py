@@ -215,7 +215,7 @@ def analyze_book(books, tags, year):
     items = filter_dict.items()
     title = u'{0}年阅读评价统计: 总计 {1} 本'.format(str(year), total)
     generate_pie(items, title, get_rating_save_png_name(year))
-    file.write('![评价统计]({0})\n\n'.format(get_tags_ref_png_name(year)))
+    file.write('![评价统计]({0})\n\n'.format(get_rating_ref_png_name(year)))
 
     output_by_rating_num(file, total, 5, rating5)
     output_by_rating_num(file, total, 4, rating4)
