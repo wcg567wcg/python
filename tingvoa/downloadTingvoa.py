@@ -43,7 +43,7 @@ def getHtml(url):
             response = opener.open(url)
             data = response.read().decode('utf-8')
         else:
-            request = urllib2.Request(url, None, gHeaders['User-Agent'])
+            request = urllib2.Request(url, None, gHeaders)
             response = urllib2.urlopen(request)
             data = response.read().decode('utf-8')
     except urllib2.URLError, e :
