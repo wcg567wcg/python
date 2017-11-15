@@ -13,12 +13,12 @@ def scan_file(filepath, prefix, output_file):
 
     info = '\n{0}- {1}'.format(prefix, os.path.basename(filepath))
     output_file.write(info)
-    #print info
+    #print(info)
 
 def scan_dir(path, prefix, output_file):
     info = '\n{0}+ {1}'.format(prefix, os.path.basename(path))
     output_file.write(info)
-    #print info
+    #print(info)
 
     prefix = '{0}    '.format(prefix)
     for filename in os.listdir(path):

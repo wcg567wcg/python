@@ -40,11 +40,11 @@ def getHtml(url):
             data = response.read().decode('utf-8')
     except urllib2.URLError, e :
         if hasattr(e, "code"):
-            print "The server couldn't fulfill the request: " + url
-            print "Error code: %s" % e.code
+            print("The server couldn't fulfill the request: " + url)
+            print("Error code: %s" % e.code)
         elif hasattr(e, "reason"):
-            print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
-            print "Reason: %s" % e.reason
+            print("We failed to reach a server. Please check your url: " + url + ", and read the Reason.")
+            print("Reason: %s" % e.reason)
     return data
 
 # 书籍信息类
@@ -89,7 +89,7 @@ def parseItemInfo(page, bookInfos):
     soup = BeautifulSoup(page, 'html.parser')
     items = soup.find_all("div", "doulist-item")
     for item in items:
-        #print item.prettify().encode('utf-8')
+        #print(item.prettify().encode('utf-8'))
 
         # get book name
         bookName = ''
@@ -98,7 +98,7 @@ def parseItemInfo(page, bookInfos):
             href = content.find("a")
             if href != None and href.string != None:
                 bookName = href.string.strip().encode('utf-8')
-        #print " > name: {0}".format(bookName)
+        #print(" > name: {0}".format(bookName))
 
         # get book url and icon
         bookUrl = ''
@@ -111,7 +111,7 @@ def parseItemInfo(page, bookInfos):
             tag = content.find('img')
             if tag != None:
                 bookImage = tag['src'].encode('utf-8')
-        #print " > url: {0}, image: {1}".format(bookUrl, bookImage)
+        #print(" > url: {0}, image: {1}".format(bookUrl, bookImage))
 
 
         # get rating
@@ -132,7 +132,7 @@ def parseItemInfo(page, bookInfos):
                         ratingStr = match.group(2).strip()
                         if len(ratingStr) > 0:
                             ratingPeople = int(ratingStr)
-        #print " > ratingNum: {0}, ratingPeople: {1}".format(ratingNum, ratingPeople)
+        #print(" > ratingNum: {0}, ratingPeople: {1}".format(ratingNum, ratingPeople))
 
         # get comment
         comment = ''
@@ -141,7 +141,7 @@ def parseItemInfo(page, bookInfos):
             for child in content.contents:
                 if child.name == None and child.string != None:
                     comment = child.string.strip().encode('utf-8')
-        #print " > comment: {0}".format(comment)
+        #print(" > comment: {0}".format(comment))
 
         # add book info to list
         bookInfo = BookInfo(bookName, bookUrl, bookImage, ratingNum, ratingPeople, comment)
@@ -156,7 +156,7 @@ def parse(url):
 
     # get doulist title
     doulistTile = soup.html.head.title.string.encode('utf-8')
-    print " > 获取豆列：" + doulistTile
+    print(" > 获取豆列：" + doulistTile)
 
     # get doulist about
     doulistAbout = ''
@@ -165,7 +165,7 @@ def parse(url):
         if child.string != None:
             htmlContent = child.string.strip().encode('utf-8')
             doulistAbout = "{0}\n{1}".format(doulistAbout, htmlContent)
-    #print "doulist about:" + doulistAbout
+    #print("doulist about:" + doulistAbout)
 
 
     # get page urls
@@ -188,14 +188,14 @@ def parse(url):
     books = []
 
     # get books from current page
-    print ' > process page :  {0}'.format(url)
+    print(' > process page :  {0}'.format(url))
     parseItemInfo(page, books)
 
     # get books from follow pages
     for pageStart in range(nextPageStart, lastPageStart + nextPageStart, nextPageStart):
         slow_down()
         pageUrl = "{0}?start={1:d}&sort=seq&sub_type=".format(url, pageStart)
-        print ' > process page :  {0}'.format(pageUrl)
+        print(' > process page :  {0}'.format(pageUrl))
         page = getHtml(pageUrl)
         if page != None:
             parseItemInfo(page, books)
@@ -206,7 +206,7 @@ def parse(url):
     # summrise
     total = len(books)
     elapsed = timeit.default_timer() - start
-    print " > 共获取 {0} 本图书信息，耗时 {1} 秒".format(total, elapsed)
+    print(" > 共获取 {0} 本图书信息，耗时 {1} 秒".format(total, elapsed))
 
 #=============================================================================
 # 程序入口：抓取指定指定豆列的书籍

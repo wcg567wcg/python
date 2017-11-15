@@ -27,7 +27,7 @@ def process_file(path, new_path):
         if match:
             pass
         else:
-            #print line
+            #print(line)
             out_file.write(line)
 
     in_file.close()
@@ -47,7 +47,7 @@ def convert_name(name):
     if name == "零":
         return '000'
 
-    #print name
+    #print(name)
     # >= 110
     pattern = re.compile(r'(^一百)(.*)(十)(.*)')
     match = pattern.match(name)
@@ -82,7 +82,7 @@ def convert_name(name):
 
 
 def divide_into_chapter(path):
-    print path
+    print(path)
     dir_path = "{0}/chapters".format(os.path.dirname(path))
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
@@ -100,13 +100,13 @@ def divide_into_chapter(path):
 
                 name = convert_name(match.group(2))
                 chapter_path = "{0}/{1}.txt".format(dir_path, name)
-                print chapter_path
+                print(chapter_path)
                 if (os.path.isfile(chapter_path)):
                     os.remove(chapter_path)
                 chapter = open(chapter_path, 'a')
                 chapter.write(line)
             else:
-                #print line.strip()
+                #print(line.strip())
                 if (chapter):
                     chapter.write(line)
 

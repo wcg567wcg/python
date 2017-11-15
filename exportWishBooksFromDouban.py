@@ -45,11 +45,11 @@ def getHtml(url):
             data = response.read().decode('utf-8')
     except urllib2.URLError, e :
         if hasattr(e, "code"):
-            print "The server couldn't fulfill the request: " + url
-            print "Error code: %s" % e.code
+            print("The server couldn't fulfill the request: " + url)
+            print("Error code: %s" % e.code)
         elif hasattr(e, "reason"):
-            print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
-            print "Reason: %s" % e.reason
+            print("We failed to reach a server. Please check your url: " + url + ", and read the Reason.")
+            print("Reason: %s" % e.reason)
     return data
 
 
@@ -125,7 +125,7 @@ def parseItemInfo(minNum, maxNum, k, page, bookInfos):
     if tag != None:
         bookName = tag['title'].strip().encode('utf-8')
         bookImage = tag['href'].encode('utf-8')
-    #print " > name: {0}, bookImage: {1}".format(bookName, bookImage)
+    #print(" > name: {0}, bookImage: {1}".format(bookName, bookImage))
 
     # get description
     description = ''
@@ -136,7 +136,7 @@ def parseItemInfo(minNum, maxNum, k, page, bookInfos):
             if des != None and des.string != None:
                 intro = des.string.strip().encode('utf-8')
                 description = description + intro
-    #print " > description: {0}".format(description)
+    #print(" > description: {0}".format(description))
 
     # get book url
     bookUrl = ''
@@ -146,7 +146,7 @@ def parseItemInfo(minNum, maxNum, k, page, bookInfos):
         if tag != None:
             bookUrl = tag['href'].encode('utf-8')
             bookUrl = bookUrl.replace('/new_offer', '/')
-    #print " > url: {0}".format(bookUrl)
+    #print(" > url: {0}".format(bookUrl))
 
     ratingNum = 0.0
     ratingPeople = 0
@@ -164,7 +164,7 @@ def parseItemInfo(minNum, maxNum, k, page, bookInfos):
             ratingStr = tag.string.strip().encode('utf-8')
             if len(ratingStr) > 0:
                 ratingPeople = int(ratingStr)
-    #print " > ratingNum: {0}, ratingPeople: {1}".format(ratingNum, ratingPeople)
+    #print(" > ratingNum: {0}, ratingPeople: {1}".format(ratingNum, ratingPeople))
 
     # add book info to list
     bookInfo = BookInfo(bookName, bookUrl, bookImage, ratingNum, ratingPeople, description)
@@ -175,7 +175,7 @@ def parseItemUrlInfo(page, urls):
     soup = BeautifulSoup(page, 'html.parser')
     items = soup.find_all("li", "subject-item")
     for item in items:
-        #print item.prettify().encode('utf-8')
+        #print(item.prettify().encode('utf-8'))
 
         # get item url
         url = ''
@@ -184,7 +184,7 @@ def parseItemUrlInfo(page, urls):
             tag = content.find('a')
             if tag != None:
                 url = tag['href'].encode('utf-8')
-        #print " > url: {0}".format(url)
+        #print(" > url: {0}".format(url))
         urls.append(url)
 
 #=============================================================================
@@ -257,7 +257,7 @@ class ParseItemUrlConsumer(Thread):
  
 
 def spider(username, minNum, maxNum, k):
-    print '   抓取我想读的书 ...'
+    print('   抓取我想读的书 ...')
     start = timeit.default_timer()
 
     # all producers
@@ -269,12 +269,12 @@ def spider(username, minNum, maxNum, k):
     wishUrl = "https://book.douban.com/people/{0}/wish".format(username)
     page = getHtml(wishUrl)
     if page == None:
-        print ' > invalid url {0}'.format(wishUrl)
+        print(' > invalid url {0}'.format(wishUrl))
     else:
         # get url of other pages in doulist
         soup = BeautifulSoup(page, 'html.parser')
         content = soup.find("div", "paginator")
-        #print content.prettify().encode('utf-8')
+        #print(content.prettify().encode('utf-8'))
 
         nextPageStart = 100000
         lastPageStart = 0
@@ -304,7 +304,7 @@ def spider(username, minNum, maxNum, k):
             producer = Producer('Producer_{0:d}'.format(pageStart), pageUrl, queue)
             producer.start()
             producers.append(producer)
-            #print " > process page : {0}".format(pageUrl)
+            #print(" > process page : {0}".format(pageUrl))
             time.sleep(0.1)         # slow down a little
 
         # wait for all producers
@@ -324,13 +324,13 @@ def spider(username, minNum, maxNum, k):
         consumer = Consumer('Consumer', minNum, maxNum, k, bookQueue, bookInfos)
         consumer.start()
 
-        print " urls: ", len(urls)
+        print(" urls: ", len(urls))
         # create parge item producers
         for url in urls:
             producer = Producer(url, url, bookQueue)
             producer.start()
             producers.append(producer)
-            #print " > process item : {0}".format(url)
+            #print(" > process item : {0}".format(url))
             time.sleep(0.2)         # slow down a little
 
         # wait for all producers
@@ -345,7 +345,7 @@ def spider(username, minNum, maxNum, k):
         # summrise
         total = len(bookInfos)
         elapsed = timeit.default_timer() - start
-        print "   获取 %d 本我想读的书，耗时 %.2f 秒"%(total, elapsed)
+        print("   获取 %d 本我想读的书，耗时 %.2f 秒"%(total, elapsed))
         return bookInfos
 
 
@@ -356,7 +356,7 @@ def process(wishUrl, minNum, maxNum, k):
         books = list(set(books))
 
         total = len(books)
-        print " > 共获取 {0} 本我想读的书".format(total)
+        print(" > 共获取 {0} 本我想读的书".format(total))
 
         # sort
         books = sorted(books)
@@ -400,4 +400,4 @@ if __name__ == '__main__':
     process(username, 30, 3000, 0.25)
 
     elapsed = timeit.default_timer() - start
-    print "== 总耗时 %.2f 秒 =="%(elapsed)
+    print("== 总耗时 %.2f 秒 =="%(elapsed))

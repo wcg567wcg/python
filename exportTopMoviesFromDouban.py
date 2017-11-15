@@ -44,11 +44,11 @@ def getHtml(url):
             data = response.read().decode('utf-8')
     except urllib2.URLError, e :
         if hasattr(e, "code"):
-            print "The server couldn't fulfill the request: " + url
-            print "Error code: %s" % e.code
+            print("The server couldn't fulfill the request: " + url)
+            print("Error code: %s" % e.code)
         elif hasattr(e, "reason"):
-            print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
-            print "Reason: %s" % e.reason
+            print("We failed to reach a server. Please check your url: " + url + ", and read the Reason.")
+            print("Reason: %s" % e.reason)
     return data
     
 
@@ -130,7 +130,7 @@ def parseItemInfo(countryList, tag, minNum, maxNum, k, page, itemInfos):
     soup = BeautifulSoup(page, 'html.parser')
     items = soup.find_all("tr", "item")
     for item in items:
-        #print item.prettify().encode('utf-8')
+        #print(item.prettify().encode('utf-8'))
 
         # get name & url & description
         itemName = ''
@@ -140,7 +140,7 @@ def parseItemInfo(countryList, tag, minNum, maxNum, k, page, itemInfos):
         if content != None:
             href = content.find("a")
             if href != None:
-                #print href.prettify().encode('utf-8')
+                #print(href.prettify().encode('utf-8'))
                 itemUrl = href['href'].encode('utf-8')
                 contents = href.contents
                 if contents != None:
@@ -155,9 +155,9 @@ def parseItemInfo(countryList, tag, minNum, maxNum, k, page, itemInfos):
             if des != None and des.string != None:
                 description = des.string.strip().encode('utf-8')
 
-        # print " > name: {0}".format(itemName)
-        # print " > itemUrl: {0}".format(itemUrl)
-        # print " > description: {0}".format(description)
+        # print(" > name: {0}".format(itemName))
+        # print(" > itemUrl: {0}".format(itemUrl))
+        # print(" > description: {0}".format(description))
 
         # match the country list?
         if len(countryList):
@@ -176,7 +176,7 @@ def parseItemInfo(countryList, tag, minNum, maxNum, k, page, itemInfos):
                             break
 
             if not validCountry:
-                #print " > description: {0}".format(description)
+                #print(" > description: {0}".format(description))
                 continue
 
         # get url and image
@@ -184,7 +184,7 @@ def parseItemInfo(countryList, tag, minNum, maxNum, k, page, itemInfos):
         content = item.find("img")
         if content != None:
             itemImage = content['src'].encode('utf-8')
-        #print " > image: {0}".format(itemImage)
+        #print(" > image: {0}".format(itemImage))
 
         # get rating
         ratingNum = 0.0
@@ -206,7 +206,7 @@ def parseItemInfo(countryList, tag, minNum, maxNum, k, page, itemInfos):
                     ratingStr = match.group(2).strip()
                     if len(ratingStr) > 0:
                         ratingPeople = int(ratingStr)
-        #print " > ratingNum: {0}, ratingPeople: {1}".format(ratingNum, ratingPeople)
+        #print(" > ratingNum: {0}, ratingPeople: {1}".format(ratingNum, ratingPeople))
 
         # add imte info to list
         itemInfo = ItemInfo(itemName, itemUrl, itemImage, ratingNum, ratingPeople, description)
@@ -265,7 +265,7 @@ class Consumer(Thread):
  
 
 def spider(tag, countryList, minNum, maxNum, k):
-    print '   抓取 [{0}] 电影 ...'.format(tag)
+    print('   抓取 [{0}] 电影 ...'.format(tag))
     start = timeit.default_timer()
 
     # all producers
@@ -277,12 +277,12 @@ def spider(tag, countryList, minNum, maxNum, k):
     url = "https://movie.douban.com/tag/{0}".format(tag)
     page = getHtml(url)
     if page == None:
-        print ' > invalid url {0}'.format(url)
+        print(' > invalid url {0}'.format(url))
     else:
         # get url of other pages in doulist
         soup = BeautifulSoup(page, 'html.parser')
         content = soup.find("div", "paginator")
-        #print content.prettify().encode('utf-8')
+        #print(content.prettify().encode('utf-8'))
 
         nextPageStart = 100000
         lastPageStart = 0
@@ -298,7 +298,7 @@ def spider(tag, countryList, minNum, maxNum, k):
                         lastPageStart = index
 
         # process current page
-        #print " > process page : {0}".format(url)
+        #print(" > process page : {0}".format(url))
         queue.put(page)
 
         # create consumer
@@ -312,7 +312,7 @@ def spider(tag, countryList, minNum, maxNum, k):
             producer = Producer('Producer_{0:d}'.format(pageStart), pageUrl, queue)
             producer.start()
             producers.append(producer)
-            #print " > process page : {0}".format(pageUrl)
+            #print(" > process page : {0}".format(pageUrl))
             time.sleep(0.1)         # slow down a little
 
         # wait for all producers
@@ -327,7 +327,7 @@ def spider(tag, countryList, minNum, maxNum, k):
         # summrise
         total = len(itemInfos)
         elapsed = timeit.default_timer() - start
-        print "   获取 %d 部 [%s] 电影信息，耗时 %.2f 秒"%(total, tag, elapsed)
+        print("   获取 %d 部 [%s] 电影信息，耗时 %.2f 秒"%(total, tag, elapsed))
         return itemInfos
 
 
@@ -343,7 +343,7 @@ def process(tags):
     if country != "":
         countryList = country.split(',')
         countryList = list(set(countryList + tagList))
-        #print countryList
+        #print(countryList)
 
     items = []
     # spider
@@ -352,7 +352,7 @@ def process(tags):
         items = list(set(items + tagItems))
 
     total = len(items)
-    print " > 共获取 {0} 部 [{1}] 不重复电影信息".format(total, tags[0])
+    print(" > 共获取 {0} 部 [{1}] 不重复电影信息".format(total, tags[0]))
 
     # sort
     items = sorted(items)
@@ -425,4 +425,4 @@ if __name__ == '__main__':
         process(tag)
 
     elapsed = timeit.default_timer() - start
-    print "== 总耗时 %.2f 秒 =="%(elapsed)
+    print("== 总耗时 %.2f 秒 =="%(elapsed))

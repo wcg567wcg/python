@@ -43,11 +43,11 @@ def getHtml(url):
             data = response.read().decode('utf-8')
     except urllib2.URLError, e :
         if hasattr(e, "code"):
-            print "The server couldn't fulfill the request: " + url
-            print "Error code: %s" % e.code
+            print("The server couldn't fulfill the request: " + url)
+            print("Error code: %s" % e.code)
         elif hasattr(e, "reason"):
-            print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
-            print "Reason: %s" % e.reason
+            print("We failed to reach a server. Please check your url: " + url + ", and read the Reason.")
+            print("Reason: %s" % e.reason)
     return data
 
 def slow_down():
@@ -68,11 +68,11 @@ def num_to_kanji(num):
     if num >= 1 and num <= 5:
         return dict[num]
     else:
-        print " ** error: invalid rating num {0}".format(num)
+        print(" ** error: invalid rating num {0}".format(num))
         return ""
 
 def parse_item_info(item, yearBookDict, currentYearOnly):
-    # print item.prettify().encode('utf-8')
+    # print(item.prettify().encode('utf-8'))
 
     now = datetime.date.today()
     currentYear = now.year
@@ -86,8 +86,8 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
         if link != None:
             url = link.get('href').strip().encode('utf-8')
             name = link.get('title').strip().encode('utf-8')
-    #print " > name: {0}".format(name)
-    #print " > url: {0}".format(url)
+    #print(" > name: {0}".format(name))
+    #print(" > url: {0}".format(url))
 
     # get book icon
     image = ''
@@ -96,7 +96,7 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
         link = content.find("img")
         if link != None:
             image = link.get("src").strip().encode('utf-8')
-    #print " > image: {0}".format(image)
+    #print(" > image: {0}".format(image))
 
     # get book publish
     publish = ''
@@ -104,7 +104,7 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
     if content != None:
         if content.string != None:
             publish = content.string.strip().encode('utf-8')
-    #print " > publish: {0}".format(publish)
+    #print(" > publish: {0}".format(publish))
 
     # get book comment
     comment = ''
@@ -112,7 +112,7 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
     if content != None:
         if content.string != None:
             comment = content.string.strip().encode('utf-8')
-    #print " > comment: {0}".format(comment)
+    #print(" > comment: {0}".format(comment))
 
     # get book reading data
     date = ''
@@ -133,7 +133,7 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
             match = pattern.search(date)
             if match:
                 year = match.group(1)
-    #print " > date: {0}".format(date)
+    #print(" > date: {0}".format(date))
 
     if True == currentYearOnly:
         readYear = int(year)
@@ -144,7 +144,7 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
     if content != None:
         if content.string != None:
             tags = content.string.strip().encode('utf-8')
-    #print " > tags: {0}".format(tags)
+    #print(" > tags: {0}".format(tags))
 
         p = content.parent
         for child in p.find_all("span"):
@@ -158,7 +158,7 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
                     break
 
     reading = "{0} {1} {2}".format(star, date, tags)
-    #print reading
+    #print(reading)
 
     # add book info to list
     bookInfo = BookInfo(name, url, image, publish, reading, comment)
@@ -182,7 +182,7 @@ def exportToRawdata(yearBookDict):
         if os.path.isfile(path):
             os.remove(path)
 
-        print "export {0} books to {1}".format(len(books), path)
+        print("export {0} books to {1}".format(len(books), path))
         file = open(path, 'w')
 
         for i, book in enumerate(books):
@@ -214,8 +214,8 @@ def parse_page(url, yearBookDict, currentYearOnly):
             if False == proceed:
                 break
     except Exception as e:
-        print "failed to parse page : {0}".format(url)
-        print e
+        print("failed to parse page : {0}".format(url))
+        print(e)
 
 def parse_pages(entry_url):
     page = getHtml(entry_url)
@@ -255,13 +255,13 @@ def parse_pages(entry_url):
                 if start > lastPageStart:
                     lastPageStart = start
 
-        print "last page starts at %d, page step %d" % (lastPageStart, pageStep)
+        print("last page starts at %d, page step %d" % (lastPageStart, pageStep))
         for i in range(0, lastPageStart + 1, pageStep):
             url = '{0}{1}{2}{3}'.format(p1, p2, i, p4)
-            #print " page start at %d : %s" % (i, url)
+            #print(" page start at %d : %s" % (i, url))
             urls.append(url)
 
-    print 'total %d pages' % len(urls)
+    print('total %d pages' % len(urls))
     return urls
 
 #=============================================================================

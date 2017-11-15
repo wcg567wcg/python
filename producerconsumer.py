@@ -25,12 +25,12 @@ class ProducerThread(Thread):
         while self.isExit == False:
             condition.acquire()
             if len(queue) == MAX_NUM:
-                print "Queue full, producer is waiting"
+                print("Queue full, producer is waiting")
                 condition.wait()
-                print "Space in queue, Consumer notified the producer"
+                print("Space in queue, Consumer notified the producer")
             num = random.choice(nums)
             queue.append(num)
-            print "Produced", num
+            print("Produced", num)
 
             condition.notify()
             condition.release()
@@ -47,11 +47,11 @@ class ConsumerThread(Thread):
         while self.isExit == False:
             condition.acquire()
             if not queue:
-                print "Nothing in queue, consumer is waiting"
+                print("Nothing in queue, consumer is waiting")
                 condition.wait()
-                print "Producer added something to queue and notified the consumer"
+                print("Producer added something to queue and notified the consumer")
             num = queue.pop(0)
-            print "Consumed", num
+            print("Consumed", num)
 
             condition.notify()
             condition.release()

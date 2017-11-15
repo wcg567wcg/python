@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 #! encoding=utf-8
-
+#
 # countline.py
 # counting lines of java/python file or java/python files in a dir
+#
+# Python Version: Python 3.4.3
+#
 
 import os
 import sys

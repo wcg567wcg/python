@@ -31,7 +31,7 @@ def get_filename_without_ext(path):
 def save_to_file(list, path):
     if (os.path.isfile(path)):
         os.remove(path)
-    print "> saving to {0}".format(path)
+    print("> saving to {0}".format(path))
     with open(path, 'a') as f:
         for item in list:
             f.write('{0} : {1}\n'.format(item[0].encode('utf-8'), item[1]))
@@ -39,18 +39,18 @@ def save_to_file(list, path):
 def log_dict(info, dict):
     if enable_log:
         if info != '':
-            print info
+            print(info)
         for (letter, count) in  dict.items():
-            print '%s\t\t: %d' % (letter, count)
-        print "\n"
+            print('%s\t\t: %d' % (letter, count))
+        print("\n")
 
 def log_list(info, list):
     if enable_log:
         if info != '':
-            print info
+            print(info)
         for item in list:
-            print '%s\t\t: %d' % (item[0], item[1])
-        print "\n"
+            print('%s\t\t: %d' % (item[0], item[1]))
+        print("\n")
 
 def remove_punctuation(document):
     document = str(document)
@@ -77,9 +77,9 @@ def read(path):
     log_dict('Raw items:', raw_dict)
 
     # # most common items
-    # print '\nMost common items:'
+    # print('\nMost common items:')
     # for letter, count in raw_dict.most_common(3):
-    #     print '%s\t\t: %d' % (letter, count)
+    #     print('%s\t\t: %d' % (letter, count))
     return raw_dict
 
 def filter(dict, filter_keys, min_limit):
@@ -105,7 +105,7 @@ def top(list, num):
 
     top_list = list[0 : min(len(list), num)]
     if enable_log:
-        print 'Toppest %d items:' % num
+        print('Toppest %d items:' % num)
     log_list('', top_list)
     return top_list
 
@@ -113,7 +113,7 @@ def process_file(path, data_path, num_top, filter_keys, count_min_limit):
     if path.endswith('_wordfrq.txt'):
         return
 
-    print ">> processing %s ..." % path
+    print(">> processing %s ..." % path)
     counter_dict = read(path)
     filter_dict = filter(counter_dict, filter_keys, count_min_limit)
     sorted_list = sort(filter_dict)
@@ -132,7 +132,7 @@ def process_dir(path, data_path, num_top, filter_keys, count_min_limit):
     if path.endswith('/'):
         path = path[0:len(path)-1]
 
-    print ">>> processing directory %s ..." % path
+    print(">>> processing directory %s ..." % path)
     listfile = os.listdir(path)
     for filename in listfile:
         filepath = path + '/' + filename

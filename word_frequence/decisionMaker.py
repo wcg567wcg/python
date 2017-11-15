@@ -38,9 +38,9 @@ class decisionMaker(object):
         test_data = testset[:, 0:-1]    # 去除label后的特征数据
 
         ret = self.train_and_predict_with_svm(train_data, train_data_label, test_data)
-        print len(ret)
-        print ret[0:71]
-        print ret[71:120]
+        print(len(ret))
+        print(ret[0:71])
+        print(ret[71:120])
 
 
 if __name__ == '__main__':

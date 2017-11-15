@@ -79,7 +79,7 @@ def num_to_kanji(num):
     if num >= 1 and num <= 5:
         return dict[num]
     else:
-        print " ** error: invalid rating num {0}".format(num)
+        print(" ** error: invalid rating num {0}".format(num))
         return ""
 
 def num_to_stars(num):
@@ -87,7 +87,7 @@ def num_to_stars(num):
     if num >= 1 and num <= 5:
         return dict[num]
     else:
-        print " ** error: invalid rating num {0}".format(num)
+        print(" ** error: invalid rating num {0}".format(num))
         return "☆"
 
 def kanji_to_num(kanji):
@@ -127,7 +127,7 @@ def output_by_rating(file, index, rating, books):
 
     books.sort(cmp=None, key=lambda x:(x.ratingNums, x.tag), reverse=True)
     for book in books:
-        #print '{0} {1} {2}\n'.format(book.name, book.ratingNums, book.tag)
+        #print('{0} {1} {2}\n'.format(book.name, book.ratingNums, book.tag))
         file.write('#### No.{0:d} {1}\n'.format(index, book.name))
         file.write(' > 图书名称：[{0}]({1})  \n'.format(book.name, book.url))
         file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
@@ -149,7 +149,7 @@ def output_by_tag(file, books, index, tag):
 
     books.sort(cmp=None, key=lambda x:(x.ratingNums), reverse=True)
     for book in books:
-        #print '{0} {1} {2}\n'.format(book.name, book.ratingNums, book.tag)
+        #print('{0} {1} {2}\n'.format(book.name, book.ratingNums, book.tag))
         file.write('#### No.{0:d} {1}\n'.format(index, book.name))
         file.write(' > 图书名称：[{0}]({1})  \n'.format(book.name, book.url))
         file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
@@ -176,9 +176,9 @@ def generate_pie(items, title, savefilename):
         explode.append(0)
     explode[0] = 0.02
     # for label in labels:
-    #     print "{0} ".format(label)
-    # print fracs
-    # print explode
+    #     print("{0} ".format(label))
+    # print(fracs)
+    # print(explode)
     show_pie(labels, fracs, explode, title, savefilename)
 
 def show_pie(labels, fracs, explode, title, savefilename):
@@ -226,7 +226,7 @@ def analyze_book(books, tags, year):
     file.write('\n')
 
     tags = sorted(tags.items(), key=lambda d: d[1], reverse=True)
-    #print tags
+    #print(tags)
 
     output_tags(file, tags, total, year)
 
@@ -294,9 +294,9 @@ def process(datapath, year):
                 if match:
                     name = match.group(2).strip()
                     url = match.group(5)
-                    #print " >> new book {0}, url: {1}".format(name, url)
+                    #print(" >> new book {0}, url: {1}".format(name, url))
                 else:
-                    print " == error: invalid begin line: {0}".format(line)
+                    print(" == error: invalid begin line: {0}".format(line))
                 continue
 
             elif itemName == "Publish":
@@ -316,9 +316,9 @@ def process(datapath, year):
                         else:
                             tags[t] = 1
 
-                    #print " >> rating {0}, month: {1}, tag: {2}".format(ratingNums, readMonth, tag)
+                    #print(" >> rating {0}, month: {1}, tag: {2}".format(ratingNums, readMonth, tag))
                 else:
-                    print " == error: invalid rating line: {0}".format(line)
+                    print(" == error: invalid rating line: {0}".format(line))
                 continue
 
             elif itemName == 'Comment':
@@ -329,9 +329,9 @@ def process(datapath, year):
                 books.append(book)
 
         if index > 5:
-            print " ** unknown info: {0}".format(line)
+            print(" ** unknown info: {0}".format(line))
 
-    print " >> total {0} books".format(len(books))
+    print(" >> total {0} books".format(len(books)))
 
     analyze_book(books, tags, year)
 
@@ -348,9 +348,9 @@ def get_matplot_zh_font():
     zh_fonts = set(f.split(',', 1)[0] for f in output.split('\n'))
     available = list(mat_fonts & zh_fonts)
 
-    print '*' * 10, '可用的字体', '*' * 10
+    print('*' * 10, '可用的字体', '*' * 10)
     for f in available:
-        print f
+        print(f)
     return available
 
 def set_matplot_zh_font():
@@ -377,5 +377,5 @@ if __name__ == '__main__':
             if match:
                 rawdataPath = get_raw_data_path(year)
                 if os.path.exists(rawdataPath):
-                    print "process {0}".format(rawdataPath)
+                    print("process {0}".format(rawdataPath))
                     process(rawdataPath, year)

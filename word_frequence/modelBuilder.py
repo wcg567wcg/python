@@ -78,7 +78,7 @@ class modelBuilder(object):
                         rate = float(words[1]) / total_words * 1000
                         rate = float("%.6f" % rate)# 指定位数
                         feature_vector_list.append(rate)
-                        # print words[0] + ' : ' + line
+                        # print(words[0] + ' : ' + line)
                         find_flag = 1
                         break
 
@@ -94,7 +94,7 @@ class modelBuilder(object):
         for loop in range(40, 50):
             feature = self.build_feature_vector(loop, 1) #label 为 1 表示正例
             positive_trainset_list.append(feature)
-        # print positive_trainset_list
+        # print(positive_trainset_list)
         np.save('pos_trainset.npy', positive_trainset_list)
 
     def make_negative_trainset(self):
@@ -102,7 +102,7 @@ class modelBuilder(object):
         for loop in range(90, 100):
             feature = self.build_feature_vector(loop, 2) #label 为 2 表示负例
             negative_trainset_list.append(feature)
-        # print negative_trainset_list
+        # print(negative_trainset_list)
         np.save('neg_trainset.npy', negative_trainset_list)
 
     def make_trainset(self):
@@ -116,23 +116,23 @@ class modelBuilder(object):
         for loop in range(0, 120):
             feature = self.build_feature_vector(loop, 0) #无需 label，暂设为 0
             testset_list.append(feature)
-        # print testset_list
+        # print(testset_list)
         np.save('testset.npy', testset_list)
 
 
 def log_list(info, list):
     if info != '':
-        print info
+        print(info)
     for item in list:
-        print '\'%s\', ' % (item)
-    print "\n"
+        print('\'%s\', ' % (item))
+    print("\n")
 
 if __name__ == '__main__':
     builder = modelBuilder()
 
     # common = builder.get_common_words()
     # log_list("common words:", common)
-    # print builder.build_feature_vector(1)
+    # print(builder.build_feature_vector(1))
 
     builder.make_positive_trainset()
     builder.make_negative_trainset()

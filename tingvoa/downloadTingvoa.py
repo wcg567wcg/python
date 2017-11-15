@@ -48,11 +48,11 @@ def getHtml(url):
             data = response.read().decode('utf-8')
     except urllib2.URLError, e :
         if hasattr(e, "code"):
-            print "The server couldn't fulfill the request: " + url
-            print "Error code: %s" % e.code
+            print("The server couldn't fulfill the request: " + url)
+            print("Error code: %s" % e.code)
         elif hasattr(e, "reason"):
-            print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
-            print "Reason: %s" % e.reason
+            print("We failed to reach a server. Please check your url: " + url + ", and read the Reason.")
+            print("Reason: %s" % e.reason)
     return data
 
 
@@ -143,7 +143,7 @@ def get_book_infos(levelInfo):
     name = levelInfo.name
     url = levelInfo.url
     rootUrl = get_root_url(url)
-    #print levelInfo
+    #print(levelInfo)
 
     slow_down()
     page = getHtml(url)
@@ -153,11 +153,11 @@ def get_book_infos(levelInfo):
     # get book infos
     mainleftlist = soup.find(id="mainleftlist");
     if (mainleftlist != None):
-        #print mainleftlist.prettify()
+        #print(mainleftlist.prettify())
         leftTitles = mainleftlist.find_all("div", "leftTitle")
-        #print "find %d books" % len(leftTitles)
+        #print("find %d books" % len(leftTitles))
         for leftTitle in leftTitles:
-            #print leftTitle.prettify()
+            #print(leftTitle.prettify())
             link = leftTitle.find("a");
             if link != None:
                 bookName = ""
@@ -173,7 +173,7 @@ def get_book_infos(levelInfo):
                 chapterInfos = []
                 subleftList = leftTitle.findNext("div")
                 if subleftList != None:
-                    #print subleftList.prettify()
+                    #print(subleftList.prettify())
                     allLinks = subleftList.findAll("a")
                     for link in allLinks[1:]:
                         chapterName = ""
@@ -184,10 +184,10 @@ def get_book_infos(levelInfo):
                         mp3Url = get_mp3_url(chapterUrl)
                         chapterInfo = ChapterInfo(chapterName, chapterUrl, mp3Url)
                         chapterInfos.append(chapterInfo)
-                        #print chapterInfo
+                        #print(chapterInfo)
 
                 bookInfo.chapterInfos = chapterInfos
-                #print bookInfo
+                #print(bookInfo)
 
     return bookInfos
 
@@ -207,7 +207,7 @@ def get_mp3_url(chapterUrl):
     if match:
         mp3 = "{0}{1}".format(match.group(6), match.group(7))
         mp3Url = "http://x8.tingvoa.com/{1}".format(rootUrl, mp3)
-        #print mp3Url
+        #print(mp3Url)
     return mp3Url
 
 
@@ -247,7 +247,7 @@ def store_to_excel(resPath):
     workSheet = workbook.create_sheet(0, sheetName.decode('utf-8'))
 
     # for i, sheetName in enumerate(workbook.get_sheet_names()):
-    #     print "sheet {0}: {1}".format(i, sheetName)
+    #     print("sheet {0}: {1}".format(i, sheetName))
 
     rootDir = os.path.dirname(resPath)
     currentLevelDir = ""
@@ -278,7 +278,7 @@ def store_to_excel(resPath):
                 workSheet.append([""])
                 workSheet.append([info])
 
-                print ">> current book: {0}".format(currentBookDir)
+                print(">> current book: {0}".format(currentBookDir))
                 continue
 
             ### Level.1 书虫第一级
@@ -292,7 +292,7 @@ def store_to_excel(resPath):
                 workSheet.append([""])
                 workSheet.append([info.strip()])
 
-                print ">> current level: {0}".format(currentLevelDir)
+                print(">> current level: {0}".format(currentLevelDir))
                 continue
 
     # Save the file
@@ -305,13 +305,13 @@ def store_to_excel(resPath):
 
 def print_level_infos(levelInfos):
     for i, level in enumerate(levelInfos):
-        print '\n### Level.{0:d} {1}\n'.format(i + 1, level.name)
+        print('\n### Level.{0:d} {1}\n'.format(i + 1, level.name))
 
         for j, book in enumerate(level.bookInfos):
-            print '\n#### Book.{0:d} {1}\n'.format(j + 1, book.name)
+            print('\n#### Book.{0:d} {1}\n'.format(j + 1, book.name))
 
             for k, chapter in enumerate(book.chapterInfos):
-                print '##### Chapter.{0:d} {1}, {2}\n'.format(k + 1, chapter.name, chapter.mp3Url)
+                print('##### Chapter.{0:d} {1}, {2}\n'.format(k + 1, chapter.name, chapter.mp3Url))
 
 
 # parse resource url
@@ -319,7 +319,7 @@ def parse(url):
     start = timeit.default_timer()
 
     rootUrl = get_root_url(url)
-    print "rootUrl: " + rootUrl
+    print("rootUrl: " + rootUrl)
 
     levelInfos = []
 
@@ -328,7 +328,7 @@ def parse(url):
 
     # get page title
     #pageTitle = soup.html.head.title.string.encode('utf-8')
-    #print " > page title：" + pageTitle
+    #print(" > page title：" + pageTitle)
 
     # get resource title
     resourceTitle = ""
@@ -337,16 +337,16 @@ def parse(url):
         titleContent = content.find("div", "catmenutitle");
         if titleContent != None and titleContent.string != None:
             resourceTitle = titleContent.string.strip().encode('utf-8')
-            #print " > resource title：" + resourceTitle
+            #print(" > resource title：" + resourceTitle)
 
     # get level infos
     mainleftlist = soup.find(id="mainleftlist");
     if (mainleftlist != None):
-        #print mainleftlist.prettify()
+        #print(mainleftlist.prettify())
         leftTitles = mainleftlist.find_all("div", "leftTitle")
-        print "find %d levels" % len(leftTitles)
+        print("find %d levels" % len(leftTitles))
         for leftTitle in leftTitles:
-            #print leftTitle.prettify()
+            #print(leftTitle.prettify())
             link = leftTitle.find("a");
             if link != None:
                 levelName = ""
@@ -357,7 +357,7 @@ def parse(url):
 
                 levelInfo = LevelInfo(levelName, levelUrl)
                 levelInfos.append(levelInfo)
-                print levelInfo
+                print(levelInfo)
 
     for levelInfo in levelInfos:
         levelInfo.bookInfos = get_book_infos(levelInfo)
@@ -371,7 +371,7 @@ def parse(url):
     store_to_excel(path)
 
     elapsed = timeit.default_timer() - start
-    print " > 下载完成，耗时 {0} 秒".format(elapsed)
+    print(" > 下载完成，耗时 {0} 秒".format(elapsed))
 
 #=============================================================================
 # download
@@ -397,7 +397,7 @@ def download_resource(resPath):
 
                     downloadInfo = DownloadInfo(name, path, mp3Url)
                     downloadInfos.append(downloadInfo)
-                    #print ">> current chapter: {0}".format(downloadInfo)
+                    #print(">> current chapter: {0}".format(downloadInfo))
                 continue
 
             #### Book.1 爱情与金钱
@@ -407,7 +407,7 @@ def download_resource(resPath):
                 name = match.group(3).strip()
                 currentBookDir = os.path.join(currentLevelDir, name)
                 mkdir(currentBookDir)
-                print ">> current book: {0}".format(currentBookDir)
+                print(">> current book: {0}".format(currentBookDir))
                 continue
 
             ### Level.1 书虫第一级
@@ -417,7 +417,7 @@ def download_resource(resPath):
                 name = match.group(3).strip()
                 currentLevelDir = os.path.join(rootDir, name)
                 mkdir(currentLevelDir)
-                print ">> current level: {0}".format(currentLevelDir)
+                print(">> current level: {0}".format(currentLevelDir))
                 continue
 
     download(downloadInfos, get_cpu_count())
@@ -427,10 +427,10 @@ def download(infos, threads=2):
     pool.map(download_info, infos)
     pool.close()
     pool.join()
-    print ">> download parllel done!"
+    print(">> download parllel done!")
 
 def download_info(info):
-    print "> download {0} to {1}".format(info.mp3Url, info.path)
+    print("> download {0} to {1}".format(info.mp3Url, info.path))
     remote = urllib2.urlopen(info.mp3Url) 
     with open(info.path, "wb") as local:
        local.write(remote.read()) 

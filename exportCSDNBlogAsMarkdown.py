@@ -19,9 +19,6 @@ import codecs
 import urllib2
 from bs4 import BeautifulSoup
 
-# 尝试获取资源次数
-gRetryCount = 5
-
 # 获取 url 内容
 gUseCookie = False
 gHeaders = {
@@ -43,11 +40,11 @@ def getHtml(url):
             data = response.read().decode('utf-8')
     except urllib2.URLError, e :
         if hasattr(e, "code"):
-            print "The server couldn't fulfill the request: " + url
-            print "Error code: %s" % e.code
+            print("The server couldn't fulfill the request: " + url)
+            print("Error code: %s" % e.code)
         elif hasattr(e, "reason"):
-            print "We failed to reach a server. Please check your url: " + url + ", and read the Reason."
-            print "Reason: %s" % e.reason
+            print("We failed to reach a server. Please check your url: " + url + ", and read the Reason.")
+            print("Reason: %s" % e.reason)
     return data
 
 def slow_down():
@@ -55,7 +52,7 @@ def slow_down():
 
 def log(str):
     if gEnableLog:
-        print str
+        print(str)
 
         logPath = os.path.join(gOutputDir, 'log.txt');
         newFile = open(logPath, 'a+')
@@ -174,7 +171,7 @@ def getPageUrlList(url):
     if lastArticleHref == None:
         return []
     
-    print " > last page href:" + lastArticleHref
+    print(" > last page href:" + lastArticleHref)
     lastPageIndex = lastArticleHref.rfind("/")
     lastPageNum = int(lastArticleHref[lastPageIndex+1:])
     urlInfo = "http://blog.csdn.net" + lastArticleHref[0:lastPageIndex]
@@ -197,7 +194,7 @@ def getArticleList(url):
     strPage = " > parsing page {0}"
     for pageUrl in pageUrlList:
         retryCount = 0
-        print " > parsing page {0}".format(pageUrl)
+        print(" > parsing page {0}".format(pageUrl))
 
         slow_down() #访问太快会不响应
         page = getHtml(pageUrl);
@@ -220,7 +217,7 @@ def getArticleList(url):
     for articleListDoc in articleListDocs:
         linkDocs = articleListDoc.find_all("span", "link_title")
         for linkDoc in linkDocs:
-            #print linkDoc.prettify().encode('UTF-8')
+            #print(linkDoc.prettify().encode('UTF-8'))
             link = linkDoc.a
             url = link["href"].encode('UTF-8')
             title = link.get_text().encode('UTF-8')
