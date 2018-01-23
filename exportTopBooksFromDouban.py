@@ -4,7 +4,7 @@
 # Author        : kesalin@gmail.com
 # Blog          : http://kesalin.github.io
 # Date          : 2016/07/13
-# Description   : 抓取豆瓣上指定标签的书籍并导出为 Markdown 文件，多线程版本. 
+# Description   : 抓取豆瓣上指定标签的书籍并导出为 Markdown 文件，多线程版本.
 # Version       : 1.0.0.0
 # Python Version: Python 2.7.3
 # Python Queue  : https://docs.python.org/2/library/queue.html
@@ -30,8 +30,9 @@ gHeaders = {
     'Cookie': 'Put your cookie here'
 }
 
+
 def getHtml(url):
-    try :
+    try:
         if gUseCookie:
             opener = urllib2.build_opener()
             for k, v in gHeaders.items():
@@ -42,18 +43,20 @@ def getHtml(url):
             request = urllib2.Request(url, None, gHeaders)
             response = urllib2.urlopen(request)
             data = response.read().decode('utf-8')
-    except urllib2.URLError, e :
+    except urllib2.URLError as e:
         if hasattr(e, "code"):
             print("The server couldn't fulfill the request: " + url)
             print("Error code: %s" % e.code)
         elif hasattr(e, "reason"):
-            print("We failed to reach a server. Please check your url: " + url + ", and read the Reason.")
+            print("We failed to reach a server. Please check your url: " +
+                  url + ", and read the Reason.")
             print("Reason: %s" % e.reason)
     return data
 
 
 # 书籍信息类
 class BookInfo:
+
     def __init__(self, name, url, icon, num, people, comment):
         self.name = name
         self.url = url
@@ -101,10 +104,10 @@ def exportToMarkdown(tag, books, total):
     file = open(path, 'a')
     file.write('## 说明\n\n')
     file.write(' > 本页面是由 Python 爬虫根据图书推荐算法抓取豆瓣图书信息自动生成，列出特定主题排名靠前的一百本图书。  \n\n')
-    file.write(' > 我使用的推荐算法似乎要比豆瓣默认的算法要可靠些，因为我喜欢书，尤其是对非虚构类图书有一定了解，' 
-        '所以我可以根据特定主题对推荐算法进行调整。大家可以访问 '
-        '[豆瓣图书爬虫](https://github.com/luozhaohui/PythonSnippet/blob/master/exportTopBooksFromDouban.py) 查看推荐算法。'
-        '希望能得到大家的反馈与建议，改善算法，提供更精准的图书排名。  \n\n')
+    file.write(' > 我使用的推荐算法似乎要比豆瓣默认的算法要可靠些，因为我喜欢书，尤其是对非虚构类图书有一定了解，'
+               '所以我可以根据特定主题对推荐算法进行调整。大家可以访问 '
+               '[豆瓣图书爬虫](https://github.com/luozhaohui/PythonSnippet/blob/master/exportTopBooksFromDouban.py) 查看推荐算法。'
+               '希望能得到大家的反馈与建议，改善算法，提供更精准的图书排名。  \n\n')
     file.write(' > 联系方式：  \n')
     file.write('    + 邮箱：kesalin@gmail.com  \n')
     file.write('    + 微博：[飘飘白云](http://weibo.com/kesalin)  \n')
@@ -124,21 +127,23 @@ def exportToMarkdown(tag, books, total):
     file.close()
 
 # 解析图书信息
+
+
 def parseItemInfo(tag, minNum, maxNum, k, page, bookInfos):
     soup = BeautifulSoup(page, 'html.parser')
     items = soup.find_all("li", "subject-item")
     for item in items:
-        #print(item.prettify().encode('utf-8'))
+        # print(item.prettify().encode('utf-8'))
 
         # get book name
         bookName = ''
         content = item.find("h2")
-        if content != None:
+        if content:
             href = content.find("a")
-            if href != None:
+            if href:
                 bookName = href['title'].strip().encode('utf-8')
                 span = href.find("span")
-                if span != None and span.string != None:
+                if span and span.string:
                     subTitle = span.string.strip().encode('utf-8')
                     bookName = '{0}{1}'.format(bookName, subTitle)
         #print(" > name: {0}".format(bookName))
@@ -146,7 +151,7 @@ def parseItemInfo(tag, minNum, maxNum, k, page, bookInfos):
         # get description
         description = ''
         content = item.find("p")
-        if content != None:
+        if content:
             description = content.string.strip().encode('utf-8')
         #print(" > description: {0}".format(description))
 
@@ -154,12 +159,12 @@ def parseItemInfo(tag, minNum, maxNum, k, page, bookInfos):
         bookUrl = ''
         bookImage = ''
         content = item.find("div", "pic")
-        if content != None:
+        if content:
             tag = content.find('a')
-            if tag != None:
+            if tag:
                 bookUrl = tag['href'].encode('utf-8')
             tag = content.find('img')
-            if tag != None:
+            if tag:
                 bookImage = tag['src'].encode('utf-8')
         #print(" > url: {0}, image: {1}".format(bookUrl, bookImage))
 
@@ -167,12 +172,12 @@ def parseItemInfo(tag, minNum, maxNum, k, page, bookInfos):
         ratingNum = 0.0
         ratingPeople = 0
         content = item.find("span", "rating_nums")
-        if content != None:
+        if content:
             ratingStr = content.string.strip().encode('utf-8')
             if len(ratingStr) > 0:
                 ratingNum = float(ratingStr)
         content = item.find("span", "pl")
-        if content != None:
+        if content:
             ratingStr = content.string.strip().encode('utf-8')
             pattern = re.compile(r'(\()([0-9]*)(.*)(\))')
             match = pattern.search(ratingStr)
@@ -183,26 +188,31 @@ def parseItemInfo(tag, minNum, maxNum, k, page, bookInfos):
         #print(" > ratingNum: {0}, ratingPeople: {1}".format(ratingNum, ratingPeople))
 
         # add book info to list
-        bookInfo = BookInfo(bookName, bookUrl, bookImage, ratingNum, ratingPeople, description)
-        bookInfo.compositeRating = computeCompositeRating(tag, minNum, maxNum, k, ratingNum, ratingPeople)
+        bookInfo = BookInfo(bookName, bookUrl, bookImage,
+                            ratingNum, ratingPeople, description)
+        bookInfo.compositeRating = computeCompositeRating(
+            tag, minNum, maxNum, k, ratingNum, ratingPeople)
         bookInfos.append(bookInfo)
 
 #=============================================================================
 # 生产者-消费者模型
 #=============================================================================
+
+
 class Producer(Thread):
     url = ''
-    
-    def __init__(self, t_name, url, queue):  
+
+    def __init__(self, t_name, url, queue):
         Thread.__init__(self, name=t_name)
         self.url = url
         self.queue = queue
 
     def run(self):
         page = getHtml(self.url)
-        if page != None:
+        if page:
             # block util a free slot available
             self.queue.put(page, True)
+
 
 class Consumer(Thread):
     running = True
@@ -213,7 +223,7 @@ class Consumer(Thread):
     maxNum = 5000
     k = 0.25
 
-    def __init__(self, t_name, tag, minNum, maxNum, k, queue, books):  
+    def __init__(self, t_name, tag, minNum, maxNum, k, queue, books):
         Thread.__init__(self, name=t_name)
         self.queue = queue
         self.books = books
@@ -227,14 +237,15 @@ class Consumer(Thread):
 
     def run(self):
         while True:
-            if self.running == False and self.queue.empty():
-                break;
+            if not self.running and self.queue.empty():
+                break
 
             page = self.queue.get()
-            if page != None:
-                parseItemInfo(self.tag, self.minNum, self.maxNum, self.k, page, self.books)
+            if page:
+                parseItemInfo(self.tag, self.minNum, self.maxNum,
+                              self.k, page, self.books)
             self.queue.task_done()
- 
+
 
 def spider(tag, minNum, maxNum, k):
     print('   抓取 [{0}] 图书 ...'.format(tag))
@@ -248,17 +259,17 @@ def spider(tag, minNum, maxNum, k):
     # get first page of doulist
     url = "https://book.douban.com/tag/{0}".format(tag)
     page = getHtml(url)
-    if page == None:
+    if not page:
         print(' > invalid url {0}'.format(url))
     else:
         # get url of other pages in doulist
         soup = BeautifulSoup(page, 'html.parser')
         content = soup.find("div", "paginator")
-        #print(content.prettify().encode('utf-8'))
+        # print(content.prettify().encode('utf-8'))
 
         nextPageStart = 0
         lastPageStart = 0
-        if content != None:
+        if content:
             nextPageStart = 100000
             for child in content.children:
                 if child.name == 'a':
@@ -276,14 +287,16 @@ def spider(tag, minNum, maxNum, k):
         queue.put(page)
 
         # create consumer
-        consumer = Consumer('Consumer', tag, minNum, maxNum, k, queue, bookInfos)
+        consumer = Consumer('Consumer', tag, minNum,
+                            maxNum, k, queue, bookInfos)
         consumer.start()
 
         # create producers
         producers = []
         for pageStart in range(nextPageStart, lastPageStart + nextPageStart, nextPageStart):
             pageUrl = "{0}?start={1:d}&type=T".format(url, pageStart)
-            producer = Producer('Producer_{0:d}'.format(pageStart), pageUrl, queue)
+            producer = Producer('Producer_{0:d}'.format(
+                pageStart), pageUrl, queue)
             producer.start()
             producers.append(producer)
             #print(" > process page : {0}".format(pageUrl))
@@ -301,7 +314,7 @@ def spider(tag, minNum, maxNum, k):
         # summrise
         total = len(bookInfos)
         elapsed = timeit.default_timer() - start
-        print("   获取 %d 本 [%s] 图书信息，耗时 %.2f 秒"%(total, tag, elapsed))
+        print("   获取 %d 本 [%s] 图书信息，耗时 %.2f 秒" % (total, tag, elapsed))
         return bookInfos
 
 
@@ -322,12 +335,12 @@ def process(tags, ignore):
     print(" > 共获取 {0} 本 [{1}] 不重复图书信息".format(total, tags[0]))
 
     if tags[0].find("文学") != -1 \
-        or tags[0].find("文化") \
-        or tags[0].find("绘本") \
-        or tags[0] == "小说" \
-        or tags[0] == "成长" \
-        or tags[0].find("哲学") \
-        or tags[0].find("政治"):
+            or tags[0].find("文化") \
+            or tags[0].find("绘本") \
+            or tags[0] == "小说" \
+            or tags[0] == "成长" \
+            or tags[0].find("哲学") \
+            or tags[0].find("政治"):
         books = list(set(books) - set(ignore))
 
     # sort
@@ -337,7 +350,7 @@ def process(tags, ignore):
     topBooks = books[0:min(130, len(books))]
 
     # ignore blacklist
-    if backlist != None:
+    if backlist:
         delList = []
         for book in topBooks:
             for bl in backlist:
@@ -354,6 +367,8 @@ def process(tags, ignore):
 #=============================================================================
 # 排序算法
 #=============================================================================
+
+
 def computeCompositeRating(tag, minNum, maxNum, k, num, people):
     people = max(1, min(maxNum, people))
     if people <= minNum:
@@ -377,24 +392,24 @@ def computeCompositeRating(tag, minNum, maxNum, k, num, people):
 #=============================================================================
 # 程序入口：抓取指定标签的书籍
 #=============================================================================
-if __name__ == '__main__': 
+if __name__ == '__main__':
     # blacklist
     classicBL = ["新概念英语", "大明宫词", "费恩曼物理学讲义", "经济学原理"]
-    japanLibBL = ["苍井优", "知日", "杉浦康平", "设计中的设计", "我的造梦之路", \
-        "版式设计原理", "家庭收纳1000例", "无缘社会", "未来ちゃん", "用洗脸盆吃羊肉饭"]
+    japanLibBL = ["苍井优", "知日", "杉浦康平", "设计中的设计", "我的造梦之路",
+                  "版式设计原理", "家庭收纳1000例", "无缘社会", "未来ちゃん", "用洗脸盆吃羊肉饭"]
     programBL = ["三双鞋", "触动人心", "破茧成蝶", "MFC", "李开复", "沸腾十五年"]
-    techBL = ["哲学家们都干了些什么", "你一定爱读的极简欧洲史", "一课经济学", "定本育儿百科", \
-        "儿童百科", "宝石"]
-    politicsBL = ["剑桥中华人民共和国史", "我为什么要写作", "职场动物进化手册", "王小波", \
-        "大明王朝", "观念的水位", "一课经济学", "雪", "毛泽东选集"]
+    techBL = ["哲学家们都干了些什么", "你一定爱读的极简欧洲史", "一课经济学", "定本育儿百科",
+              "儿童百科", "宝石"]
+    politicsBL = ["剑桥中华人民共和国史", "我为什么要写作", "职场动物进化手册", "王小波",
+                  "大明王朝", "观念的水位", "一课经济学", "雪", "毛泽东选集"]
     lawBL = ["七号房的礼物", "走不出的风景", "美国常春藤上的中国蜗牛"]
-    philosophyBL = ["鲁迅全集", "人类简史", "孙子兵法", "上帝掷骰子吗", "中国历代政治得失",\
-        "洞穴奇案", "规训与惩罚", "韦伯", "古拉格", "顾准", "王小波", "穷查理宝典", "思维的乐趣", \
-        "毛泽东选集", "进化心理学", "一只特立独行的猪", "陈寅恪的最后20年", "生命之书", "自私的基因", \
-        "金枝", "经济学的思维方式"]
+    philosophyBL = ["鲁迅全集", "人类简史", "孙子兵法", "上帝掷骰子吗", "中国历代政治得失",
+                    "洞穴奇案", "规训与惩罚", "韦伯", "古拉格", "顾准", "王小波", "穷查理宝典", "思维的乐趣",
+                    "毛泽东选集", "进化心理学", "一只特立独行的猪", "陈寅恪的最后20年", "生命之书", "自私的基因",
+                    "金枝", "经济学的思维方式"]
     anthropologyBL = ["考古学", "贫穷的本质", "基因组"]
-    pictureBookBL = ["花卉圣经", "窥视印度", "你今天心情不好吗", "猫国物语", "奈良美智横滨手稿", \
-        "平如美棠", "一点巴黎", "一个人去跑步", "踮脚张望", "失乐园","我的路"]
+    pictureBookBL = ["花卉圣经", "窥视印度", "你今天心情不好吗", "猫国物语", "奈良美智横滨手稿",
+                     "平如美棠", "一点巴黎", "一个人去跑步", "踮脚张望", "失乐园", "我的路"]
 
     tags = [
         # ["杂文", None, 50, 5000, 0.25],
@@ -452,19 +467,18 @@ if __name__ == '__main__':
         tagName = tag[0]
         books = process(tag, ignore)
         if tagName.find("绘本") != -1 \
-            or tagName.find("漫画") != -1 \
-            or tagName.find("童话") != -1 \
-            or tagName.find("青春") != -1 \
-            or tagName.find("言情") != -1 \
-            or tagName.find("武侠") != -1 \
-            or tagName.find("悬疑") != -1 \
-            or tagName.find("推理") != -1 \
-            or tagName.find("科幻") != -1 \
-            or tagName.find("魔幻") != -1 \
-            or tagName.find("编程") != -1 \
-            or tagName.find("宗教") != -1:
+                or tagName.find("漫画") != -1 \
+                or tagName.find("童话") != -1 \
+                or tagName.find("青春") != -1 \
+                or tagName.find("言情") != -1 \
+                or tagName.find("武侠") != -1 \
+                or tagName.find("悬疑") != -1 \
+                or tagName.find("推理") != -1 \
+                or tagName.find("科幻") != -1 \
+                or tagName.find("魔幻") != -1 \
+                or tagName.find("编程") != -1 \
+                or tagName.find("宗教") != -1:
             ignore = list(set(books + ignore))
 
-
     elapsed = timeit.default_timer() - start
-    print("== 总耗时 %.2f 秒 =="%(elapsed))
+    print("== 总耗时 %.2f 秒 ==" % (elapsed))

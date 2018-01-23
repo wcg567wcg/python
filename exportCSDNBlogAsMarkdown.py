@@ -4,7 +4,7 @@
 # Author        : kesalin@gmail.com
 # Blog          : http://luozhaohui.github.io
 # Date          : 2014/10/18
-# Description   : Export CSND blog articles to Markdown files. 
+# Description   : Export CSND blog articles to Markdown files.
 # Version       : 1.0.0.0
 # Python Version: Python 2.7.3
 #
@@ -26,8 +26,9 @@ gHeaders = {
     'Cookie': 'Put your cookie here'
 }
 
+
 def getHtml(url):
-    try :
+    try:
         if gUseCookie:
             opener = urllib2.build_opener()
             for k, v in gHeaders.items():
@@ -38,60 +39,67 @@ def getHtml(url):
             request = urllib2.Request(url, None, gHeaders)
             response = urllib2.urlopen(request)
             data = response.read().decode('utf-8')
-    except urllib2.URLError, e :
+    except urllib2.URLError as e:
         if hasattr(e, "code"):
             print("The server couldn't fulfill the request: " + url)
             print("Error code: %s" % e.code)
         elif hasattr(e, "reason"):
-            print("We failed to reach a server. Please check your url: " + url + ", and read the Reason.")
+            print("We failed to reach a server. Please check your url: " +
+                  url + ", and read the Reason.")
             print("Reason: %s" % e.reason)
     return data
 
+
 def slow_down():
     time.sleep(0.5)         # slow down a little
+
 
 def log(str):
     if gEnableLog:
         print(str)
 
-        logPath = os.path.join(gOutputDir, 'log.txt');
+        logPath = os.path.join(gOutputDir, 'log.txt')
         newFile = open(logPath, 'a+')
         newFile.write(str + '\n')
         newFile.close()
-        
+
+
 def decodeHtmlSpecialCharacter(htmlStr):
-    specChars = {"&ensp;" : "", \
-                 "&emsp;" : "", \
-                 "&nbsp;" : "", \
-                 "&lt;" : "<", \
-                 "&gt" : ">", \
-                 "&amp;" : "&", \
-                 "&quot;" : "\"", \
-                 "&copy;" : "®", \
-                 "&times;" : "×", \
-                 "&divide;" : "÷", \
+    specChars = {"&ensp;": "",
+                 "&emsp;": "",
+                 "&nbsp;": "",
+                 "&lt;": "<",
+                 "&gt": ">",
+                 "&amp;": "&",
+                 "&quot;": "\"",
+                 "&copy;": "®",
+                 "&times;": "×",
+                 "&divide;": "÷",
                  }
     for key in specChars.keys():
         htmlStr = htmlStr.replace(key, specChars[key])
     return htmlStr
 
+
 def repalceInvalidCharInFilename(filename):
-    specChars = {"\\" : "", \
-                 "/" : "", \
-                 ":" : "", \
-                 "*" : "", \
-                 "?" : "", \
-                 "\"" : "", \
-                 "<" : "小于", \
-                 ">" : "大于", \
-                 "|" : " and ", \
-                 "&" :" or ", \
+    specChars = {"\\": "",
+                 "/": "",
+                 ":": "",
+                 "*": "",
+                 "?": "",
+                 "\"": "",
+                 "<": "小于",
+                 ">": "大于",
+                 "|": " and ",
+                 "&": " or ",
                  }
     for key in specChars.keys():
         filename = filename.replace(key, specChars[key])
     return filename
 
 # process html content to markdown content
+
+
 def htmlContent2String(contentStr):
     patternImg = re.compile(r'(<img.+?src=")(.+?)(".+ />)')
     patternHref = re.compile(r'(<a.+?href=")(.+?)(".+?>)(.+?)(</a>)')
@@ -102,6 +110,7 @@ def htmlContent2String(contentStr):
     resultContent = re.sub(patternRemoveHtml, r'', resultContent)
     resultContent = decodeHtmlSpecialCharacter(resultContent)
     return resultContent
+
 
 def exportToMarkdown(exportDir, postdate, categories, title, content):
     titleDate = postdate.strftime('%Y-%m-%d')
@@ -120,11 +129,12 @@ def exportToMarkdown(exportDir, postdate, categories, title, content):
     newFile.write('categories: [' + categories + ']' + '\n')
     newFile.write('tags: [' + categories + ']' + '\n')
     newFile.write('description: \"' + title + '\"\n')
-    newFile.write('keywords: ' + categories + '\n') 
+    newFile.write('keywords: ' + categories + '\n')
     newFile.write('---' + '\n\n')
     newFile.write(content)
     newFile.write('\n')
     newFile.close()
+
 
 def download(title, url, output):
     # 下载文章，并保存为 markdown 格式
@@ -133,8 +143,8 @@ def download(title, url, output):
     categories = ""
     content = ""
     postDate = datetime.datetime.now()
-    
-    slow_down();
+
+    slow_down()
     page = getHtml(url)
     soup = BeautifulSoup(page)
 
@@ -143,11 +153,12 @@ def download(title, url, output):
         categoryDoc = managerDoc.find_all("span", "link_categories")
         if len(categoryDoc) > 0:
             categories = categoryDoc[0].a.get_text().encode('UTF-8').strip()
-        
+
         postDateDoc = managerDoc.find_all("span", "link_postdate")
         if len(postDateDoc) > 0:
             postDateStr = postDateDoc[0].string.encode('UTF-8').strip()
-            postDate = datetime.datetime.strptime(postDateStr, '%Y-%m-%d %H:%M')
+            postDate = datetime.datetime.strptime(
+                postDateStr, '%Y-%m-%d %H:%M')
 
     contentDocs = soup.find_all(id="article_content")
     for contentDoc in contentDocs:
@@ -155,6 +166,7 @@ def download(title, url, output):
         content = htmlContent2String(htmlContent)
 
     exportToMarkdown(output, postDate, categories, title, content)
+
 
 def getPageUrlList(url):
     page = getHtml(url)
@@ -168,12 +180,12 @@ def getPageUrlList(url):
             lastArticleHrefDoc = hrefDocs[len(hrefDocs) - 1]
             lastArticleHref = lastArticleHrefDoc["href"].encode('UTF-8')
 
-    if lastArticleHref == None:
+    if not lastArticleHref:
         return []
-    
+
     print(" > last page href:" + lastArticleHref)
     lastPageIndex = lastArticleHref.rfind("/")
-    lastPageNum = int(lastArticleHref[lastPageIndex+1:])
+    lastPageNum = int(lastArticleHref[lastPageIndex + 1:])
     urlInfo = "http://blog.csdn.net" + lastArticleHref[0:lastPageIndex]
 
     pageUrlList = []
@@ -185,39 +197,38 @@ def getPageUrlList(url):
     log("total pages: " + str(len(pageUrlList)) + "\n")
     return pageUrlList
 
+
 def getArticleList(url):
     # 获取所有的文章的 url/title
     pageUrlList = getPageUrlList(url)
-    
+
     articleListDocs = []
 
-    strPage = " > parsing page {0}"
     for pageUrl in pageUrlList:
-        retryCount = 0
         print(" > parsing page {0}".format(pageUrl))
 
-        slow_down() #访问太快会不响应
-        page = getHtml(pageUrl);
+        slow_down()  # 访问太快会不响应
+        page = getHtml(pageUrl)
         soup = BeautifulSoup(page)
-        
+
         # 获取置顶文章
         topArticleDocs = soup.find_all(id="article_toplist")
-        if topArticleDocs != None:
+        if topArticleDocs:
             articleListDocs = articleListDocs + topArticleDocs
 
         # 获取文章
         articleDocs = soup.find_all(id="article_list")
-        if articleDocs != None:
+        if articleDocs:
             articleListDocs = articleListDocs + articleDocs
 
         break
-    
+
     artices = []
     topTile = "[置顶]"
     for articleListDoc in articleListDocs:
         linkDocs = articleListDoc.find_all("span", "link_title")
         for linkDoc in linkDocs:
-            #print(linkDoc.prettify().encode('UTF-8'))
+            # print(linkDoc.prettify().encode('UTF-8'))
             link = linkDoc.a
             url = link["href"].encode('UTF-8')
             title = link.get_text().encode('UTF-8')
@@ -228,6 +239,7 @@ def getArticleList(url):
 
     log("total articles: " + str(len(artices)) + "\n")
     return artices
+
 
 def exportBlog(username, output):
     url = "http://blog.csdn.net/" + username
@@ -247,7 +259,8 @@ def exportBlog(username, output):
     currentNum = 0
     for article in articleList:
         currentNum = currentNum + 1
-        strPageTemp = "[{0}/{1}] : {2}".format(currentNum, totalNum, article[1])
+        strPageTemp = "[{0}/{1}] : {2}".format(
+            currentNum, totalNum, article[1])
         log(strPageTemp)
 
         download(article[1], article[0], path)
@@ -266,5 +279,5 @@ gOutputDir = "csdn_posts"
 
 gEnableLog = True
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
     exportBlog(gUsername, gOutputDir)

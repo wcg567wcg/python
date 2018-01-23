@@ -4,7 +4,7 @@
 # Author        : kesalin@gmail.com
 # Blog          : http://kesalin.github.io
 # Date          : 2016/07/13
-# Description   : 将豆列导出为 Markdown 文件，多线程版本. 
+# Description   : 将豆列导出为 Markdown 文件，多线程版本.
 # Version       : 1.0.0.0
 # Python Version: Python 2.7.3
 #
@@ -30,8 +30,9 @@ gHeaders = {
     'Cookie': 'Put your cookie here'
 }
 
+
 def getHtml(url):
-    try :
+    try:
         if gUseCookie:
             opener = urllib2.build_opener()
             for k, v in gHeaders.items():
@@ -42,17 +43,21 @@ def getHtml(url):
             request = urllib2.Request(url, None, gHeaders)
             response = urllib2.urlopen(request)
             data = response.read().decode('utf-8')
-    except urllib2.URLError, e :
+    except urllib2.URLError as e:
         if hasattr(e, "code"):
             print("The server couldn't fulfill the request: " + url)
             print("Error code: %s" % e.code)
         elif hasattr(e, "reason"):
-            print("We failed to reach a server. Please check your url: " + url + ", and read the Reason.")
+            print("We failed to reach a server. Please check your url: " +
+                  url + ", and read the Reason.")
             print("Reason: %s" % e.reason)
     return data
 
 # 书籍信息类
+
+
 class BookInfo:
+
     def __init__(self, name, url, icon, num, people, comment):
         self.name = name
         self.url = url
@@ -83,16 +88,18 @@ class BookInfo:
             people = max(5, min(1000, self.ratingPeople))
             peopleWeight = math.pow(people, k)
             if people < 50:
-                self.compositeRating = (self.ratingNum * 80 + peopleWeight * 20) / 100.0
+                self.compositeRating = (
+                    self.ratingNum * 80 + peopleWeight * 20) / 100.0
             elif people < 1000:
-                self.compositeRating = (self.ratingNum * 90 + peopleWeight * 10) / 100.0
+                self.compositeRating = (
+                    self.ratingNum * 90 + peopleWeight * 10) / 100.0
             else:
-                self.compositeRating = (self.ratingNum * 95 + peopleWeight * 5) / 100.0
+                self.compositeRating = (
+                    self.ratingNum * 95 + peopleWeight * 5) / 100.0
 
         return self.compositeRating
 
     def __sortByCompositeRating(self, other):
-        rhs = other.getCompositeRating()
         val = self.getCompositeRating() - other.getCompositeRating()
         if val < 0:
             return 1
@@ -135,14 +142,14 @@ def parseItemInfo(page, bookInfos):
     soup = BeautifulSoup(page, 'html.parser')
     items = soup.find_all("div", "doulist-item")
     for item in items:
-        #print(item.prettify().encode('utf-8'))
+        # print(item.prettify().encode('utf-8'))
 
         # get book name
         bookName = ''
         content = item.find("div", "title")
-        if content != None:
+        if content:
             href = content.find("a")
-            if href != None and href.string != None:
+            if href and href.string:
                 bookName = href.string.strip().encode('utf-8')
         #print(" > name: {0}".format(bookName))
 
@@ -150,23 +157,22 @@ def parseItemInfo(page, bookInfos):
         bookUrl = ''
         bookImage = ''
         content = item.find("div", "post")
-        if content != None:
+        if content:
             tag = content.find('a')
-            if tag != None:
+            if tag:
                 bookUrl = tag['href'].encode('utf-8')
             tag = content.find('img')
-            if tag != None:
+            if tag:
                 bookImage = tag['src'].encode('utf-8')
         #print(" > url: {0}, image: {1}".format(bookUrl, bookImage))
-
 
         # get rating
         ratingNum = 0.0
         ratingPeople = 0
         contents = item.find("div", "rating")
         for content in contents:
-            if content.name != None and content.string != None:
-                if content.get("class") != None:
+            if content.name and content.string:
+                if content.get("class"):
                     ratingStr = content.string.strip().encode('utf-8')
                     if len(ratingStr) > 0:
                         ratingNum = float(ratingStr)
@@ -183,14 +189,15 @@ def parseItemInfo(page, bookInfos):
         # get comment
         comment = ''
         content = item.find("blockquote", "comment")
-        if content != None:
+        if content:
             for child in content.contents:
-                if child.name == None and child.string != None:
+                if not child.name and child.string:
                     comment = child.string.strip().encode('utf-8')
         #print(" > comment: {0}".format(comment))
 
         # add book info to list
-        bookInfo = BookInfo(bookName, bookUrl, bookImage, ratingNum, ratingPeople, comment)
+        bookInfo = BookInfo(bookName, bookUrl, bookImage,
+                            ratingNum, ratingPeople, comment)
         bookInfos.append(bookInfo)
 
 
@@ -200,10 +207,11 @@ def parseItemInfo(page, bookInfos):
 gQueue = Queue(20)
 gBookInfos = []
 
+
 class Producer(Thread):
     url = ''
-    
-    def __init__(self, t_name, url):  
+
+    def __init__(self, t_name, url):
         Thread.__init__(self, name=t_name)
         self.url = url
 
@@ -211,13 +219,14 @@ class Producer(Thread):
         global gQueue
 
         page = getHtml(self.url)
-        if page != None:
+        if page:
             gQueue.put(page)
+
 
 class Consumer(Thread):
     running = True
 
-    def __init__(self, t_name):  
+    def __init__(self, t_name):
         Thread.__init__(self, name=t_name)
 
     def stop(self):
@@ -228,14 +237,14 @@ class Consumer(Thread):
         global gBookInfos
 
         while True:
-            if self.running == False and gQueue.empty():
-                break;
+            if not self.running and gQueue.empty():
+                break
 
             page = gQueue.get()
-            if page != None:
+            if page:
                 parseItemInfo(page, gBookInfos)
             gQueue.task_done()
- 
+
 
 # 解析豆列 url
 def parse(url):
@@ -246,7 +255,7 @@ def parse(url):
 
     # get first page of doulist
     page = getHtml(gDoulistUrl)
-    
+
     # get url of other pages in doulist
     soup = BeautifulSoup(page, 'html.parser')
 
@@ -258,7 +267,7 @@ def parse(url):
     doulistAbout = ''
     content = soup.find("div", "doulist-about")
     for child in content.children:
-        if child.string != None:
+        if child.string:
             htmlContent = child.string.strip().encode('utf-8')
             doulistAbout = "{0}\n{1}".format(doulistAbout, htmlContent)
     #print("doulist about:" + doulistAbout)
@@ -317,5 +326,5 @@ def parse(url):
 #=============================================================================
 gDoulistUrl = "https://www.douban.com/doulist/1133232/"
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
     parse(gDoulistUrl)

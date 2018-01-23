@@ -4,25 +4,29 @@
 # Author        : kesalin@gmail.com
 # Blog          : http://kesalin.github.io
 # Date          : 2014/10/27
-# Description   : Encrypt/decrypt data. 
+# Description   : Encrypt/decrypt data.
 # PyCrypto      : 2.6
 # Python        : 2.7.3
 #
 
 import hashlib
 import base64
-import sys
+
 from Crypto.Cipher import AES
 from Crypto import Random
 from binascii import b2a_hex, a2b_hex
 
+
 def md5(str):
     return hashlib.md5(str).hexdigest()
 
+
 def sha1(str):
-    return hashlib.sha1(str).hexdigest();
+    return hashlib.sha1(str).hexdigest()
+
 
 class AESCipher:
+
     def __init__(self, key):
         self.bs = 32
         if len(key) >= 32:
@@ -47,12 +51,14 @@ class AESCipher:
         return s + (self.bs - len(s) % self.bs) * chr(self.bs - len(s) % self.bs)
 
     def _unpad(self, s):
-        return s[:-ord(s[len(s)-1:])]
+        return s[:-ord(s[len(s) - 1:])]
+
 
 def encryptData(key, str):
     aes = AESCipher(md5(key))
     result = aes.encrypt(str)
     return result
+
 
 def decryptData(key, str):
     aes = AESCipher(md5(key))
@@ -64,6 +70,6 @@ if __name__ == '__main__':
     data = "test"
     en = encryptData(key, data)
     de = decryptData(key, en)
-    print " >>> data:", data
-    print " >>> encrypt:", en
-    print " >>> decrypt:", de
+    print(" >>> data:{}".format(data))
+    print(" >>> encrypt:{}".format(en))
+    print(" >>> decrypt:{}".format(de))

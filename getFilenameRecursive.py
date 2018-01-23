@@ -2,7 +2,7 @@
 #!/usr/bin/python
 
 import os
-import sys
+
 
 def scan_file(filepath, prefix, output_file):
     exclude_extends = ['.mp3', '.jpeg', '.jpg', '.db', '.txt', '.wma', '.nfo']
@@ -13,22 +13,24 @@ def scan_file(filepath, prefix, output_file):
 
     info = '\n{0}- {1}'.format(prefix, os.path.basename(filepath))
     output_file.write(info)
-    #print(info)
+    # print(info)
+
 
 def scan_dir(path, prefix, output_file):
     info = '\n{0}+ {1}'.format(prefix, os.path.basename(path))
     output_file.write(info)
-    #print(info)
+    # print(info)
 
     prefix = '{0}    '.format(prefix)
     for filename in os.listdir(path):
-        filepath = os.path.join(path, filename) 
+        filepath = os.path.join(path, filename)
         if os.path.isdir(filepath):
             # exclude hidden dirs
-            if filename.startswith('.') == False:
+            if not filename.startswith('.'):
                 scan_dir(filepath, prefix, output_file)
         elif os.path.isfile(filepath):
             scan_file(filepath, prefix, output_file)
+
 
 def scan(path):
     output = 'result'
@@ -40,16 +42,16 @@ def scan(path):
     if(os.path.isdir(path)):
         scan_dir(path, prefix, output_file)
     elif(os.path.isfile(path)):
-        scan_file(filepath, prefix, output_file)
+        scan_file(path, prefix, output_file)
     output_file.close()
 
-#===================================================================================#
-scan_path = '/media/luozhaohui/BIGBABY/Movies'    
+#============================================================================#
+scan_path = '/media/luozhaohui/BIGBABY/Movies'
 
 scan(scan_path)
 
 # 输出文件示例如下：
-#result
+# result
 #    + 国内电影
 #        + 我叫刘跃进
 #            - 我叫刘跃进.rmvb

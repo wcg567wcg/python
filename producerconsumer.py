@@ -11,18 +11,19 @@
 from threading import Thread, Condition
 import time
 import random
- 
+
 queue = []
 MAX_NUM = 5
 condition = Condition()
- 
+
+
 class ProducerThread(Thread):
     isExit = False
 
     def run(self):
         nums = range(MAX_NUM)
         global queue
-        while self.isExit == False:
+        while not self.isExit:
             condition.acquire()
             if len(queue) == MAX_NUM:
                 print("Queue full, producer is waiting")
@@ -39,12 +40,13 @@ class ProducerThread(Thread):
     def end(self):
         self.isExit = True
 
+
 class ConsumerThread(Thread):
     isExit = False
 
     def run(self):
         global queue
-        while self.isExit == False:
+        while not self.isExit:
             condition.acquire()
             if not queue:
                 print("Nothing in queue, consumer is waiting")
@@ -60,7 +62,7 @@ class ConsumerThread(Thread):
     def end(self):
         self.isExit = True
 
-p = ProducerThread();
+p = ProducerThread()
 c = ConsumerThread()
 
 p.start()
@@ -73,4 +75,3 @@ c.end()
 
 p.join()
 c.join()
-

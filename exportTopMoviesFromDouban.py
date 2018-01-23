@@ -4,7 +4,7 @@
 # Author        : kesalin@gmail.com
 # Blog          : http://kesalin.github.io
 # Date          : 2016/07/13
-# Description   : 抓取豆瓣上指定标签的电影并导出为 Markdown 文件，多线程版本. 
+# Description   : 抓取豆瓣上指定标签的电影并导出为 Markdown 文件，多线程版本.
 # Version       : 1.0.0.0
 # Python Version: Python 2.7.3
 # Python Queue  : https://docs.python.org/2/library/queue.html
@@ -15,7 +15,6 @@ import time
 import timeit
 import datetime
 import re
-import string
 import urllib2
 import math
 
@@ -30,8 +29,9 @@ gHeaders = {
     'Cookie': 'Put your cookie here'
 }
 
+
 def getHtml(url):
-    try :
+    try:
         if gUseCookie:
             opener = urllib2.build_opener()
             for k, v in gHeaders.items():
@@ -42,18 +42,20 @@ def getHtml(url):
             request = urllib2.Request(url, None, gHeaders)
             response = urllib2.urlopen(request)
             data = response.read().decode('utf-8')
-    except urllib2.URLError, e :
+    except urllib2.URLError as e:
         if hasattr(e, "code"):
             print("The server couldn't fulfill the request: " + url)
             print("Error code: %s" % e.code)
         elif hasattr(e, "reason"):
-            print("We failed to reach a server. Please check your url: " + url + ", and read the Reason.")
+            print("We failed to reach a server. Please check your url: " +
+                  url + ", and read the Reason.")
             print("Reason: %s" % e.reason)
     return data
-    
+
 
 # 电影信息类
 class ItemInfo:
+
     def __init__(self, name, url, icon, num, people, comment):
         self.name = name
         self.url = url
@@ -100,10 +102,11 @@ def exportToMarkdown(tag, items, total):
     todayStr = today.strftime('%Y-%m-%d %H:%M:%S %z')
     file = open(path, 'a')
     file.write('## 说明\n\n')
-    file.write(' > 本页面是由 Python 爬虫根据电影推荐算法抓取豆瓣电影信息自动生成，列出特定主题排名靠前的一百或两百多部电影。  \n\n')
-    file.write(' > 我使用的推荐算法似乎要比豆瓣默认的算法要可靠些，我可以根据特定主题对推荐算法进行调整。大家可以访问 ' 
-        '[豆瓣电影爬虫](https://github.com/luozhaohui/PythonSnippet/blob/master/exportTopMoviesFromDouban.py) 查看推荐算法。'
-        '希望能得到大家的反馈与建议，改善算法，提供更精准的电影排名。  \n\n')
+    file.write(
+        ' > 本页面是由 Python 爬虫根据电影推荐算法抓取豆瓣电影信息自动生成，列出特定主题排名靠前的一百或两百多部电影。  \n\n')
+    file.write(' > 我使用的推荐算法似乎要比豆瓣默认的算法要可靠些，我可以根据特定主题对推荐算法进行调整。大家可以访问 '
+               '[豆瓣电影爬虫](https://github.com/luozhaohui/PythonSnippet/blob/master/exportTopMoviesFromDouban.py) 查看推荐算法。'
+               '希望能得到大家的反馈与建议，改善算法，提供更精准的电影排名。  \n\n')
     file.write(' > 联系方式：  \n')
     file.write('    + 邮箱：kesalin@gmail.com  \n')
     file.write('    + 微博：[飘飘白云](http://weibo.com/kesalin)  \n')
@@ -126,33 +129,36 @@ def exportToMarkdown(tag, items, total):
     file.close()
 
 # 解析图书信息
+
+
 def parseItemInfo(countryList, tag, minNum, maxNum, k, page, itemInfos):
     soup = BeautifulSoup(page, 'html.parser')
     items = soup.find_all("tr", "item")
     for item in items:
-        #print(item.prettify().encode('utf-8'))
+        # print(item.prettify().encode('utf-8'))
 
         # get name & url & description
         itemName = ''
         itemUrl = ''
         description = ''
         content = item.find("div", "pl2")
-        if content != None:
+        if content:
             href = content.find("a")
-            if href != None:
-                #print(href.prettify().encode('utf-8'))
+            if href:
+                # print(href.prettify().encode('utf-8'))
                 itemUrl = href['href'].encode('utf-8')
                 contents = href.contents
-                if contents != None:
+                if contents:
                     itemName = contents[0].strip().encode('utf-8')
-                    itemName = itemName.replace('\n',' ').replace(' ', '').replace('/', ' / ')
+                    itemName = itemName.replace('\n', ' ').replace(
+                        ' ', '').replace('/', ' / ')
                 span = href.find("span")
-                if span != None and span.string != None:
+                if span and span.string:
                     subTitle = span.string.strip().encode('utf-8')
                     itemName = '{0}{1}'.format(itemName, subTitle)
 
             des = content.find("p", 'pl')
-            if des != None and des.string != None:
+            if des and des.string:
                 description = des.string.strip().encode('utf-8')
 
         # print(" > name: {0}".format(itemName))
@@ -182,7 +188,7 @@ def parseItemInfo(countryList, tag, minNum, maxNum, k, page, itemInfos):
         # get url and image
         itemImage = ''
         content = item.find("img")
-        if content != None:
+        if content:
             itemImage = content['src'].encode('utf-8')
         #print(" > image: {0}".format(itemImage))
 
@@ -190,12 +196,12 @@ def parseItemInfo(countryList, tag, minNum, maxNum, k, page, itemInfos):
         ratingNum = 0.0
         ratingPeople = 0
         content = item.find("span", "rating_nums")
-        if content != None and content.string != None:
+        if content and content.string:
             ratingStr = content.string.strip().encode('utf-8')
             if len(ratingStr) > 0:
                 ratingNum = float(ratingStr)
         content = item.find("span", "pl")
-        if content != None:
+        if content:
             ratingStr = content.string.strip().encode('utf-8')
             if ratingStr == '(尚未上映)':
                 ratingPeople = -1
@@ -209,26 +215,31 @@ def parseItemInfo(countryList, tag, minNum, maxNum, k, page, itemInfos):
         #print(" > ratingNum: {0}, ratingPeople: {1}".format(ratingNum, ratingPeople))
 
         # add imte info to list
-        itemInfo = ItemInfo(itemName, itemUrl, itemImage, ratingNum, ratingPeople, description)
-        itemInfo.compositeRating = computeCompositeRating(tag, minNum, maxNum, k, ratingNum, ratingPeople)
+        itemInfo = ItemInfo(itemName, itemUrl, itemImage,
+                            ratingNum, ratingPeople, description)
+        itemInfo.compositeRating = computeCompositeRating(
+            tag, minNum, maxNum, k, ratingNum, ratingPeople)
         itemInfos.append(itemInfo)
 
 #=============================================================================
 # 生产者-消费者模型
 #=============================================================================
+
+
 class Producer(Thread):
     url = ''
-    
-    def __init__(self, t_name, url, queue):  
+
+    def __init__(self, t_name, url, queue):
         Thread.__init__(self, name=t_name)
         self.url = url
         self.queue = queue
 
     def run(self):
         page = getHtml(self.url)
-        if page != None:
+        if page:
             # block util a free slot available
             self.queue.put(page, True)
+
 
 class Consumer(Thread):
     running = True
@@ -240,7 +251,7 @@ class Consumer(Thread):
     k = 0.25
     countryList = []
 
-    def __init__(self, t_name, tag, countryList, minNum, maxNum, k, queue, items):  
+    def __init__(self, t_name, tag, countryList, minNum, maxNum, k, queue, items):
         Thread.__init__(self, name=t_name)
         self.queue = queue
         self.items = items
@@ -255,14 +266,15 @@ class Consumer(Thread):
 
     def run(self):
         while True:
-            if self.running == False and self.queue.empty():
-                break;
+            if not self.running and self.queue.empty():
+                break
 
             page = self.queue.get()
-            if page != None:
-                parseItemInfo(self.countryList, self.tag, self.minNum, self.maxNum, self.k, page, self.items)
+            if page:
+                parseItemInfo(self.countryList, self.tag, self.minNum,
+                              self.maxNum, self.k, page, self.items)
             self.queue.task_done()
- 
+
 
 def spider(tag, countryList, minNum, maxNum, k):
     print('   抓取 [{0}] 电影 ...'.format(tag))
@@ -276,13 +288,13 @@ def spider(tag, countryList, minNum, maxNum, k):
     # get first page of doulist
     url = "https://movie.douban.com/tag/{0}".format(tag)
     page = getHtml(url)
-    if page == None:
+    if not page:
         print(' > invalid url {0}'.format(url))
     else:
         # get url of other pages in doulist
         soup = BeautifulSoup(page, 'html.parser')
         content = soup.find("div", "paginator")
-        #print(content.prettify().encode('utf-8'))
+        # print(content.prettify().encode('utf-8'))
 
         nextPageStart = 100000
         lastPageStart = 0
@@ -302,14 +314,16 @@ def spider(tag, countryList, minNum, maxNum, k):
         queue.put(page)
 
         # create consumer
-        consumer = Consumer('Consumer', tag, countryList, minNum, maxNum, k, queue, itemInfos)
+        consumer = Consumer('Consumer', tag, countryList,
+                            minNum, maxNum, k, queue, itemInfos)
         consumer.start()
 
         # create producers
         producers = []
         for pageStart in range(nextPageStart, lastPageStart + nextPageStart, nextPageStart):
             pageUrl = "{0}?start={1:d}&type=T".format(url, pageStart)
-            producer = Producer('Producer_{0:d}'.format(pageStart), pageUrl, queue)
+            producer = Producer('Producer_{0:d}'.format(
+                pageStart), pageUrl, queue)
             producer.start()
             producers.append(producer)
             #print(" > process page : {0}".format(pageUrl))
@@ -327,7 +341,7 @@ def spider(tag, countryList, minNum, maxNum, k):
         # summrise
         total = len(itemInfos)
         elapsed = timeit.default_timer() - start
-        print("   获取 %d 部 [%s] 电影信息，耗时 %.2f 秒"%(total, tag, elapsed))
+        print("   获取 %d 部 [%s] 电影信息，耗时 %.2f 秒" % (total, tag, elapsed))
         return itemInfos
 
 
@@ -343,7 +357,7 @@ def process(tags):
     if country != "":
         countryList = country.split(',')
         countryList = list(set(countryList + tagList))
-        #print(countryList)
+        # print(countryList)
 
     items = []
     # spider
@@ -366,6 +380,8 @@ def process(tags):
 #=============================================================================
 # 排序算法
 #=============================================================================
+
+
 def computeCompositeRating(tag, minNum, maxNum, k, num, people):
     people = max(1, min(maxNum, people))
     if people <= minNum:
@@ -387,7 +403,7 @@ def computeCompositeRating(tag, minNum, maxNum, k, num, people):
 #=============================================================================
 # 程序入口：抓取指定标签的书籍
 #=============================================================================
-if __name__ == '__main__': 
+if __name__ == '__main__':
     tags = [
         ["经典", "", 100, 50000, 0.25, 300],
         ["剧情,感人", "", 100, 50000, 0.25, 250],
@@ -408,7 +424,8 @@ if __name__ == '__main__':
         ["纪录片,传记", "", 100, 50000, 0.25, 300],
         ["黑色幽默", "", 100, 50000, 0.25, 200],
         ["亚洲,日本,韩国,印度,泰国,新加坡", "日语,韩语", 100, 50000, 0.25, 300],
-        ["欧美,美国,加拿大,欧洲,德国,英国,法国,意大利,西班牙,澳大利亚,俄罗斯,伊朗,巴西,瑞典,丹麦,波兰,捷克,比利时,墨西哥,土耳其", "美国,英语,法语,俄语,德语,西班牙语,意大利语", 100, 50000, 0.25, 300],
+        ["欧美,美国,加拿大,欧洲,德国,英国,法国,意大利,西班牙,澳大利亚,俄罗斯,伊朗,巴西,瑞典,丹麦,波兰,捷克,比利时,墨西哥,土耳其",
+            "美国,英语,法语,俄语,德语,西班牙语,意大利语", 100, 50000, 0.25, 300],
         ["中国,中国大陆,内地", "大陆,汉语,普通话", 100, 50000, 0.25, 300],
         ["香港", "香港", 100, 50000, 0.25, 300],
         ["台湾", "台湾", 100, 50000, 0.25, 200],
@@ -425,4 +442,4 @@ if __name__ == '__main__':
         process(tag)
 
     elapsed = timeit.default_timer() - start
-    print("== 总耗时 %.2f 秒 =="%(elapsed))
+    print("== 总耗时 %.2f 秒 ==" % (elapsed))

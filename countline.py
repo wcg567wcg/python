@@ -8,27 +8,28 @@
 #
 
 import os
-import sys
 import codecs
+
 
 def process_file(path):
     total = 0
     if path.endswith('.java') or path.endswith('.py'):
         with codecs.open(path, 'r', 'utf-8') as handle:
             for line in handle.readlines():
-                #print(line)
+                # print(line)
                 line = line.lstrip()
                 if len(line) > 1:
-                    if line.startswith("//") == False and line.startswith("#") == False:
+                    if not line.startswith("//") and not line.startswith("#"):
                         total += 1
         #print("%s has %d lines"%(path, total))
     return total
 
+
 def process_dir(path):
     total = 0
 
-    for filename in os.listdir(path): 
-        filepath = os.path.join(path, filename) 
+    for filename in os.listdir(path):
+        filepath = os.path.join(path, filename)
         if os.path.isdir(filepath):
             # exclude hidden dirs
             if filename.startswith("."):
@@ -38,6 +39,7 @@ def process_dir(path):
         elif os.path.isfile(filepath):
             total += process_file(filepath)
     return total
+
 
 def process(path):
     total = 0
@@ -50,4 +52,4 @@ def process(path):
     return total
 
 process('countline.py')
-#process('matplot')
+# process('matplot')
