@@ -4,24 +4,21 @@
 # Author        : kesalin@gmail.com
 # Blog          : http://luozhaohui.github.io
 # Date          : 2017/10/20
-# Description   : download resources from tingvoa.com 
+# Description   : download resources from tingvoa.com
 # Version       : 1.0.0.0
 # Python Version: Python 2.7.3
 #
 # store to excel nees to install openpyxl: pip install openpyxl
 
 import os
-import threading
 from multiprocessing.dummy import Pool as ThreadPool
 import time
 import datetime
 import re
-import string
 import urllib2
 import timeit
 from bs4 import BeautifulSoup
 from openpyxl import Workbook
-from openpyxl import load_workbook
 
 #=============================================================================
 # request & response
@@ -34,8 +31,9 @@ gHeaders = {
     'Cookie': 'Put your cookie here'
 }
 
+
 def getHtml(url):
-    try :
+    try:
         if gUseCookie:
             opener = urllib2.build_opener()
             for k, v in gHeaders.items():
@@ -46,12 +44,13 @@ def getHtml(url):
             request = urllib2.Request(url, None, gHeaders)
             response = urllib2.urlopen(request)
             data = response.read().decode('utf-8')
-    except urllib2.URLError, e :
+    except urllib2.URLError as e:
         if hasattr(e, "code"):
             print("The server couldn't fulfill the request: " + url)
             print("Error code: %s" % e.code)
         elif hasattr(e, "reason"):
-            print("We failed to reach a server. Please check your url: " + url + ", and read the Reason.")
+            print("We failed to reach a server. Please check your url: " +
+                  url + ", and read the Reason.")
             print("Reason: %s" % e.reason)
     return data
 
@@ -59,53 +58,64 @@ def getHtml(url):
 #=============================================================================
 # classes
 #=============================================================================
-# 
+
 class LevelInfo:
+
     def __init__(self, name, url):
         self.name = name
         self.url = url
         self.bookInfos = []
 
-    def __str__( self ):
-        return "Level:{0}, url:{1}, books:{2}\n".format(self.name, self.url, len(self.bookInfos))
-# 
+    def __str__(self):
+        return "Level:{}, url:{}, books:{}\n".format(
+            self.name, self.url, len(self.bookInfos))
+
+
 class BookInfo:
+
     def __init__(self, name, url):
         self.name = name
         self.url = url
         self.chapterInfos = []
 
-    def __str__( self ):
-        return "Book:{0}, url:{1}, chapters:[2]".format(self.name, self.url, len(self.chapterInfos))
-# 
+    def __str__(self):
+        return "Book:{}, url:{}, chapters:{}".format(
+            self.name, self.url, len(self.chapterInfos))
+
+
 class ChapterInfo:
+
     def __init__(self, name, url, mp3):
         self.name = name
         self.url = url
         self.mp3Url = mp3
 
-    def __str__( self ):
-        return "Chapter:{0}, url:{1}, mp3:{2}".format(self.name, self.url, self.mp3Url)
+    def __str__(self):
+        return "Chapter:{}, url:{}, mp3:{}".format(
+            self.name, self.url, self.mp3Url)
 
-# 
+
 class DownloadInfo:
+
     def __init__(self, name, path, mp3):
         self.name = name
         self.path = path
         self.mp3Url = mp3
 
-    def __str__( self ):
-        return "Download:path:{0}, mp3:{1}".format(self.path, self.mp3Url)
+    def __str__(self):
+        return "Download:path:{}, mp3:{}".format(
+            self.path, self.mp3Url)
 
 #=============================================================================
 # utilities
 #=============================================================================
 
+
 def get_root_url(url):
     rootUrl = url
     start = url.find(".")
     if start > 0:
-        index = url.find("/", start);
+        index = url.find("/", start)
         if index > 0:
             rootUrl = url[0:index]
     return rootUrl
@@ -140,10 +150,10 @@ def get_cpu_count():
 # parse
 #=============================================================================
 def get_book_infos(levelInfo):
-    name = levelInfo.name
+    # name = levelInfo.name
     url = levelInfo.url
     rootUrl = get_root_url(url)
-    #print(levelInfo)
+    # print(levelInfo)
 
     slow_down()
     page = getHtml(url)
@@ -151,20 +161,20 @@ def get_book_infos(levelInfo):
 
     bookInfos = []
     # get book infos
-    mainleftlist = soup.find(id="mainleftlist");
-    if (mainleftlist != None):
-        #print(mainleftlist.prettify())
+    mainleftlist = soup.find(id="mainleftlist")
+    if (mainleftlist):
+        # print(mainleftlist.prettify())
         leftTitles = mainleftlist.find_all("div", "leftTitle")
         #print("find %d books" % len(leftTitles))
         for leftTitle in leftTitles:
-            #print(leftTitle.prettify())
-            link = leftTitle.find("a");
-            if link != None:
+            # print(leftTitle.prettify())
+            link = leftTitle.find("a")
+            if link:
                 bookName = ""
-                if link.string != None:
+                if link.string:
                     bookName = link.string.strip().encode('utf-8')
                 href = link['href'].encode('utf-8')
-                bookUrl = rootUrl + href;
+                bookUrl = rootUrl + href
 
                 bookInfo = BookInfo(bookName, bookUrl)
                 bookInfos.append(bookInfo)
@@ -172,22 +182,23 @@ def get_book_infos(levelInfo):
                 # get chapter infos
                 chapterInfos = []
                 subleftList = leftTitle.findNext("div")
-                if subleftList != None:
-                    #print(subleftList.prettify())
+                if subleftList:
+                    # print(subleftList.prettify())
                     allLinks = subleftList.findAll("a")
                     for link in allLinks[1:]:
                         chapterName = ""
-                        if link.string != None:
+                        if link.string:
                             chapterName = link.string.strip().encode('utf-8')
                         href = link['href'].encode('utf-8')
-                        chapterUrl = rootUrl + href;
+                        chapterUrl = rootUrl + href
                         mp3Url = get_mp3_url(chapterUrl)
-                        chapterInfo = ChapterInfo(chapterName, chapterUrl, mp3Url)
+                        chapterInfo = ChapterInfo(
+                            chapterName, chapterUrl, mp3Url)
                         chapterInfos.append(chapterInfo)
-                        #print(chapterInfo)
+                        # print(chapterInfo)
 
                 bookInfo.chapterInfos = chapterInfos
-                #print(bookInfo)
+                # print(bookInfo)
 
     return bookInfos
 
@@ -201,13 +212,13 @@ def get_mp3_url(chapterUrl):
     content = soup.prettify().encode('utf-8')
 
     mp3Url = ""
-    #var mp3 ="Sound/shuchong/aqyjq/tingvoa.com_1.mp3";
+    # var mp3 ="Sound/shuchong/aqyjq/tingvoa.com_1.mp3";
     pattern = re.compile(r'(var mp3)(\s*)(=)(\s*)(")(.*)(.mp3)(")')
     match = pattern.search(content)
     if match:
-        mp3 = "{0}{1}".format(match.group(6), match.group(7))
-        mp3Url = "http://x8.tingvoa.com/{1}".format(rootUrl, mp3)
-        #print(mp3Url)
+        mp3 = "{}{}".format(match.group(6), match.group(7))
+        mp3Url = "http://x8.tingvoa.com/{}".format(rootUrl, mp3)
+        # print(mp3Url)
     return mp3Url
 
 
@@ -215,7 +226,7 @@ def store_resource(title, levelInfos):
     mkdir(title)
 
     # store as markdown
-    fileName = "{0}.md".format(title)
+    fileName = "{}.md".format(title)
     path = os.path.join(title, fileName)
     if os.path.isfile(path):
         os.remove(path)
@@ -223,18 +234,19 @@ def store_resource(title, levelInfos):
     today = datetime.datetime.now()
     todayStr = today.strftime('%Y-%m-%d %H:%M:%S %z')
     file = open(path, 'a')
-    file.write('## {0}\n'.format(title))
-    file.write('### 总计 {0} levels\n'.format(len(levelInfos)))
-    file.write('### 更新时间: {0}\n'.format(todayStr))
+    file.write('## {}\n'.format(title))
+    file.write('### 总计 {} levels\n'.format(len(levelInfos)))
+    file.write('### 更新时间: {}\n'.format(todayStr))
 
     for i, level in enumerate(levelInfos):
-        file.write('\n### Level.{0:d} {1}\n'.format(i + 1, level.name))
+        file.write('\n### Level.{:d} {}\n'.format(i + 1, level.name))
 
         for j, book in enumerate(level.bookInfos):
-            file.write('\n#### Book.{0:d} {1}\n'.format(j + 1, book.name))
+            file.write('\n#### Book.{:d} {}\n'.format(j + 1, book.name))
 
             for k, chapter in enumerate(book.chapterInfos):
-                file.write('##### Chapter.{0:d} {1}, {2}\n'.format(k + 1, chapter.name, chapter.mp3Url))
+                file.write('##### Chapter.{:d} {}, {}\n'.format(
+                    k + 1, chapter.name, chapter.mp3Url))
 
     file.close()
     return path
@@ -242,19 +254,20 @@ def store_resource(title, levelInfos):
 
 def store_to_excel(resPath):
     workbook = Workbook()
-    resBasename = os.path.basename(resPath);
+    resBasename = os.path.basename(resPath)
     sheetName = os.path.splitext(resBasename)[0]
     workSheet = workbook.create_sheet(0, sheetName.decode('utf-8'))
 
     # for i, sheetName in enumerate(workbook.get_sheet_names()):
-    #     print("sheet {0}: {1}".format(i, sheetName))
+    #     print("sheet {}: {}".format(i, sheetName))
 
     rootDir = os.path.dirname(resPath)
     currentLevelDir = ""
     currentBookDir = ""
     with open(resPath, "r") as file:
         for line in file:
-            ##### Chapter.1 爱情与金钱：1 Chapter, http://x8.tingvoa.com/Sound/shuchong/aqyjq/tingvoa.com_1.mp3
+            # Chapter.1 爱情与金钱：1 Chapter,
+            # http://x8.tingvoa.com/Sound/shuchong/aqyjq/tingvoa.com_1.mp3
             pattern = re.compile(r'(#*)(\s*Chapter\.[0-9]*)(.*)')
             match = pattern.search(line)
             if match:
@@ -263,40 +276,41 @@ def store_to_excel(resPath):
                 if len(items) >= 2:
                     name = items[0]
                     mp3Url = items[1]
-                    path = os.path.join(currentBookDir, "{0}{1}".format(name, get_postfix(mp3Url)))
-                    workSheet.append([name, path, mp3Url]);
+                    path = os.path.join(currentBookDir, "{}{}".format(
+                        name, get_postfix(mp3Url)))
+                    workSheet.append([name, path, mp3Url])
                 continue
 
-            #### Book.1 爱情与金钱
+            # Book.1 爱情与金钱
             pattern = re.compile(r'(#*)(\s*Book\.[0-9]*)(.*)')
             match = pattern.search(line)
             if match:
                 name = match.group(3).strip()
                 currentBookDir = os.path.join(currentLevelDir, name)
 
-                info = "{0}{1}".format(match.group(2), match.group(3))
+                info = "{}{}".format(match.group(2), match.group(3))
                 workSheet.append([""])
                 workSheet.append([info])
 
-                print(">> current book: {0}".format(currentBookDir))
+                print(">> current book: {}".format(currentBookDir))
                 continue
 
-            ### Level.1 书虫第一级
+            # Level.1 书虫第一级
             pattern = re.compile(r'(#*)(\s*Level\.[0-9]*)(.*)')
             match = pattern.search(line)
             if match:
                 name = match.group(3).strip()
                 currentLevelDir = os.path.join(rootDir, name)
 
-                info = "{0}{1}".format(match.group(2), match.group(3))
+                info = "{}{}".format(match.group(2), match.group(3))
                 workSheet.append([""])
                 workSheet.append([info.strip()])
 
-                print(">> current level: {0}".format(currentLevelDir))
+                print(">> current level: {}".format(currentLevelDir))
                 continue
 
     # Save the file
-    excelFile = "{0}.xlsx".format(sheetName)
+    excelFile = "{}.xlsx".format(sheetName)
     excelPath = os.path.join(os.path.dirname(resPath), excelFile)
     if os.path.isfile(excelPath):
         os.remove(excelPath)
@@ -305,13 +319,14 @@ def store_to_excel(resPath):
 
 def print_level_infos(levelInfos):
     for i, level in enumerate(levelInfos):
-        print('\n### Level.{0:d} {1}\n'.format(i + 1, level.name))
+        print('\n### Level.{:d} {}\n'.format(i + 1, level.name))
 
         for j, book in enumerate(level.bookInfos):
-            print('\n#### Book.{0:d} {1}\n'.format(j + 1, book.name))
+            print('\n#### Book.{:d} {}\n'.format(j + 1, book.name))
 
             for k, chapter in enumerate(book.chapterInfos):
-                print('##### Chapter.{0:d} {1}, {2}\n'.format(k + 1, chapter.name, chapter.mp3Url))
+                print('##### Chapter.{:d} {}, {}\n'.format(
+                    k + 1, chapter.name, chapter.mp3Url))
 
 
 # parse resource url
@@ -333,27 +348,27 @@ def parse(url):
     # get resource title
     resourceTitle = ""
     content = soup.find(id="containertow")
-    if content != None:
-        titleContent = content.find("div", "catmenutitle");
-        if titleContent != None and titleContent.string != None:
+    if content:
+        titleContent = content.find("div", "catmenutitle")
+        if titleContent and titleContent.string:
             resourceTitle = titleContent.string.strip().encode('utf-8')
             #print(" > resource title：" + resourceTitle)
 
     # get level infos
-    mainleftlist = soup.find(id="mainleftlist");
-    if (mainleftlist != None):
-        #print(mainleftlist.prettify())
+    mainleftlist = soup.find(id="mainleftlist")
+    if (mainleftlist):
+        # print(mainleftlist.prettify())
         leftTitles = mainleftlist.find_all("div", "leftTitle")
         print("find %d levels" % len(leftTitles))
         for leftTitle in leftTitles:
-            #print(leftTitle.prettify())
-            link = leftTitle.find("a");
-            if link != None:
+            # print(leftTitle.prettify())
+            link = leftTitle.find("a")
+            if link:
                 levelName = ""
-                if link.string != None:
+                if link.string:
                     levelName = link.string.strip().encode('utf-8')
                 href = link['href'].encode('utf-8')
-                levelUrl = rootUrl + href;
+                levelUrl = rootUrl + href
 
                 levelInfo = LevelInfo(levelName, levelUrl)
                 levelInfos.append(levelInfo)
@@ -371,11 +386,13 @@ def parse(url):
     store_to_excel(path)
 
     elapsed = timeit.default_timer() - start
-    print(" > 下载完成，耗时 {0} 秒".format(elapsed))
+    print(" > 下载完成，耗时 {} 秒".format(elapsed))
 
 #=============================================================================
 # download
 #=============================================================================
+
+
 def download_resource(resPath):
     downloadInfos = []
 
@@ -384,7 +401,8 @@ def download_resource(resPath):
     currentBookDir = ""
     with open(resPath, "r") as file:
         for line in file:
-            ##### Chapter.1 爱情与金钱：1 Chapter, http://x8.tingvoa.com/Sound/shuchong/aqyjq/tingvoa.com_1.mp3
+            # Chapter.1 爱情与金钱：1 Chapter,
+            # http://x8.tingvoa.com/Sound/shuchong/aqyjq/tingvoa.com_1.mp3
             pattern = re.compile(r'(#*)(\s*Chapter\.[0-9]*)(.*)')
             match = pattern.search(line)
             if match:
@@ -393,34 +411,36 @@ def download_resource(resPath):
                 if len(items) >= 2:
                     name = items[0]
                     mp3Url = items[1]
-                    path = os.path.join(currentBookDir, "{0}{1}".format(name, get_postfix(mp3Url)))
+                    path = os.path.join(currentBookDir, "{}{}".format(
+                        name, get_postfix(mp3Url)))
 
                     downloadInfo = DownloadInfo(name, path, mp3Url)
                     downloadInfos.append(downloadInfo)
-                    #print(">> current chapter: {0}".format(downloadInfo))
+                    #print(">> current chapter: {}".format(downloadInfo))
                 continue
 
-            #### Book.1 爱情与金钱
+            # Book.1 爱情与金钱
             pattern = re.compile(r'(#*)(\s*Book\.[0-9]*)(.*)')
             match = pattern.search(line)
             if match:
                 name = match.group(3).strip()
                 currentBookDir = os.path.join(currentLevelDir, name)
                 mkdir(currentBookDir)
-                print(">> current book: {0}".format(currentBookDir))
+                print(">> current book: {}".format(currentBookDir))
                 continue
 
-            ### Level.1 书虫第一级
+            # Level.1 书虫第一级
             pattern = re.compile(r'(#*)(\s*Level\.[0-9]*)(.*)')
             match = pattern.search(line)
             if match:
                 name = match.group(3).strip()
                 currentLevelDir = os.path.join(rootDir, name)
                 mkdir(currentLevelDir)
-                print(">> current level: {0}".format(currentLevelDir))
+                print(">> current level: {}".format(currentLevelDir))
                 continue
 
     download(downloadInfos, get_cpu_count())
+
 
 def download(infos, threads=2):
     pool = ThreadPool(threads)
@@ -429,19 +449,20 @@ def download(infos, threads=2):
     pool.join()
     print(">> download parllel done!")
 
+
 def download_info(info):
-    print("> download {0} to {1}".format(info.mp3Url, info.path))
-    remote = urllib2.urlopen(info.mp3Url) 
+    print("> download {} to {}".format(info.mp3Url, info.path))
+    remote = urllib2.urlopen(info.mp3Url)
     with open(info.path, "wb") as local:
-       local.write(remote.read()) 
+        local.write(remote.read())
 
 #=============================================================================
 # main
 #=============================================================================
 gResourceUrl = "http://www.tingvoa.com/bookworm/"
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
     parse(gResourceUrl)
 
-    #download_resource("书虫牛津英语读物/书虫牛津英语读物.md")
-    #store_to_excel("书虫牛津英语读物/书虫牛津英语读物.md")
+    # download_resource("书虫牛津英语读物/书虫牛津英语读物.md")
+    # store_to_excel("书虫牛津英语读物/书虫牛津英语读物.md")

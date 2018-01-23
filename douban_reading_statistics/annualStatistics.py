@@ -23,19 +23,19 @@
 import os
 import re
 import sys
-import string
-import datetime
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontManager
 from pylab import mpl
 import subprocess
 
-############################################################################################################
+##########################################################################
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
+
 class BookInfo:
+
     def __init__(self, name, url, nums, month, tag, comment, publish):
         self.name = name
         self.url = url
@@ -45,23 +45,30 @@ class BookInfo:
         self.comment = comment
         self.publish = publish
 
+
 def get_rating_ref_png_name(year):
     return u'{0}_reading_rate.png'.format(str(year))
+
 
 def get_rating_save_png_name(year):
     return u'{0}/{1}'.format(str(year), get_rating_ref_png_name(year))
 
+
 def get_tags_ref_png_name(year):
     return u'{0}_reading_tags.png'.format(str(year))
+
 
 def get_tags_save_png_name(year):
     return u'{0}/{1}'.format(str(year), get_tags_ref_png_name(year))
 
+
 def get_raw_data_path(year):
-    return u'{0}/{0}reading_raw.md'.format(str(year), str(year))
+    return u'{0}/{1}reading_raw.md'.format(str(year), str(year))
+
 
 def get_markdown_path(year):
-    return u'{0}/{0}reading.md'.format(str(year), str(year))
+    return u'{0}/{1}reading.md'.format(str(year), str(year))
+
 
 def read_file(path):
     lines = []
@@ -74,40 +81,48 @@ def read_file(path):
                     lines.append(line)
     return lines
 
+
 def num_to_kanji(num):
-    dict = {1 : "一星", 2 : "两星", 3 : "三星", 4 : "四星", 5 : "五星"}
+    dict = {1: "一星", 2: "两星", 3: "三星", 4: "四星", 5: "五星"}
     if num >= 1 and num <= 5:
         return dict[num]
     else:
         print(" ** error: invalid rating num {0}".format(num))
         return ""
 
+
 def num_to_stars(num):
-    dict = {1 : "★", 2 : "★★", 3 : "★★★", 4 : "★★★★", 5 : "★★★★★"}
+    dict = {1: "★", 2: "★★", 3: "★★★", 4: "★★★★", 5: "★★★★★"}
     if num >= 1 and num <= 5:
         return dict[num]
     else:
         print(" ** error: invalid rating num {0}".format(num))
         return "☆"
 
+
 def kanji_to_num(kanji):
-    dict = {"一" : 1, "二" : 2, "两" : 2, "三" : 3, "四" : 4, "五" : 5}
+    dict = {"一": 1, "二": 2, "两": 2, "三": 3, "四": 4, "五": 5}
     return dict[kanji]
+
 
 def get_spaces():
     return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 
+
 def get_book_by_rating(books, rating):
     return [book for book in books if book.ratingNums == rating]
 
+
 def get_book_by_tag(books, tag):
     return [book for book in books if book.tag == tag]
+
 
 def output_by_rating_num(file, total, rating, books):
     count = len(books)
     if count > 0:
         file.write(' > {0}图书 {1} 本，占比 {2:2.1f}%  \n'.format(
-            num_to_kanji(rating), count, count * 100.0/total))
+            num_to_kanji(rating), count, count * 100.0 / total))
+
 
 def output_tags(file, tags, total, year):
     file.write('### 标签统计:\n')
@@ -118,6 +133,7 @@ def output_tags(file, tags, total, year):
     for key, value in tags:
         file.write(' > {0} {1} 本  \n'.format(key, value))
 
+
 def output_by_rating(file, index, rating, books):
     count = len(books)
     if count == 0:
@@ -125,7 +141,7 @@ def output_by_rating(file, index, rating, books):
 
     file.write('### {0} 图书: {1} 本\n'.format(num_to_kanji(rating), count))
 
-    books.sort(cmp=None, key=lambda x:(x.ratingNums, x.tag), reverse=True)
+    books.sort(cmp=None, key=lambda x: (x.ratingNums, x.tag), reverse=True)
     for book in books:
         #print('{0} {1} {2}\n'.format(book.name, book.ratingNums, book.tag))
         file.write('#### No.{0:d} {1}\n'.format(index, book.name))
@@ -133,12 +149,14 @@ def output_by_rating(file, index, rating, books):
         file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
         file.write(' > 出版信息：{0}  \n'.format(book.publish))
         #file.write(' > 标签：{0}{1}评分：**{2}**  \n'.format(book.tag, get_spaces(), num_to_kanji(book.ratingNums)))
-        file.write(' > 标签：{0}{1}评分：**{2}**  \n'.format(book.tag, get_spaces(), num_to_stars(book.ratingNums)))
+        file.write(' > 标签：{0}{1}评分：**{2}**  \n'.format(
+            book.tag, get_spaces(), num_to_stars(book.ratingNums)))
         file.write(' > 我的评论：{0}  \n'.format(book.comment))
         file.write('\n')
         index = index + 1
     file.write('\n')
     return index
+
 
 def output_by_tag(file, books, index, tag):
     count = len(books)
@@ -147,7 +165,7 @@ def output_by_tag(file, books, index, tag):
 
     file.write('### {0}: {1} 本\n'.format(tag, count))
 
-    books.sort(cmp=None, key=lambda x:(x.ratingNums), reverse=True)
+    books.sort(cmp=None, key=lambda x: (x.ratingNums), reverse=True)
     for book in books:
         #print('{0} {1} {2}\n'.format(book.name, book.ratingNums, book.tag))
         file.write('#### No.{0:d} {1}\n'.format(index, book.name))
@@ -155,15 +173,17 @@ def output_by_tag(file, books, index, tag):
         file.write(' > 豆瓣链接：[{0}]({1})  \n'.format(book.url, book.url))
         file.write(' > 出版信息：{0}  \n'.format(book.publish))
         #file.write(' > 标签：{0}{1}评分：**{2}**  \n'.format(book.tag, get_spaces(), num_to_kanji(book.ratingNums)))
-        file.write(' > 标签：{0}{1}评分：**{2}**  \n'.format(book.tag, get_spaces(), num_to_stars(book.ratingNums)))
+        file.write(' > 标签：{0}{1}评分：**{2}**  \n'.format(
+            book.tag, get_spaces(), num_to_stars(book.ratingNums)))
         file.write(' > 我的评论：{0}  \n'.format(book.comment))
         file.write('\n')
         index = index + 1
     file.write('\n')
     return index
 
+
 def generate_pie(items, title, savefilename):
-    total = 0;
+    total = 0
     for key, value in items:
         total += value
 
@@ -172,7 +192,7 @@ def generate_pie(items, title, savefilename):
     explode = []
     for key, value in items:
         labels.append(u"{0} {1} 本".format(key, value))
-        fracs.append(value * 100.0/total)
+        fracs.append(value * 100.0 / total)
         explode.append(0)
     explode[0] = 0.02
     # for label in labels:
@@ -181,14 +201,17 @@ def generate_pie(items, title, savefilename):
     # print(explode)
     show_pie(labels, fracs, explode, title, savefilename)
 
+
 def show_pie(labels, fracs, explode, title, savefilename):
     plt.figure(figsize=(6, 6))
-    ax = plt.axes([0.1, 0.1, 0.8, 0.8])
-    plt.pie(fracs, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True)
-    plt.title(title, bbox={'facecolor':'0.8', 'pad':12})
+    # ax = plt.axes([0.1, 0.1, 0.8, 0.8])
+    plt.pie(fracs, explode=explode, labels=labels,
+            autopct='%1.1f%%', shadow=True)
+    plt.title(title, bbox={'facecolor': '0.8', 'pad': 12})
     plt.savefig(savefilename)
-    #plt.show()
+    # plt.show()
     plt.close()
+
 
 def analyze_book(books, tags, year):
     path = get_markdown_path(year)
@@ -208,9 +231,11 @@ def analyze_book(books, tags, year):
     file.write('## 总计阅读 {0} 本\n'.format(total))
     file.write('### 评价统计:\n')
 
-    rating_dict = {u"五星" : len(rating5), u"四星" : len(rating4),
-        u"三星" : len(rating3), u"两星" : len(rating2), u"一星" : len(rating1)}
-    filter_dict = { key : rating_dict[key] for key in rating_dict.keys() if (rating_dict[key] > 0) }
+    rating_dict = {u"五星": len(rating5), u"四星": len(rating4),
+                   u"三星": len(rating3), u"两星": len(rating2),
+                   u"一星": len(rating1)}
+    filter_dict = {key: rating_dict[key]
+                   for key in rating_dict.keys() if (rating_dict[key] > 0)}
     #items = sorted(filter_dict.iteritems(), key=lambda d:d[1], reverse = True)
     items = filter_dict.items()
     title = u'{0}年阅读评价统计: 总计 {1} 本'.format(str(year), total)
@@ -226,7 +251,7 @@ def analyze_book(books, tags, year):
     file.write('\n')
 
     tags = sorted(tags.items(), key=lambda d: d[1], reverse=True)
-    #print(tags)
+    # print(tags)
 
     output_tags(file, tags, total, year)
 
@@ -244,13 +269,16 @@ def analyze_book(books, tags, year):
 
     file.close()
 
+
 def is_begin(line):
     pattern = re.compile(r'(##No\.)([0-9]+)(.*)')
     match = pattern.search(line)
-    return match != None
+    return match
+
 
 def is_end(line, index):
     return len(line) == 0 and index >= 4
+
 
 def process(datapath, year):
     books = []
@@ -271,7 +299,7 @@ def process(datapath, year):
 
         pattern = re.compile(r'(##No\.)([0-9]+)(.*)')
         match = pattern.search(line)
-        if match != None:
+        if match:
             index = 0
             name = ''
             url = ''
@@ -284,7 +312,7 @@ def process(datapath, year):
 
         pattern = re.compile(r'(> )([a-zA-Z]+)(: )(.*)')
         match = pattern.search(line)
-        if match != None:
+        if match:
             itemName = match.group(2)
             itemContent = match.group(4).strip()
 
@@ -304,7 +332,8 @@ def process(datapath, year):
                 continue
 
             elif itemName == 'Reading':
-                pattern = re.compile(r'(.*)(星\s*)(\d{4})(-)(\d{2})(-)(\d{2})(.*)(标签:\s*)(.*)')
+                pattern = re.compile(
+                    r'(.*)(星\s*)(\d{4})(-)(\d{2})(-)(\d{2})(.*)(标签:\s*)(.*)')
                 match = pattern.search(itemContent)
                 if match:
                     ratingNums = kanji_to_num(match.group(1))
@@ -325,7 +354,8 @@ def process(datapath, year):
                 comment = itemContent
 
                 # end parse item
-                book = BookInfo(name, url, ratingNums, readMonth, tag, comment, publish)
+                book = BookInfo(name, url, ratingNums,
+                                readMonth, tag, comment, publish)
                 books.append(book)
 
         if index > 5:
@@ -344,7 +374,8 @@ def get_matplot_zh_font():
     fm = FontManager()
     mat_fonts = set(f.name for f in fm.ttflist)
 
-    output = subprocess.check_output('fc-list :lang=zh -f "%{family}\n"', shell=True)
+    output = subprocess.check_output(
+        'fc-list :lang=zh -f "%{family}\n"', shell=True)
     zh_fonts = set(f.split(',', 1)[0] for f in output.split('\n'))
     available = list(mat_fonts & zh_fonts)
 
@@ -353,11 +384,13 @@ def get_matplot_zh_font():
         print(f)
     return available
 
+
 def set_matplot_zh_font():
     available = get_matplot_zh_font()
     if len(available) > 0:
         mpl.rcParams['font.sans-serif'] = [available[0]]    # 指定默认字体
-        mpl.rcParams['axes.unicode_minus'] = False          # 解决保存图像是负号'-'显示为方块的问题
+        # 解决保存图像是负号'-'显示为方块的问题
+        mpl.rcParams['axes.unicode_minus'] = False
 
 
 #=============================================================================
@@ -369,9 +402,9 @@ if __name__ == '__main__':
 
     rootDir = os.path.dirname(os.path.abspath(__file__))
 
-    for year in os.listdir(rootDir): 
-        path = os.path.join(rootDir, year) 
-        if os.path.isdir(path): 
+    for year in os.listdir(rootDir):
+        path = os.path.join(rootDir, year)
+        if os.path.isdir(path):
             pattern = re.compile(r'([0-9]{4})')
             match = pattern.search(year)
             if match:
