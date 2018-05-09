@@ -266,25 +266,30 @@ def parse(url):
     # get doulist about
     doulistAbout = ''
     content = soup.find("div", "doulist-about")
-    for child in content.children:
-        if child.string:
-            htmlContent = child.string.strip().encode('utf-8')
-            doulistAbout = "{0}\n{1}".format(doulistAbout, htmlContent)
+    if content:
+        for child in content.children:
+            if child.string:
+                htmlContent = child.string.strip().encode('utf-8')
+                doulistAbout = "{0}\n{1}".format(doulistAbout, htmlContent)
     #print("doulist about:" + doulistAbout)
 
-    nextPageStart = 100000
+    MAX_NEXT_PAGE_START = 100000
+    nextPageStart = MAX_NEXT_PAGE_START
     lastPageStart = 0
     content = soup.find("div", "paginator")
-    for child in content.children:
-        if child.name == 'a':
-            pattern = re.compile(r'(start=)([0-9]*)(.*)(&sort=)')
-            match = pattern.search(child['href'].encode('utf-8'))
-            if match:
-                index = int(match.group(2))
-                if nextPageStart > index:
-                    nextPageStart = index
-                if lastPageStart < index:
-                    lastPageStart = index
+    if content:
+        for child in content.children:
+            if child.name == 'a':
+                pattern = re.compile(r'(start=)([0-9]*)(.*)(&sort=)')
+                match = pattern.search(child['href'].encode('utf-8'))
+                if match:
+                    index = int(match.group(2))
+                    if nextPageStart > index:
+                        nextPageStart = index
+                    if lastPageStart < index:
+                        lastPageStart = index
+    if nextPageStart == MAX_NEXT_PAGE_START:
+        nextPageStart = 0
 
     # create consumer
     consumer = Consumer('Consumer')
