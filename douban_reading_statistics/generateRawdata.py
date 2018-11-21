@@ -21,8 +21,8 @@ from bs4 import BeautifulSoup
 #
 gUseCookie = True
 gHeaders = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
-    'Cookie': 'Put you cookie here.'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36',
+    'Cookie': 'Please put your cookie here.'
 }
 
 
@@ -231,6 +231,7 @@ def parse_pages(entry_url):
     page = getHtml(entry_url)
     soup = BeautifulSoup(page, 'html.parser')
 
+    # https://book.douban.com/people/kesalin/collect?start=45&sort=time&rating=all&filter=all&mode=grid
     urls = []
     paginator = soup.find('div', 'paginator')
     if paginator:
@@ -255,6 +256,9 @@ def parse_pages(entry_url):
                 p4 = match.group(4)
                 pageStep = int(match.group(3))
 
+        # print(" >>> href: {}".format(href))
+        # print(" >>> p1: {}".format(p1))
+
         links = paginator.find_all('a')
         for link in links:
             href = link['href'].encode('utf-8')
@@ -268,7 +272,7 @@ def parse_pages(entry_url):
         print("last page starts at %d, page step %d" %
               (lastPageStart, pageStep))
         for i in range(0, lastPageStart + 1, pageStep):
-            url = '{0}{1}{2}{3}'.format(p1, p2, i, p4)
+            url = 'https://book.douban.com{0}{1}{2}{3}'.format(p1, p2, i, p4)
             #print(" page start at %d : %s" % (i, url))
             urls.append(url)
 
