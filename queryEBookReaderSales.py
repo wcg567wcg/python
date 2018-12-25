@@ -10,12 +10,12 @@ from selenium import webdriver
 import time
 
 url_dict = {
-    'iReader Plus 黑': 'https://detail.tmall.com/item.htm?spm=a1z10.5-b-s.w4011-14439296382.49.s2cXT1&id=530386199851&sku_properties=5919063:6536025',
-    'iReader 青春版': 'https://detail.tmall.com/item.htm?spm=a230r.1.14.6.JsOheI&id=550673734838',
-    'Kindle 基本款': 'https://detail.tmall.com/item.htm?spm=a1z10.1-b-s.w5003-16522198144.3.35TBaC&id=534274368086&sku_properties=5919063:6536025',
-    'Kindle PaperWhite 3': 'https://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.1.2Jz0PN&id=522680881881',
-    'Kindle Voyage': 'https://detail.tmall.com/item.htm?spm=a1z10.1-b-s.w5003-16522198144.54.35TBaC&id=522686700744',
-    '当当电子书': 'https://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.6.I6lT6O&id=527714448328',
+    # 'iReader Plus 黑': 'https://detail.tmall.com/item.htm?spm=a1z10.5-b-s.w4011-14439296382.49.s2cXT1&id=530386199851&sku_properties=5919063:6536025',
+    # 'iReader 青春版': 'https://detail.tmall.com/item.htm?spm=a230r.1.14.6.JsOheI&id=550673734838',
+    # 'Kindle 基本款': 'https://detail.tmall.com/item.htm?spm=a1z10.1-b-s.w5003-16522198144.3.35TBaC&id=534274368086&sku_properties=5919063:6536025',
+    # 'Kindle PaperWhite 3': 'https://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.1.2Jz0PN&id=522680881881',
+    # 'Kindle Voyage': 'https://detail.tmall.com/item.htm?spm=a1z10.1-b-s.w5003-16522198144.54.35TBaC&id=522686700744',
+    '当当电子书': 'https://detail.tmall.com/item.htm?spm=a220o.1000855.0.0.5b122063sZ5zhr&pvid=edbfd735-f1ab-4841-a5f9-cdbfeae30790&pos=1&acm=03037.1003.1.1288281&id=562477657745&scm=1007.12959.83083.100200300000000',
     'QQ阅读电子书': 'https://detail.tmall.com/item.htm?spm=a1z10.3-b.w4011-16636505510.42.149d0431jHy7rB&id=555910053652&rn=4679eb02347d211f5686ec4d13cc9867&abbucket=4&sku_properties=1627207:28341',
 }
 

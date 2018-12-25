@@ -6,7 +6,7 @@
 # Date          : 2016/12/24
 # Description   : Douban Reading Annual Statistics.
 # Version       : 1.0.0.0
-# Python Version: Python 2.7.3
+# Python Version: Python 3.6
 #
 # sudo apt-get install python-matplotlib
 # sudo apt-get install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose

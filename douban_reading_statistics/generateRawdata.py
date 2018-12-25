@@ -6,13 +6,13 @@
 # Date          : 2016/12/24
 # Description   : Generate douban reading rawdata for statistics.
 # Version       : 1.0.0.0
-# Python Version: Python 2.7.3
+# Python Version: Python 3.6
 
 import os
 import re
 import time
 import datetime
-import urllib2
+import urllib.request
 from bs4 import BeautifulSoup
 
 # 获取 url 内容
@@ -22,7 +22,7 @@ from bs4 import BeautifulSoup
 gUseCookie = True
 gHeaders = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36',
-    'Cookie': 'Please put your cookie here.'
+    'Cookie': 'll="108296"; bid=2i0iZ3u0n24; _ga=GA1.2.1407926077.1540182587; push_doumail_num=0; __utmc=30149280; __utmv=30149280.129; gr_user_id=de24dfc8-cae4-43c7-951f-a6d7512b0c5a; _vwo_uuid_v2=D157B1BB68592A279BE84CBBEF73CF1D3|c1f345e618c46437e46a22bbc89ecc12; douban-fav-remind=1; __utmz=30149280.1541056982.5.2.utmcsr=bing|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); douban-profile-remind=1; push_noty_num=0; dbcl2="1297475:k97w7MOYTck"; ck=QvJR; ap_v=0,6.0; __utma=30149280.1407926077.1540182587.1545705378.1545709471.65; __utmt=1; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03=796ffa69-0430-4bf8-9bc0-97de3db733e8; gr_cs1_796ffa69-0430-4bf8-9bc0-97de3db733e8=user_id%3A1; __utmt_douban=1; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03_796ffa69-0430-4bf8-9bc0-97de3db733e8=true; __utmb=30149280.8.10.1545709471'
 }
 
 
@@ -30,16 +30,16 @@ def getHtml(url):
     data = ''
     try:
         if gUseCookie:
-            opener = urllib2.build_opener()
+            opener = urllib.request.build_opener()
             for k, v in gHeaders.items():
                 opener.addheaders.append((k, v))
             response = opener.open(url)
             data = response.read().decode('utf-8')
         else:
-            request = urllib2.Request(url, None, gHeaders)
-            response = urllib2.urlopen(request)
+            request = urllib.request.Request(url, None, gHeaders)
+            response = urllib.request.urlopen(request)
             data = response.read().decode('utf-8')
-    except urllib2.URLError as e:
+    except urllib.request.URLError as e:
         if hasattr(e, "code"):
             print("The server couldn't fulfill the request: " + url)
             print("Error code: %s" % e.code)
@@ -77,7 +77,7 @@ def num_to_kanji(num):
 
 
 def parse_item_info(item, yearBookDict, currentYearOnly):
-    # print(item.prettify().encode('utf-8'))
+    # print(item.prettify())
 
     now = datetime.date.today()
     currentYear = now.year
@@ -89,10 +89,10 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
     if content:
         link = content.find("a")
         if link:
-            url = link.get('href').strip().encode('utf-8')
-            name = link.get('title').strip().encode('utf-8')
-    #print(" > name: {0}".format(name))
-    #print(" > url: {0}".format(url))
+            url = link.get('href').strip()
+            name = link.get('title').strip()
+    # print(" > name: {0}".format(name))
+    # print(" > url: {0}".format(url))
 
     # get book icon
     image = ''
@@ -100,24 +100,24 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
     if content:
         link = content.find("img")
         if link:
-            image = link.get("src").strip().encode('utf-8')
-    #print(" > image: {0}".format(image))
+            image = link.get("src").strip()
+    # print(" > image: {0}".format(image))
 
     # get book publish
     publish = ''
     content = item.find("div", "pub")
     if content:
         if content.string:
-            publish = content.string.strip().encode('utf-8')
-    #print(" > publish: {0}".format(publish))
+            publish = content.string.strip()
+    # print(" > publish: {0}".format(publish))
 
     # get book comment
     comment = ''
     content = item.find("p", "comment")
     if content:
         if content.string:
-            comment = content.string.strip().encode('utf-8')
-    #print(" > comment: {0}".format(comment))
+            comment = content.string.strip()
+    # print(" > comment: {0}".format(comment))
 
     # get book reading data
     date = ''
@@ -127,7 +127,7 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
     content = item.find("span", "date")
     if content:
         if content.string:
-            date = content.string.strip().encode('utf-8').replace('\n', '')
+            date = content.string.strip().replace('\n', '')
             parts = date.split(' ')
             date = ''
             for part in parts:
@@ -138,7 +138,7 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
             match = pattern.search(date)
             if match:
                 year = match.group(1)
-    #print(" > date: {0}".format(date))
+    # print(" > date: {0}".format(date))
 
     if True == currentYearOnly:
         readYear = int(year)
@@ -148,14 +148,14 @@ def parse_item_info(item, yearBookDict, currentYearOnly):
     content = item.find("span", "tags")
     if content:
         if content.string:
-            tags = content.string.strip().encode('utf-8')
-    #print(" > tags: {0}".format(tags))
+            tags = content.string.strip()
+        # print(" > tags: {0}".format(tags))
 
         p = content.parent
         for child in p.find_all("span"):
             cls = child.get("class")
             if cls and len(cls) > 0:
-                clsStr = cls[0].strip().encode('utf-8')
+                clsStr = cls[0].strip()
                 pattern = re.compile(r'(rating)([0-9])(.*)')
                 match = pattern.search(clsStr)
                 if match:
@@ -247,7 +247,7 @@ def parse_pages(entry_url):
         p4 = ''
         nextLink = nextItem.find('a')
         if nextLink:
-            href = nextLink['href'].encode('utf-8')
+            href = nextLink['href']
             pattern = re.compile(r'(.*)(start=)([0-9]+)(.*)')
             match = pattern.search(href)
             if match:
@@ -261,7 +261,7 @@ def parse_pages(entry_url):
 
         links = paginator.find_all('a')
         for link in links:
-            href = link['href'].encode('utf-8')
+            href = link['href']
             pattern = re.compile(r'(.*)(start=)([0-9]+)(.*)')
             match = pattern.search(href)
             if match:
@@ -294,5 +294,5 @@ if __name__ == '__main__':
     for url in pageUrls:
         parse_page(url, yearBookDict, current_year_only)
 
-    # export
+    #export
     exportToRawdata(yearBookDict)
