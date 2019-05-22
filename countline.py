@@ -51,5 +51,50 @@ def process(path):
     print('>>> total code lines : %d' % total)
     return total
 
-process('countline.py')
+import os
+import time
+import datetime
+from threading import Thread,currentThread,activeCount
+
+date = datetime.datetime.now()
+week = date.weekday()
+
+def clean_log():
+    print("week: {}".format(week))
+    for root, dirs, filenames in os.walk("/home/kesalin/Documents/roslog", topdown=True, onerror=None, followlinks=False):
+        for filename in filenames:
+            if ".log" in filename and root =="/home/kesalin/Documents/roslog":
+                temp_name = filename.split("-")
+                length = len(temp_name)
+
+                print("filename: {}".format(filename))
+                print("temp_name: {}".format(temp_name))
+                print("temp_name length: {}".format(length))
+
+                key_value = -1
+                if length >= 3:
+                    tmp = temp_name[len(temp_name)-2]
+                    print("tmp: {}".format(tmp))
+                    try:
+                        key_value = int(tmp)
+                        print("key_value: {}".format(key_value))
+                    except ValueError:
+                        print("ValueError: {}".format(filename))
+                elif length == 2:
+                    tmp = temp_name[len(temp_name)-1]
+                    print("tmp: {}".format(tmp))
+                    try:
+                        key_value = int(tmp.split(".")[0])
+                        print("key_value: {}".format(key_value))
+                    except ValueError:
+                        print("ValueError: {}".format(filename))
+
+                if key_value >= 0 and week+1 != key_value:
+                    cmd = "rm -r /home/kesalin/Documents/roslog/" + filename
+                    print("excute: {}".format(cmd))
+                    os.system(cmd)
+
+# process('countline.py')
 # process('matplot')
+
+clean_log()
