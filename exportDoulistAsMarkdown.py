@@ -223,7 +223,7 @@ def parse(url):
 #=============================================================================
 # 程序入口：抓取指定指定豆列的书籍
 #=============================================================================
-gDoulistUrl = "https://www.douban.com/doulist/1133232/"
+gDoulistUrl = "https://www.douban.com/doulist/46225014/"
 
 if __name__ == '__main__':
     parse(gDoulistUrl)
